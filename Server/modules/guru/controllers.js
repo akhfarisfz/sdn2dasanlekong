@@ -2,7 +2,7 @@
 const { LibPaginationResponse } = require("../../libs/paginations");
 const { LibHTTPResponseException } = require("../../libs/https");
 
-const HelloControllerList =  async (req, res) => {
+const GuruControllerList =  async (req, res) => {
   try {
     // Your code here
 
@@ -12,7 +12,7 @@ const HelloControllerList =  async (req, res) => {
 
 
     res.status(201).json({
-      controller: "HelloControllerList",
+      controller: "GuruControllerList",
       query: req.query
     });
   } catch (error) {
@@ -20,11 +20,11 @@ const HelloControllerList =  async (req, res) => {
   }
 }
 
-const HelloControllerCreate = async (req, res) => {
+const GuruControllerCreate = async (req, res) => {
   try {
     // Your code here
     res.status(201).json({
-      controller: "HelloControllerCreate",
+      controller: "GuruControllerCreate",
       body: req.body
     });
   } catch (error) {
@@ -32,11 +32,11 @@ const HelloControllerCreate = async (req, res) => {
   }
 }
 
-const HelloControllerDetail = async (req, res) => {
+const GuruControllerDetail = async (req, res) => {
   try {
     // Your code here
     res.status(200).json({
-      controller: "HelloControllerDetail",
+      controller: "GuruControllerDetail",
       params: req.params
     });
   } catch (error) {
@@ -44,11 +44,11 @@ const HelloControllerDetail = async (req, res) => {
   }
 }
 
-const HelloControllerUpdate = async (req, res) => {
+const GuruControllerUpdate = async (req, res) => {
   try {
     // Your code here
     res.status(200).json({
-      controller: "HelloControllerUpdate",
+      controller: "GuruControllerUpdate",
       params: req.params,
       body: req.body
     });
@@ -57,11 +57,11 @@ const HelloControllerUpdate = async (req, res) => {
   }
 }
 
-const HelloControllerDelete = async (req, res) => {
+const GuruControllerDelete = async (req, res) => {
   try {
     // Your code here
     res.status(204).json({
-      controller: "HelloControllerDelete",
+      controller: "GuruControllerDelete",
       params: req.params
     });
   } catch (error) {
@@ -70,9 +70,9 @@ const HelloControllerDelete = async (req, res) => {
 }
 
 module.exports = {
-  HelloControllerList,
-  HelloControllerCreate,
-  HelloControllerDetail,
-  HelloControllerUpdate,
-  HelloControllerDelete,
+  GuruControllerList,
+  GuruControllerCreate,
+  GuruControllerDetail,
+  GuruControllerUpdate,
+  GuruControllerDelete,
 };

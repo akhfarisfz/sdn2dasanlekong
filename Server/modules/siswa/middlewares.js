@@ -11,15 +11,15 @@ const {
  * you can remove 'LibAuthenticationMiddleware' from your middleware list.
  */
 
-const HelloMiddlewareList = LibValidationsMiddleware(
+const SiswaMiddlewareList = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
-const HelloMiddlewareDetail = LibValidationsMiddleware(
+const SiswaMiddlewareDetail = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
-const HelloMiddlewareCreate = LibValidationsMiddleware(
+const SiswaMiddlewareCreate = LibValidationsMiddleware(
   LibAuthenticationMiddleware,
   /** Your middleware here (validations, sanitizing, etc..) */
 
@@ -33,11 +33,11 @@ const HelloMiddlewareCreate = LibValidationsMiddleware(
    *  LibValidationFields.CharField({ field: "field2" }),
    *  LibValidationFields.CharField({
    *    field: "field3",
-   *    customs: [HelloValidatorField3Unique],
+   *    customs: [SiswaValidatorField3Unique],
    *  }),
    *  LibValidationFields.CharField({
    *    field: "field4",
-   *    sanitizers: [HelloSanitizerField4ToHash],
+   *    sanitizers: [SiswaSanitizerField4ToHash],
    *  }),
    *  ...
    */
@@ -45,21 +45,21 @@ const HelloMiddlewareCreate = LibValidationsMiddleware(
   LibValidationExceptionMiddleware,
 );
 
-const HelloMiddlewareUpdate = LibValidationsMiddleware(
+const SiswaMiddlewareUpdate = LibValidationsMiddleware(
   LibAuthenticationMiddleware,
   /** Your middleware here (validations, sanitizing, etc..) */
   LibValidationExceptionMiddleware,
 );
 
-const HelloMiddlewareDelete = LibValidationsMiddleware(
+const SiswaMiddlewareDelete = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
 module.exports = {
-  HelloMiddlewareCreate,
-  HelloMiddlewareUpdate,
-  HelloMiddlewareDetail,
-  HelloMiddlewareList,
-  HelloMiddlewareDelete,
+  SiswaMiddlewareCreate,
+  SiswaMiddlewareUpdate,
+  SiswaMiddlewareDetail,
+  SiswaMiddlewareList,
+  SiswaMiddlewareDelete,
 };
   

@@ -1,3 +1,4 @@
+
 const { LibAuthenticationMiddleware } = require("../../libs/authentications");
 const {
   LibValidationExceptionMiddleware,
@@ -6,60 +7,59 @@ const {
 } = require("../../libs/validations");
 
 /**
- * If you want to remove JWT authentication,
+ * If you want to remove JWT authentication, 
  * you can remove 'LibAuthenticationMiddleware' from your middleware list.
  */
 
-const BarangMiddlewareList = LibValidationsMiddleware(
+const GuruMiddlewareList = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
-const BarangMiddlewareDetail = LibValidationsMiddleware(
+const GuruMiddlewareDetail = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
-const BarangMiddlewareCreate = LibValidationsMiddleware(
+const GuruMiddlewareCreate = LibValidationsMiddleware(
   LibAuthenticationMiddleware,
   /** Your middleware here (validations, sanitizing, etc..) */
 
   /**
-   * "LibValidationExceptionMiddleware" is suitable for validating data sent by the client in body.
+   * "LibValidationExceptionMiddleware" is suitable for validating data sent by the client in body. 
    * If you have your own handler, you can replace it.
-   *
+   * 
    * For example:
    *  ...
    *  LibValidationFields.CharField({ field: "field1" }),
    *  LibValidationFields.CharField({ field: "field2" }),
    *  LibValidationFields.CharField({
    *    field: "field3",
-   *    customs: [BarangValidatorField3Unique],
+   *    customs: [GuruValidatorField3Unique],
    *  }),
    *  LibValidationFields.CharField({
    *    field: "field4",
-   *    sanitizers: [BarangSanitizerField4ToHash],
+   *    sanitizers: [GuruSanitizerField4ToHash],
    *  }),
    *  ...
    */
-  LibValidationFields.CharField({ field: "nama" }),
-  LibValidationExceptionMiddleware
+
+  LibValidationExceptionMiddleware,
 );
 
-const BarangMiddlewareUpdate = LibValidationsMiddleware(
+const GuruMiddlewareUpdate = LibValidationsMiddleware(
   LibAuthenticationMiddleware,
-  LibValidationFields.CharField({ field: "nama" }),
   /** Your middleware here (validations, sanitizing, etc..) */
-  LibValidationExceptionMiddleware
+  LibValidationExceptionMiddleware,
 );
 
-const BarangMiddlewareDelete = LibValidationsMiddleware(
+const GuruMiddlewareDelete = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
 module.exports = {
-  BarangMiddlewareCreate,
-  BarangMiddlewareUpdate,
-  BarangMiddlewareDetail,
-  BarangMiddlewareList,
-  BarangMiddlewareDelete,
+  GuruMiddlewareCreate,
+  GuruMiddlewareUpdate,
+  GuruMiddlewareDetail,
+  GuruMiddlewareList,
+  GuruMiddlewareDelete,
 };
-
+  

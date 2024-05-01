@@ -1,5 +1,5 @@
 
-function HelloFilter(req) {
+function SiswaFilter(req) {
   let qSearch = {};
   const { search, limit, page, ...filters } = req.query;
 
@@ -20,6 +20,6 @@ function HelloFilter(req) {
 }
 
 module.exports = {
-  HelloFilter,
+  SiswaFilter,
 };
   

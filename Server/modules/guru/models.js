@@ -1,7 +1,7 @@
 
 const mongoose = require("mongoose");
 
-const HelloSchema = new mongoose.Schema(
+const GuruSchema = new mongoose.Schema(
   { 
     /** Your schema here */ 
     created: { type: Date, default: Date.now },
@@ -9,9 +9,9 @@ const HelloSchema = new mongoose.Schema(
   { versionKey: false }
 );
 
-const Hello = mongoose.model("Hello", HelloSchema);
+const Guru = mongoose.model("Guru", GuruSchema);
 
 module.exports = {
-  Hello,
+  Guru,
 };
     
