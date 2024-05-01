@@ -10,49 +10,26 @@ const Login = () => {
   const application = useContext(ContextApplication);
   const http = useHTTP();
   const jwt = useJWT();
-<<<<<<< HEAD
 
-  const [user, setUser] = useState({ username: "", password: "" });
-  const userChangeListener = useChangeListener();
-  const userValidator = useValidator({ username: [], password: [] });
-
-  const onSignIn = async () => {
-    try {
-      userValidator.reset();
-      const response = await http.publicHTTP.post(
-        `${BASE_URL}/users/signin/`,
-        user
-      );
-      jwt.set(response.data.token);
-      application.setIsAuthenticated(true);
-    } catch (error) {
-      if (error.response && error.response.data) {
-        // Mendestruksi properti 'data' jika 'response' dan 'data' didefinisikan
-        const { data } = error.response;
-        console.log(data);
-      } else {
-        // Menangani kasus di mana 'response' atau 'data' tidak didefinisikan
-        console.log("Error occurred:", error.message);
-      }
-=======
- 
   const [user, setUser] = useState({ email: "", password: "" });
   const userValidator = useValidator({ email: [], password: [] });
 
-const onSignIn = () => {
+  const onSignIn = () => {
     userValidator.reset();
-    http.publicHTTP.post(`${BASE_URL}/users/signin/`, user).then((response) => {
-        
+    http.publicHTTP
+      .post(`${BASE_URL}/users/signin/`, user)
+      .then((response) => {
         jwt.set(response.data.token);
         application.setIsAuthenticated(true);
-        alert("Data berhasil masuk! Namun belum diarahkan ke halaman dashboard");
-    }).catch((error) => {
->>>>>>> 9bbac48a2d69f0fcc9bffd9ef16059f18abda9b2
-      userValidator.except(error);
-      console.log(error)
-    })
-  }
-  
+        alert(
+          "Data berhasil masuk! Namun belum diarahkan ke halaman dashboard"
+        );
+      })
+      .catch((error) => {
+        userValidator.except(error);
+        console.log(error);
+      });
+  };
 
   return (
     <div className="flex justify-center items-center h-screen">

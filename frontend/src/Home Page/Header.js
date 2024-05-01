@@ -3,14 +3,9 @@ import { CgMenuGridO } from "react-icons/cg";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import Logo from "../img/tuturi.png";
 import { Link } from "react-scroll";
+import { NavLink } from "react-router-dom";
 
 function Header() {
-  let Links = [
-    { name: "Sekolah", link: "#sekolah" },
-    { name: "Eksul", link: "/     " },
-    { name: "Prestasi", link: "/" },
-    { name: "Masuk", link: "/login" },
-  ];
   let [isOpen, setIsOpen] = useState(false);
   return (
     <div className="z-10 shadow-md w-full bg-blue-400 fixed top-0 left-0 ">
@@ -35,15 +30,30 @@ function Header() {
             isOpen ? "top12" : "top-[-490px]"
           }`}
         >
-          {Links.map((link) => (
-            <li className="font-semibold my-7 md:my-0 md:ml-8">
-              <a href="#">
-                <Link to={link.link} smooth={true} duration={350}>
-                  {link.name}
-                </Link>
-              </a>
-            </li>
-          ))}
+          <li className="font-semibold my-7 md:my-0 md:ml-8">
+            <a href="#Sekolah">
+              <Link to="Sekolah" smooth={true} duration={350}>
+                Sekolah
+              </Link>
+            </a>
+          </li>
+          <li className="font-semibold my-7 md:my-0 md:ml-8">
+            <a href="#Eskul">
+              <Link to="Eskul" smooth={true} duration={350}>
+                Eskul
+              </Link>
+            </a>
+          </li>
+          <li className="font-semibold my-7 md:my-0 md:ml-8">
+            <a href="#">
+              <Link to="prestasi" smooth={true} duration={350}>
+                Prestasi
+              </Link>
+            </a>
+          </li>
+          <li className="font-semibold my-7 md:my-0 md:ml-8">
+            <NavLink to="/login">Masuk</NavLink>
+          </li>
         </ul>
       </div>
     </div>
