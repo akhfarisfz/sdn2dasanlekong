@@ -10,7 +10,7 @@ function Header() {
   ];
   let [isOpen, setIsOpen] = useState(false);
   return (
-    <div className=" shadow-md w-full bg-blue-400 fixed top-0 left-0 ">
+    <div className="z-10 shadow-md w-full bg-blue-400 fixed top-0 left-0 ">
       <div className="md:px-10 py-4 px-7 md:flex justify-between items-center">
         <div className="flex text-2xl cursor-pointer items-center gap-5">
           <img className="size-12" src={Logo} alt="Logo" />
