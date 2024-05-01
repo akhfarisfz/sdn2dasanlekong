@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import useChangeListener from "../libs/hooks/useChangeListener.js";
 import useHTTP from "../libs/hooks/useHTTP.js";
 import { BASE_URL } from "../libs/config/settings.js";
 import useJWT from "../libs/hooks/useJWT.js";
@@ -13,27 +12,20 @@ const Login = () => {
   const jwt = useJWT();
  
   const [user, setUser] = useState({ email: "", password: "" });
-  const userChangeListener = useChangeListener();
   const userValidator = useValidator({ email: [], password: [] });
 
-  const onSignIn = async () => {
-    try {
-      userValidator.reset();
-      const response = await http.publicHTTP.post(`${BASE_URL}/users/signin/`, user);
+const onSignIn = () => {
+    userValidator.reset();
+    alert("Data berhasil masuk!");
+    http.publicHTTP.post(`${BASE_URL}/users/signin/`, user).then((response) => {
       jwt.set(response.data.token);
       application.setIsAuthenticated(true);
-    } catch (error) {
-      if (error.response && error.response.data) {
-        // Mendestruksi properti 'data' jika 'response' dan 'data' didefinisikan
-        const { data } = error.response;
-        console.log(data);
-      } else {
-        // Menangani kasus di mana 'response' atau 'data' tidak didefinisikan
-        console.log("Error occurred:", error.message);
-      }
+    }).catch((error) => {
       userValidator.except(error);
-    }
-  };
+      console.log(error)
+    })
+  }
+  
 
 
   return (
@@ -45,7 +37,7 @@ const Login = () => {
           <input
             name="email"
             value={user.email}
-            onChange={(e) => userChangeListener.onChangeText(e, user, setUser)}
+            onChange={(e) => setUser({ ...user, email: e.target.value })}
             type="email"
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           />
@@ -56,7 +48,7 @@ const Login = () => {
           <input
             name="password"
             value={user.password}
-            onChange={(e) => userChangeListener.onChangeText(e, user, setUser)}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
             type="password"
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           />
