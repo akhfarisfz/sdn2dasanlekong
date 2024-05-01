@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { CgMenuGridO } from "react-icons/cg";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import Logo from "../img/tuturi.png";
+import { Link } from "react-scroll";
+
 function Header() {
   let Links = [
-    { name: "Sekolah", link: "/" },
-    { name: "Eksul", link: "/" },
+    { name: "Sekolah", link: "#sekolah" },
+    { name: "Eksul", link: "/     " },
     { name: "Prestasi", link: "/" },
+    { name: "Masuk", link: "/login" },
   ];
   let [isOpen, setIsOpen] = useState(false);
   return (
@@ -34,7 +37,11 @@ function Header() {
         >
           {Links.map((link) => (
             <li className="font-semibold my-7 md:my-0 md:ml-8">
-              <a href="/">{link.name}</a>
+              <a href="#">
+                <Link to={link.link} smooth={true} duration={350}>
+                  {link.name}
+                </Link>
+              </a>
             </li>
           ))}
         </ul>

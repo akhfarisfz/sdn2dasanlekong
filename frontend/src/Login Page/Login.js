@@ -11,15 +11,18 @@ const Login = () => {
   const application = useContext(ContextApplication);
   const http = useHTTP();
   const jwt = useJWT();
- 
-  const [user, setUser] = useState({ email: "", password: "" });
+
+  const [user, setUser] = useState({ username: "", password: "" });
   const userChangeListener = useChangeListener();
-  const userValidator = useValidator({ email: [], password: [] });
+  const userValidator = useValidator({ username: [], password: [] });
 
   const onSignIn = async () => {
     try {
       userValidator.reset();
-      const response = await http.publicHTTP.post(`${BASE_URL}/users/signin/`, user);
+      const response = await http.publicHTTP.post(
+        `${BASE_URL}/users/signin/`,
+        user
+      );
       jwt.set(response.data.token);
       application.setIsAuthenticated(true);
     } catch (error) {
@@ -35,24 +38,25 @@ const Login = () => {
     }
   };
 
-
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="w-64 bg-white p-8 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold mb-4">Sign In</h2>
+        <h2 className="text-xl font-semibold mb-4">Masuk ke akun anda</h2>
         <div className="mb-4">
-          <label className="block mb-2">Email</label>
+          <label className="block mb-2">Masukkan nama kalian!!</label>
           <input
-            name="email"
-            value={user.email}
+            name="username"
+            value={user.username}
             onChange={(e) => userChangeListener.onChangeText(e, user, setUser)}
-            type="email"
+            type="username"
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           />
-          <ComponentMessageValidation messages={userValidator.get("email")} />
+          <ComponentMessageValidation
+            messages={userValidator.get("username")}
+          />
         </div>
         <div className="mb-4">
-          <label className="block mb-2">Password</label>
+          <label className="block mb-2">Masukkan Password</label>
           <input
             name="password"
             value={user.password}
@@ -60,9 +64,16 @@ const Login = () => {
             type="password"
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           />
-          <ComponentMessageValidation messages={userValidator.get("password")} />
+          <ComponentMessageValidation
+            messages={userValidator.get("password")}
+          />
         </div>
-        <button onClick={onSignIn} className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Sign In</button>
+        <button
+          onClick={onSignIn}
+          className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+        >
+          Sign In
+        </button>
       </div>
     </div>
   );
