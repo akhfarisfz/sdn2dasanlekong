@@ -2,7 +2,7 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import { useContext } from "react";
 import { ContextApplication } from "../config/contexts.js";
 import useJWT from "../hooks/useJWT.jsx";
-import useHTTP from "../hooks/useHTTP.jsx";
+import useHTTP from "../hooks/useHTTP.js";
 
 const LibComponentNavbar = () => {
   const jwt = useJWT();

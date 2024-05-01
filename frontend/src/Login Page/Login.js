@@ -11,24 +11,30 @@ const Login = () => {
   const application = useContext(ContextApplication);
   const http = useHTTP();
   const jwt = useJWT();
-
+ 
   const [user, setUser] = useState({ email: "", password: "" });
   const userChangeListener = useChangeListener();
   const userValidator = useValidator({ email: [], password: [] });
 
-  const onSignIn = () => {
-    userValidator.reset();
-    http.publicHTTP
-      .post(`${BASE_URL}/users/signin/`, user)
-      .then((response) => {
-        jwt.set(response.data.token);
-        application.setIsAuthenticated(true);
-      })
-      .catch((error) => {
-        userValidator.except(error);
-        console.log(error);
-      });
+  const onSignIn = async () => {
+    try {
+      userValidator.reset();
+      const response = await http.publicHTTP.post(`${BASE_URL}/users/signin/`, user);
+      jwt.set(response.data.token);
+      application.setIsAuthenticated(true);
+    } catch (error) {
+      if (error.response && error.response.data) {
+        // Mendestruksi properti 'data' jika 'response' dan 'data' didefinisikan
+        const { data } = error.response;
+        console.log(data);
+      } else {
+        // Menangani kasus di mana 'response' atau 'data' tidak didefinisikan
+        console.log("Error occurred:", error.message);
+      }
+      userValidator.except(error);
+    }
   };
+
 
   return (
     <div className="flex justify-center items-center h-screen">

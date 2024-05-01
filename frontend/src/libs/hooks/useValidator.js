@@ -4,7 +4,7 @@ const useValidator = (initialState) => {
   const [message, setMessage] = useState(initialState);
 
   const except = (error) => {
-    const { data, status, statusText } = error.response;
+    const { data, status } = error.response;
     if (status === 400) {
       setMessage(data);
     }
