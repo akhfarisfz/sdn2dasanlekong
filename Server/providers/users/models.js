@@ -10,12 +10,12 @@ const UserSchema = new mongoose.Schema(
       lastName: { type: String },
     },
     isActive: { type: Boolean, default: false },
-    isAdmin: { type: Boolean, default: false },
-    isStaff: { type: Boolean, default: false },
+    roles: [{ type: String, enum: ['Admin', 'Guru', 'Siswa'],default:'Admin' ,required:false}], 
     created: { type: Date, default: Date.now },
   },
   { versionKey: false }
 );
+
 
 const User = mongoose.model("User", UserSchema);
 
