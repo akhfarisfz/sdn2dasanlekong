@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import useChangeListener from "../libs/hooks/useChangeListener.js";
 import useHTTP from "../libs/hooks/useHTTP.js";
 import { BASE_URL } from "../libs/config/settings.js";
 import useJWT from "../libs/hooks/useJWT.js";
@@ -11,6 +10,7 @@ const Login = () => {
   const application = useContext(ContextApplication);
   const http = useHTTP();
   const jwt = useJWT();
+<<<<<<< HEAD
 
   const [user, setUser] = useState({ username: "", password: "" });
   const userChangeListener = useChangeListener();
@@ -34,9 +34,25 @@ const Login = () => {
         // Menangani kasus di mana 'response' atau 'data' tidak didefinisikan
         console.log("Error occurred:", error.message);
       }
+=======
+ 
+  const [user, setUser] = useState({ email: "", password: "" });
+  const userValidator = useValidator({ email: [], password: [] });
+
+const onSignIn = () => {
+    userValidator.reset();
+    http.publicHTTP.post(`${BASE_URL}/users/signin/`, user).then((response) => {
+        
+        jwt.set(response.data.token);
+        application.setIsAuthenticated(true);
+        alert("Data berhasil masuk! Namun belum diarahkan ke halaman dashboard");
+    }).catch((error) => {
+>>>>>>> 9bbac48a2d69f0fcc9bffd9ef16059f18abda9b2
       userValidator.except(error);
-    }
-  };
+      console.log(error)
+    })
+  }
+  
 
   return (
     <div className="flex justify-center items-center h-screen">
@@ -45,10 +61,10 @@ const Login = () => {
         <div className="mb-4">
           <label className="block mb-2">Masukkan nama kalian!!</label>
           <input
-            name="username"
-            value={user.username}
-            onChange={(e) => userChangeListener.onChangeText(e, user, setUser)}
-            type="username"
+            name="email"
+            value={user.email}
+            onChange={(e) => setUser({ ...user, email: e.target.value })}
+            type="email"
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           />
           <ComponentMessageValidation
@@ -60,7 +76,7 @@ const Login = () => {
           <input
             name="password"
             value={user.password}
-            onChange={(e) => userChangeListener.onChangeText(e, user, setUser)}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
             type="password"
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           />
