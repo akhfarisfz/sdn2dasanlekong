@@ -16,10 +16,11 @@ const Login = () => {
 
 const onSignIn = () => {
     userValidator.reset();
-    alert("Data berhasil masuk!");
     http.publicHTTP.post(`${BASE_URL}/users/signin/`, user).then((response) => {
-      jwt.set(response.data.token);
-      application.setIsAuthenticated(true);
+        
+        jwt.set(response.data.token);
+        application.setIsAuthenticated(true);
+        alert("Data berhasil masuk! Namun belum diarahkan ke halaman dashboard");
     }).catch((error) => {
       userValidator.except(error);
       console.log(error)
