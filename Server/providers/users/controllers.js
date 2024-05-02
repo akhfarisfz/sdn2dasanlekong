@@ -30,13 +30,13 @@ const UserControllerSignIn = async (req, res) => {
 
     const tokenPayload = {
       id: user._id,
-      email: user.email
-      // roles: user.roles 
+      email: user.email,
+      roles: user.roles 
     };
 
     const token = LibAuthenticationMakeJWT(tokenPayload);
     return res.status(200).json({ token
-      // , roles: user.roles
+      , roles: user.roles
      }); // Menyertakan peran dalam respons JSON
   } catch (error) {
     return LibHTTPResponseException(res, error);

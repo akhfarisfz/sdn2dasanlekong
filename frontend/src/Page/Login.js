@@ -5,6 +5,7 @@ import useJWT from "../libs/hooks/useJWT.js";
 import { ContextApplication } from "../libs/config/contexts.js";
 import useValidator from "../libs/hooks/useValidator.js";
 import ComponentMessageValidation from "../libs/components/ComponentMessageValidation.js";
+import { Navigate } from "react-router-dom";
 
 const Login = () => {
   const application = useContext(ContextApplication);
@@ -13,7 +14,10 @@ const Login = () => {
 
   const [user, setUser] = useState({ email: "", password: "" });
   const userValidator = useValidator({ email: [], password: [] });
+  const [IsLogin, setIsLogin] = useState(false);
+  const [Role, setRole] = useState(null);
 
+  
   const onSignIn = () => {
     userValidator.reset();
     http.publicHTTP
@@ -21,15 +25,24 @@ const Login = () => {
       .then((response) => {
         jwt.set(response.data.token);
         application.setIsAuthenticated(true);
-        alert(
-          "Data berhasil masuk! Namun belum diarahkan ke halaman dashboard"
-        );
+        setRole(response.data.roles);
+        setIsLogin(true);
       })
       .catch((error) => {
         userValidator.except(error);
         console.log(error);
       });
   };
+  
+  switch (Role[0]) {
+    case 'Admin':
+      return <Navigate to="/admin/dashboard" replace />; 
+    case 'Guru':
+      return <Navigate to="/guru/dashboard" replace />; 
+    case 'Siswa':
+      return <Navigate to="/siswa/dashboard" replace />; 
+    default:break;
+  }
 
   return (
     <div className="flex justify-center items-center h-screen">
