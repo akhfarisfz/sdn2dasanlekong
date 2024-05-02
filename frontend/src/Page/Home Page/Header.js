@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { CgMenuGridO } from "react-icons/cg";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import Logo from "../img/tuturi.png";
+import Logo from "../../img/tuturi.png";
 import { Link } from "react-scroll";
 import { NavLink } from "react-router-dom";
 

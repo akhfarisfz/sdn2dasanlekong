@@ -2,8 +2,27 @@ const { LibAuthenticationMakeJWT } = require("../../libs/authentications");
 const {
   LibHTTPResponseException
 } = require("../../libs/https");
+const { LibPaginationResponse } = require("../../libs/paginations");
+const { UserFilter } = require("./filters");
 const { User } = require("./models");
 // };
+
+const UserControllerList = async (req, res) => {
+  try {
+    // Your code here
+
+    // example:
+    // const results = YourModel.find(YourFilter(req));
+    // return LibPaginationResponse(req, res, results);
+
+    const results = User.find(UserFilter(req));
+    console.log(req.body)
+    return LibPaginationResponse(req, res, results);
+  } catch (error) {
+    return LibHTTPResponseException(res, error);
+  }
+};
+
 const UserControllerSignUp = async (req, res) => {
   try {
     const userData = { ...req.cleanedData, roles: req.body.roles };
@@ -30,13 +49,13 @@ const UserControllerSignIn = async (req, res) => {
 
     const tokenPayload = {
       id: user._id,
-      email: user.email
-      // roles: user.roles 
+      email: user.email,
+      roles: user.roles 
     };
 
     const token = LibAuthenticationMakeJWT(tokenPayload);
     return res.status(200).json({ token
-      // , roles: user.roles
+      , roles: user.roles
      }); // Menyertakan peran dalam respons JSON
   } catch (error) {
     return LibHTTPResponseException(res, error);
@@ -47,4 +66,5 @@ const UserControllerSignIn = async (req, res) => {
 module.exports = {
   UserControllerSignUp,
   UserControllerSignIn,
+  UserControllerList
 };
