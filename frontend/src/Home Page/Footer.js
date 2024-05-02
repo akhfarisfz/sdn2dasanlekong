@@ -3,7 +3,7 @@ import React from "react";
 function Footer() {
   return (
     <footer className="bg-gray-900 text-white py-8 mt-10 w-screen">
-      <div className="container mx-6 px-4">
+      <div className="container px-4 w-screen">
         {/* Alamat Sekolah */}
         <div className="mb-6">
           <h3 className="text-xl font-semibold mb-2">Alamat Sekolah</h3>
