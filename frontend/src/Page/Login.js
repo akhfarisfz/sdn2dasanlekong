@@ -5,6 +5,7 @@ import useJWT from "../libs/hooks/useJWT.js";
 import { ContextApplication } from "../libs/config/contexts.js";
 import useValidator from "../libs/hooks/useValidator.js";
 import ComponentMessageValidation from "../libs/components/ComponentMessageValidation.js";
+import Header from "../Home Page/Header.js";
 import { Link } from "react-router-dom"; // Import Link
 
 const Login = () => {
@@ -78,7 +79,7 @@ const Login = () => {
         </Link>
 
       </div>
-    </div>
+    </>
   );
 };
 
