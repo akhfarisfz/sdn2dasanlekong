@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "./Header.js";
 import Footer from "./Footer.js";
-import sekolah1 from "../../img/Gambar-Gedung-Sekolah-Modern-18.jpg"; // Impor gambar cover sekolah
+import sekolah1 from "../../img/Gambar-Gedung-Sekolah-Modern-18.jpg"; 
 import { NavLink } from "react-router-dom";
 
 const images = [
@@ -10,12 +10,11 @@ const images = [
     title: "Judul Gambar 1",
     description: "Deskripsi Gambar 1",
   },
-  {
+  { 
     src: "image2.jpg",
     title: "Judul Gambar 2",
     description: "Deskripsi Gambar 2",
   },
-  // Tambahkan item gambar dan caption sesuai kebutuhan
 ];
 
 function Home() {
