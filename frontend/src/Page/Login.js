@@ -14,7 +14,6 @@ const Login = () => {
 
   const [user, setUser] = useState({ email: "", password: "" });
   const userValidator = useValidator({ email: [], password: [] });
-  const [IsLogin, setIsLogin] = useState(false);
   const [Role, setRole] = useState(null);
 
   
@@ -25,8 +24,7 @@ const Login = () => {
       .then((response) => {
         jwt.set(response.data.token);
         application.setIsAuthenticated(true);
-        setRole(response.data.roles);
-        setIsLogin(true);
+        setRole(response.data.roles[0]);
       })
       .catch((error) => {
         userValidator.except(error);
@@ -34,7 +32,7 @@ const Login = () => {
       });
   };
   
-  switch (Role[0]) {
+  switch (Role) {
     case 'Admin':
       return <Navigate to="/admin/dashboard" replace />; 
     case 'Guru':
