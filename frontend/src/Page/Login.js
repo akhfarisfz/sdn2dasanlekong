@@ -5,7 +5,7 @@ import useJWT from "../libs/hooks/useJWT.js";
 import { ContextApplication } from "../libs/config/contexts.js";
 import useValidator from "../libs/hooks/useValidator.js";
 import ComponentMessageValidation from "../libs/components/ComponentMessageValidation.js";
-import { Navigate } from "react-router-dom";
+import { Link } from "react-router-dom"; // Import Link
 
 const Login = () => {
   const application = useContext(ContextApplication);
@@ -16,7 +16,7 @@ const Login = () => {
   const userValidator = useValidator({ email: [], password: [] });
   const [Role, setRole] = useState(null);
 
-  
+
   const onSignIn = () => {
     userValidator.reset();
     http.publicHTTP
@@ -30,33 +30,25 @@ const Login = () => {
         userValidator.except(error);
         console.log(error);
       });
+
   };
-  
-  switch (Role) {
-    case 'Admin':
-      return <Navigate to="/admin/dashboard" replace />; 
-    case 'Guru':
-      return <Navigate to="/guru/dashboard" replace />; 
-    case 'Siswa':
-      return <Navigate to="/siswa/dashboard" replace />; 
-    default:break;
-  }
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="w-64 bg-white p-8 rounded-lg shadow-md">
+      <div className="w-96 bg-white p-8 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-4">Masuk ke akun anda</h2>
         <div className="mb-4">
-          <label className="block mb-2">Masukkan nama kalian!!</label>
+          <label className="block mb-2">Email</label>
           <input
             name="email"
             value={user.email}
             onChange={(e) => setUser({ ...user, email: e.target.value })}
             type="email"
+            required
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           />
           <ComponentMessageValidation
-            messages={userValidator.get("username")}
+            messages={userValidator.get("email")}
           />
         </div>
         <div className="mb-4">
@@ -65,6 +57,7 @@ const Login = () => {
             name="password"
             value={user.password}
             onChange={(e) => setUser({ ...user, password: e.target.value })}
+            required
             type="password"
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           />
@@ -72,12 +65,18 @@ const Login = () => {
             messages={userValidator.get("password")}
           />
         </div>
-        <button
-          onClick={onSignIn}
+        <Link
+          to={{
+            pathname: Role === 'Admin' ? '/admin/dashboard' :
+                      Role === 'Guru' ? '/guru/dashboard' :
+                      Role === 'Siswa' ? '/siswa/dashboard' : '/login',
+          }} state={{ role: Role }}
           className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+          onClick={onSignIn}
         >
           Sign In
-        </button>
+        </Link>
+
       </div>
     </div>
   );

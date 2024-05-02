@@ -1,9 +1,20 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
-function DashboardGuru() {
+function DashboardAdmin() {
+  const location = useLocation();
+  const { state } = location;
+  const role = state && state.role;
+
   return (
-    <div>INI DASHBOARD GURU</div>
+    <div>
+      {role ? (
+        <div>Ini adalah dashboard untuk role: {role}</div>
+      ) : (
+        <div>Role tidak ditemukan dalam state.</div>
+      )}
+    </div>
   );
 }
 
-export default DashboardGuru;
+export default DashboardAdmin;

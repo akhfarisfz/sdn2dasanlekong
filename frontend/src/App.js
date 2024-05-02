@@ -6,8 +6,11 @@ import DashboardGuru from "./Page/Guru/DashboardGuru.js";
 import DashboardSiswa from "./Page/Siswa/DashboardSiswa.js";
 import { ContextApplication } from "./libs/config/contexts.js";
 import { useState } from "react";
+import PageCommonOutlet from "./Page/commons/PageCommonOutlet.js";
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
+  
   return (
     <ContextApplication.Provider
       value={{ isAuthenticated, setIsAuthenticated }}
@@ -16,14 +19,16 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-        </Routes>
-        <Routes>
-          <Route path="/admin/dashboard" element={<DashboardAdmin />} />
-          <Route path="/guru/dashboard" element={<DashboardGuru />} />
-          <Route path="/siswa/dashboard" element={<DashboardSiswa />} />
+          <Route element={<PageCommonOutlet />}>
+            <Route path="/admin/dashboard" element={<DashboardAdmin />} />
+            <Route path="/guru/dashboard" element={<DashboardGuru />} />
+            <Route path="/siswa/dashboard" element={<DashboardSiswa />} />
+          </Route>
         </Routes>
       </BrowserRouter>
+      
     </ContextApplication.Provider>
+    
   );
 }
 

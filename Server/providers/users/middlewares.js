@@ -1,3 +1,4 @@
+const { LibAuthenticationMiddleware } = require("../../libs/authentications");
 const {
   LibValidationsMiddleware,
   LibValidationFields,
@@ -10,6 +11,12 @@ const {
   UserValidatorSignIn,
   UserValidatorCheckPassword,
 } = require("./validators");
+
+
+
+const UserMiddlewareList = LibValidationsMiddleware(
+  LibAuthenticationMiddleware
+);
 
 const UserMiddlewareSignUp = LibValidationsMiddleware(
   LibValidationFields.CharField({
@@ -47,4 +54,5 @@ const UserMiddlewareSignIn = LibValidationsMiddleware(
 module.exports = {
   UserMiddlewareSignUp,
   UserMiddlewareSignIn,
+  UserMiddlewareList
 };
