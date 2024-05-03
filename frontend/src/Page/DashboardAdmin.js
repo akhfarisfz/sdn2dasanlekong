@@ -11,8 +11,6 @@ function DashboardAdmin() {
   const location = useLocation();
   const { state } = location;
   const role = state && state.role;
-  const [data, setData] = useState(null);
-  const navigate = useNavigate();
 
   const http = useHTTP();
   const jwt = useJWT();
@@ -69,7 +67,7 @@ function DashboardAdmin() {
       {role ? (
         <div>Ini adalah dashboard untuk role: {role}</div>
       ) : (
-        <div>Role tidak ditemukan dalam state.</div>
+        <div>Anda tidak diizinkan</div>
       )}
       <div>
       <input

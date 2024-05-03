@@ -11,7 +11,7 @@ function DashboardAdmin() {
       {role ? (
         <div>Ini adalah dashboard untuk role: {role}</div>
       ) : (
-        <div>Role tidak ditemukan dalam state.</div>
+        <div>Anda tidak diizinkan</div>
       )}
     </div>
   );
