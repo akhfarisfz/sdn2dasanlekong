@@ -3,7 +3,7 @@ import Header from "./Header.js";
 import Footer from "./Footer.js";
 import sekolah1 from "../../img/Gambar-Gedung-Sekolah-Modern-18.jpg"; 
 import { NavLink } from "react-router-dom";
-import futsal from "../img/eskul futsal.jpeg";
+import futsal from "../../img/eskul futsal.jpeg";
 
 const images = [
   {
