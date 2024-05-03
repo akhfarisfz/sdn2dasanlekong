@@ -10,25 +10,24 @@ import PageCommonOutlet from "./Page/commons/PageCommonOutlet.js";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
-  
+
   return (
-    <ContextApplication.Provider
-      value={{ isAuthenticated, setIsAuthenticated }}
-    >
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route element={<PageCommonOutlet />}>
-            <Route path="/admin/dashboard" element={<DashboardAdmin />} />
-            <Route path="/guru/dashboard" element={<DashboardGuru />} />
-            <Route path="/siswa/dashboard" element={<DashboardSiswa />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-      
-    </ContextApplication.Provider>
-    
+      <ContextApplication.Provider
+        value={{ isAuthenticated, setIsAuthenticated }}
+      >
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+
+            <Route path="/login" element={<Login />} />
+            <Route element={<PageCommonOutlet />}>
+              <Route path="/admin/dashboard" element={<DashboardAdmin />} />
+              <Route path="/guru/dashboard" element={<DashboardGuru />} />
+              <Route path="/siswa/dashboard" element={<DashboardSiswa />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ContextApplication.Provider>
   );
 }
 

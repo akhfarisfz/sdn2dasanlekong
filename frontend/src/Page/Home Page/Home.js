@@ -3,7 +3,8 @@ import Header from "./Header.js";
 import Footer from "./Footer.js";
 import sekolah1 from "../../img/Gambar-Gedung-Sekolah-Modern-18.jpg"; // Impor gambar cover sekolah
 import { NavLink } from "react-router-dom";
-import futsal from "../img/eskul futsal.jpeg";
+import futsal from "../../img/eskul futsal.jpeg";
+import { Carousel } from "@material-tailwind/react";
 
 const images = [
   {
@@ -52,6 +53,15 @@ function Home() {
   return (
     <>
       <Header />
+      <Carousel className="rounded-xl">
+        <img
+          src="../../img/eskul futsal.jpeg"
+          alt="image 1"
+          className="h-full w-full object-cover"
+        />
+        <img src="" alt="image 2" className="h-full w-full object-cover" />
+        <img src="" alt="image 3" className="h-full w-full object-cover" />
+      </Carousel>
       <div className="container w-screen">
         <div
           id="cover"
@@ -109,6 +119,7 @@ function Home() {
               lacus tempus ipsum, nec placerat arcu metus vel felis.
             </p>
           </div>
+
           <div className="mt-16 px-4">
             <div className="relative max-w-lg mx-auto ">
               {carouselData.map((item, index) => (
