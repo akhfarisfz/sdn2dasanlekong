@@ -51,6 +51,15 @@ function Home() {
   return (
     <>
       <Header />
+      <Carousel className="rounded-xl">
+        <img
+          src="../../img/eskul futsal.jpeg"
+          alt="image 1"
+          className="h-full w-full object-cover"
+        />
+        <img src="" alt="image 2" className="h-full w-full object-cover" />
+        <img src="" alt="image 3" className="h-full w-full object-cover" />
+      </Carousel>
       <div className="container w-screen">
         <div
           id="cover"
@@ -108,6 +117,7 @@ function Home() {
               lacus tempus ipsum, nec placerat arcu metus vel felis.
             </p>
           </div>
+
           <div className="mt-16 px-4">
             <div className="relative max-w-lg mx-auto ">
               {carouselData.map((item, index) => (
