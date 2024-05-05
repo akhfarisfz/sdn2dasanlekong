@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import Header from "./Header.js";
 import Footer from "./Footer.js";
-import sekolah1 from "../../img/Gambar-Gedung-Sekolah-Modern-18.jpg"; 
+import sekolah1 from "../../img/Gambar-Gedung-Sekolah-Modern-18.jpg";
 import { NavLink } from "react-router-dom";
 import futsal from "../../img/eskul futsal.jpeg";
-import { Carousel } from "@material-tailwind/react";
 
 const images = [
   {
@@ -12,7 +11,7 @@ const images = [
     title: "Judul Gambar 1",
     description: "Deskripsi Gambar 1",
   },
-  { 
+  {
     src: "image2.jpg",
     title: "Judul Gambar 2",
     description: "Deskripsi Gambar 2",
@@ -52,15 +51,7 @@ function Home() {
   return (
     <>
       <Header />
-      <Carousel className="rounded-xl">
-        <img
-          src="../../img/eskul futsal.jpeg"
-          alt="image 1"
-          className="h-full w-full object-cover"
-        />
-        <img src="" alt="image 2" className="h-full w-full object-cover" />
-        <img src="" alt="image 3" className="h-full w-full object-cover" />
-      </Carousel>
+
       <div className="container w-screen">
         <div
           id="cover"
@@ -119,42 +110,6 @@ function Home() {
             </p>
           </div>
 
-          <div className="mt-16 px-4">
-            <div className="relative max-w-lg mx-auto ">
-              {carouselData.map((item, index) => (
-                <div
-                  key={item.id}
-                  className={index === currentIndex ? "block" : "hidden"}
-                >
-                  <div className="rounded-lg lg:shadow-lg bg-white p-6 md:p-8 justify-center mx-8">
-                    <div className="flex flex-col md:flex-row items-center md:items-start mb-8">
-                      <img
-                        src={item.src}
-                        alt={item.title}
-                        className="w-full md:w-1/2 rounded-lg shadow-lg mb-4 md:mb-0"
-                      />
-                      <div className="text-lg md:text-xl lg:text-2xl ml-0 md:ml-4">
-                        <h3>{item.title}</h3>
-                        <p>{item.description}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              <button
-                className="absolute top-1/2 transform -translate-y-1/2 left-0 rounded-full bg-black bg-opacity-50 text-white p-2"
-                onClick={prevSlide}
-              >
-                &#10094;
-              </button>
-              <button
-                className="absolute top-1/2 transform -translate-y-1/2 right-0 rounded-full bg-black bg-opacity-50 text-white p-2"
-                onClick={nextSlide}
-              >
-                &#10095;
-              </button>
-            </div>
-          </div>
           <div className="rounded-lg overflow-hidden shadow-lg bg-white p-6 md:p-8 mt-8 mx-8">
             <h2 id="Eskul" className="text-3xl font-semibold mb-4">
               Ekstrakurikuler dan Prestasi Sekolah
@@ -165,35 +120,41 @@ function Home() {
               sed ut nisl. Integer vulputate, nisi nec maximus suscipit, risus
               lacus tempus ipsum, nec placerat arcu metus vel felis.
             </p>
-            <div className="relative max-w-lg mx-auto">
-              {images.map((image, index) => (
-                <div
-                  key={index}
-                  className={index === currentIndex ? "block" : "hidden"}
-                >
-                  <img
-                    src={image.src}
-                    alt={`Image ${index + 1}`}
-                    className="w-full"
-                  />
-                  <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-4">
-                    <h3>{image.title}</h3>
-                    <p>{image.description}</p>
+            <div className="mt-16 px-4">
+              <div className="relative max-w-lg mx-auto ">
+                {carouselData.map((item, index) => (
+                  <div
+                    key={item.id}
+                    className={index === currentIndex ? "block" : "hidden"}
+                  >
+                    <div className="rounded-lg lg:shadow-lg bg-white p-6 md:p-8 justify-center mx-8">
+                      <div className="flex flex-col md:flex-row items-center md:items-start mb-8">
+                        <img
+                          src={item.src}
+                          alt={item.title}
+                          className="w-full md:w-1/2 rounded-lg shadow-lg mb-4 md:mb-0"
+                        />
+                        <div className="text-lg md:text-xl lg:text-2xl ml-0 md:ml-4">
+                          <h3>{item.title}</h3>
+                          <p>{item.description}</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              ))}
-              <button
-                className="absolute top-1/2 transform -translate-y-1/2 left-0 rounded-full bg-black bg-opacity-50 text-white p-2"
-                onClick={prevSlide}
-              >
-                &#10094;
-              </button>
-              <button
-                className="absolute top-1/2 transform -translate-y-1/2 right-0 rounded-full bg-black bg-opacity-50 text-white p-2"
-                onClick={nextSlide}
-              >
-                &#10095;
-              </button>
+                ))}
+                <button
+                  className="absolute top-1/2 transform -translate-y-1/2 left-0 rounded-full bg-black bg-opacity-50 text-white p-2"
+                  onClick={prevSlide}
+                >
+                  &#10094;
+                </button>
+                <button
+                  className="absolute top-1/2 transform -translate-y-1/2 right-0 rounded-full bg-black bg-opacity-50 text-white p-2"
+                  onClick={nextSlide}
+                >
+                  &#10095;
+                </button>
+              </div>
             </div>
           </div>
         </div>
