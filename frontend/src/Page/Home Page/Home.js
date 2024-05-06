@@ -12,6 +12,7 @@ import voli from "../../img/voli.jpg";
 import suara from "../../img/suara.jpg";
 import { useSwipeable } from "react-swipeable";
 import dataEskul from "../../libs/data/data_eskul.js";
+// import { Carousel } from "@material-tailwind/react";
 
 const images = [
   { src: catur, alt: "Image 2" },

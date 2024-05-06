@@ -9,7 +9,6 @@ const UserSchema = new mongoose.Schema(
       firstName: { type: String },
       lastName: { type: String },
     },
-    isActive: { type: Boolean, default: false },
     roles: [{ type: String, enum: ['Admin', 'Guru', 'Siswa'],default:'Admin' ,required:false}], 
     created: { type: Date, default: Date.now },
   },
