@@ -5,6 +5,8 @@ import useJWT from "../libs/hooks/useJWT";
 import useHTTP from "../libs/hooks/useHTTP";
 import useValidator from "../libs/hooks/useValidator";
 import { BASE_URL } from "../libs/config/settings";
+import useChangeListener from "../libs/hooks/useChangeListener.js";
+import ComponentMessageValidation from "../libs/components/ComponentMessageValidation";
 
 function AdminDetail() {
   const params = useParams();
@@ -12,9 +14,9 @@ function AdminDetail() {
   const http = useHTTP();
   const jwt = useJWT();
   const message = useMessage();
+  const userChangeListener = useChangeListener();
 
   const [user, setUser] = useState({nama: ""})
-  const userChangeListener = userChangeListener();
   const userValidator = useValidator({nama: []})
 
   const onUserUpdate = () => {
@@ -87,25 +89,24 @@ function AdminDetail() {
   <div className="mt-4">
     <div className="flex justify-center mb-3">
       <div className="md:w-6/12">
-        <h4>Buat barang</h4>
+        <h4>Buat user</h4>
       </div>
     </div>
     <div className="flex justify-center mb-3">
       <div className="md:w-6/12">
         <div className="bg-white shadow-md rounded px-4 py-3">
-          <div className="mb-3">Nama Barang</div>
+          <div className="mb-3">Nama User</div>
           <div className="mb-3">
             <input
               type="text"
-              placeholder="Nama jasa/barang cucian"
+              placeholder="Nama jasa/user cucian"
               className="w-full bg-gray-100 border border-gray-300 rounded py-2 px-3 focus:outline-none focus:border-blue-500"
-              value={barang.nama}
+              value={user.nama}
               name="nama"
-              onChange={(e) => barangChangeListener.onChangeText(e, barang, setBarang)}
+              onChange={(e) => userChangeListener.onChangeText(e, user, setUser)}
             />
-            <div>Harap di isi dengan nama jasa/layanan laundry.</div>
             {/* Komponen untuk pesan validasi */}
-            <ComponentMessageValidation messages={barangValidator.get('nama')} />
+            <ComponentMessageValidation messages={userValidator.get('nama')} />
           </div>
         </div>
       </div>
@@ -119,7 +120,7 @@ function AdminDetail() {
         <button className="border border-gray-300 px-4 py-2 text-gray-700 hover:text-gray-600 hover:border-gray-400 rounded">
           Hapus
         </button>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onClick={onBarangUpdate}>
+        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onClick={onUserUpdate}>
           Update
         </button>
       </div>
