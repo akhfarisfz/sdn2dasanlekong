@@ -68,6 +68,7 @@ function DashboardAdmin() {
     // Lakukan tindakan yang sesuai saat baris diklik
     // Misalnya, tampilkan informasi detail pengguna, dll.
     alert(`Roles of ${user.username}: ${user.roles}`);
+    window.location.href = `/detail/${user._id}`;
   }
   function handleEditButtonClick(event, user) {
     // Lakukan tindakan yang sesuai saat tombol "Edit" diklik
@@ -88,7 +89,7 @@ function DashboardAdmin() {
 
 
   return (
-    <div>
+    <div className="m-8">
       {role ? (
         <div>Ini adalah dashboard untuk role: {role}</div>
       ) : (
@@ -102,7 +103,7 @@ function DashboardAdmin() {
           className="w-1/2 bg-gray-100 my-3 py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
         />
       </div>
-      <table class="min-w-full divide-y divide-gray-200">
+      <table class="min-w-full divide-y divide-gray-200 ">
         <thead>
           <tr>
             <th colspan="6" class="bg-gray-100 py-2">Data Guru</th>
@@ -135,7 +136,7 @@ function DashboardAdmin() {
         </tbody>
       </table>
 
-      {/* <table class="min-w-full divide-y divide-gray-200 my-8">
+      <table class="min-w-full divide-y divide-gray-200">
         <thead>
           <tr>
             <th colspan="6" class="bg-gray-100 py-2">Data Siswa</th>
@@ -151,7 +152,6 @@ function DashboardAdmin() {
             </th>
           </tr>
         </thead>
-
         <tbody>
           {filtersiswa.map((user) => (
             <tr key={user._id} class="bg-white divide-y divide-gray-200 cursor-pointer hover:bg-gray-100" onClick={() => handleRowClick(user)}>
@@ -161,12 +161,13 @@ function DashboardAdmin() {
               <td class="px-6 py-4 whitespace-nowrap">{user.profile.lastName}</td>
               <td class="px-6 py-4 whitespace-nowrap">{user.roles}</td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleRoleButtonClick(user)}>Roles</button>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" onClick={(event) => handleEditButtonClick(event, user)}>Edit</button>
+                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={(event) => handleDeleteButtonClick(event, user)}>Delete</button>
               </td>
             </tr>
           ))}
         </tbody>
-      </table> */}
+      </table>
 
 
     </div>
