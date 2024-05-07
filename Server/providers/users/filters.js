@@ -5,11 +5,8 @@ function UserFilter(req) {
   if (search) {
     qSearch = {
       $or: [
-        /**
-         * You can change field1 and field2 according to your needs.
-         **/
 
-        { nama: { $regex: ".*" + search + ".*", $options: "i" } },
+        { field1: { $regex: ".*" + search + ".*", $options: "i" } },
       ],
     };
   }

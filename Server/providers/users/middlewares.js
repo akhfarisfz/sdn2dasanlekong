@@ -17,6 +17,17 @@ const {
 const UserMiddlewareList = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
+const UserMiddlewareUpdate = LibValidationsMiddleware(
+  LibAuthenticationMiddleware,
+  /** Your middleware here (validations, sanitizing, etc..) */
+  LibValidationExceptionMiddleware
+);
+const UserMiddlewareDetail = LibValidationsMiddleware(
+  LibAuthenticationMiddleware
+);
+const UserMiddlewareDelete = LibValidationsMiddleware(
+  LibAuthenticationMiddleware
+);
 
 const UserMiddlewareSignUp = LibValidationsMiddleware(
   LibValidationFields.CharField({
@@ -54,5 +65,8 @@ const UserMiddlewareSignIn = LibValidationsMiddleware(
 module.exports = {
   UserMiddlewareSignUp,
   UserMiddlewareSignIn,
-  UserMiddlewareList
+  UserMiddlewareList,
+  UserMiddlewareDelete,
+  UserMiddlewareUpdate,
+  UserMiddlewareDetail
 };

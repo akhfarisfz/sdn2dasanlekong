@@ -16,8 +16,33 @@ const UserControllerList = async (req, res) => {
     // return LibPaginationResponse(req, res, results);
 
     const results = User.find(UserFilter(req));
-    console.log(req.body)
     return LibPaginationResponse(req, res, results);
+  } catch (error) {
+    return LibHTTPResponseException(res, error);
+  }
+};
+
+const UserControllerDetail = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id });
+    return res.status(200).json(user);
+  } catch (error) {
+    return LibHTTPResponseException(res, error);
+  }
+};
+
+const UserControllerUpdate = async (req, res) => {
+  try {
+    throw { status: 403, message: "Not allowed" };
+  } catch (error) {
+    return LibHTTPResponseException(res, error);
+  }
+};
+
+const UserControllerDelete = async (req, res) => {
+  try {
+    // Your code here
+    throw { status: 403, message: "Not allowed" };
   } catch (error) {
     return LibHTTPResponseException(res, error);
   }
@@ -66,5 +91,8 @@ const UserControllerSignIn = async (req, res) => {
 module.exports = {
   UserControllerSignUp,
   UserControllerSignIn,
-  UserControllerList
+  UserControllerList,
+  UserControllerDetail,
+  UserControllerUpdate,
+  UserControllerDelete
 };

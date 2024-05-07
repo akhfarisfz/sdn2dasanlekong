@@ -6,6 +6,8 @@ import useMessage from "../libs/hooks/useMessage.js";
 import { BASE_URL } from "../libs/config/settings.js";
 
 function DashboardAdmin() {
+
+
   // Gunakan useLocation untuk mengakses location dan state
   const location = useLocation();
   const { state } = location;
@@ -46,20 +48,45 @@ function DashboardAdmin() {
     onUserList();
   }, []);
   const filterguru = daftarUser
-  .filter((user) => !user.roles.includes('Guru')&& !user.roles.includes('Admin'))
-  .sort((a, b) => {
-    const roleA = typeof a.roles === 'string' ? a.roles : '';
-    const roleB = typeof b.roles === 'string' ? b.roles : '';
-    return roleA.localeCompare(roleB);
-  });
+    .filter((user) => !user.roles.includes('Guru') && !user.roles.includes('Admin'))
+    .sort((a, b) => {
+      const roleA = typeof a.roles === 'string' ? a.roles : '';
+      const roleB = typeof b.roles === 'string' ? b.roles : '';
+      return roleA.localeCompare(roleB);
+    });
 
-const filtersiswa = daftarUser
-  .filter((user) => !user.roles.includes('Siswa')&& !user.roles.includes('Admin'))
-  .sort((a, b) => {
-    const roleA = typeof a.roles === 'string' ? a.roles : '';
-    const roleB = typeof b.roles === 'string' ? b.roles : '';
-    return roleA.localeCompare(roleB);
-  });
+  const filtersiswa = daftarUser
+    .filter((user) => !user.roles.includes('Siswa') && !user.roles.includes('Admin'))
+    .sort((a, b) => {
+      const roleA = typeof a.roles === 'string' ? a.roles : '';
+      const roleB = typeof b.roles === 'string' ? b.roles : '';
+      return roleA.localeCompare(roleB);
+    });
+
+
+  function handleRowClick(user) {
+    // Lakukan tindakan yang sesuai saat baris diklik
+    // Misalnya, tampilkan informasi detail pengguna, dll.
+    alert(`Roles of ${user.username}: ${user.roles}`);
+  }
+  function handleEditButtonClick(event, user) {
+    // Lakukan tindakan yang sesuai saat tombol "Edit" diklik
+    event.stopPropagation();
+    alert(`Edit for ${user.username}: ${user.roles}`);
+    // Misalnya, tampilkan formulir untuk mengedit data pengguna ini
+  }
+
+  function handleDeleteButtonClick(event, user) {
+    // Lakukan tindakan yang sesuai saat tombol "Delete" diklik
+    event.stopPropagation();
+    alert(`Delete for ${user.username}: ${user.roles}`);
+
+    // Misalnya, tampilkan konfirmasi dialog untuk menghapus data pengguna ini
+  }
+
+
+
+
   return (
     <div>
       {role ? (
@@ -68,60 +95,80 @@ const filtersiswa = daftarUser
         <div>Anda tidak diizinkan</div>
       )}
       <div>
-      <input
-        ref={userSearch}
-        onKeyDown={onUserSearch}
-        placeholder="Search..."
-        className="w-1/2 bg-gray-100 py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-      />
-    </div>
-      <table>
+        <input
+          ref={userSearch}
+          onKeyDown={onUserSearch}
+          placeholder="Search..."
+          className="w-1/2 bg-gray-100 my-3 py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+      <table class="min-w-full divide-y divide-gray-200">
         <thead>
-          Data Guru
           <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Role</th>
+            <th colspan="6" class="bg-gray-100 py-2">Data Guru</th>
+          </tr>
+          <tr>
+            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
+            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">First Name</th>
+            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Name</th>
+            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+            <th class="px-6 py-3 bg-gray-100">
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Guru</button>
+            </th>
           </tr>
         </thead>
         <tbody>
           {filterguru.map((user) => (
-            <tr key={user._id}>
-              <td>{user.username}</td>
-              <td>{user.email}</td>
-              <td>{user.profile.firstName}</td>
-              <td>{user.profile.lastName}</td>
-              <td>{user.roles}</td>
+            <tr key={user._id} class="bg-white divide-y divide-gray-200 cursor-pointer hover:bg-gray-100" onClick={() => handleRowClick(user)}>
+              <td class="px-6 py-4 whitespace-nowrap">{user.username}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{user.email}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{user.profile.firstName}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{user.profile.lastName}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{user.roles}</td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" onClick={(event) => handleEditButtonClick(event, user)}>Edit</button>
+                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={(event) => handleDeleteButtonClick(event, user)}>Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      <table>
+      {/* <table class="min-w-full divide-y divide-gray-200 my-8">
         <thead>
-          Data Siswa
           <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Role</th>
+            <th colspan="6" class="bg-gray-100 py-2">Data Siswa</th>
+          </tr>
+          <tr>
+            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
+            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">First Name</th>
+            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Name</th>
+            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+            <th class="px-6 py-3 bg-gray-100">
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Siswa</button>
+            </th>
           </tr>
         </thead>
+
         <tbody>
           {filtersiswa.map((user) => (
-            <tr key={user._id}>
-              <td>{user.username}</td>
-              <td>{user.email}</td>
-              <td>{user.profile.firstName}</td>
-              <td>{user.profile.lastName}</td>
-              <td>{user.roles}</td>
+            <tr key={user._id} class="bg-white divide-y divide-gray-200 cursor-pointer hover:bg-gray-100" onClick={() => handleRowClick(user)}>
+              <td class="px-6 py-4 whitespace-nowrap">{user.username}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{user.email}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{user.profile.firstName}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{user.profile.lastName}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{user.roles}</td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleRoleButtonClick(user)}>Roles</button>
+              </td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
+
+
     </div>
   );
 }
