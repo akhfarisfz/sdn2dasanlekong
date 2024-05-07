@@ -14,49 +14,30 @@ import { useSwipeable } from "react-swipeable";
 import dataEskul from "../../libs/data/data_eskul.js";
 // import { Carousel } from "@material-tailwind/react";
 
-const images = [
-  { src: catur, alt: "Image 2" },
-  { src: futsal, alt: "Image 3" },
-  { src: menari, alt: "Image 4" },
-  { src: pramuka, alt: "Image 5" },
-  { src: suara, alt: "Image 6" },
-  { src: voli, alt: "Image 7" },
-];
-
-const carouselData = [
-  {
-    id: 1,
-    src: futsal,
-    title: "Futsal",
-    description:
-      "Eskul futsal di sekolah ini setara dengan akademi Barcelona di spanyol. Sudah langganan juara liga provinsi",
-  },
-  {
-    id: 2,
-    src: "image2.jpg",
-    title: "Pramuka",
-    description: "ini eskul pramuka",
-  },
-  // Tambahkan item gambar dan caption sesuai kebutuhan
-];
 function Home() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentImageIndexes, setCurrentImageIndexes] = useState(
+    Array(dataEskul.length).fill(0)
+  );
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0
-        ? dataEskul[currentIndex].images.length - 1
-        : prevIndex - 1
-    );
+  const prevSlide = (index) => {
+    setCurrentImageIndexes((prevIndexes) => {
+      const newIndexes = [...prevIndexes];
+      newIndexes[index] =
+        (newIndexes[index] - 1 + dataEskul[index].images.length) %
+        dataEskul[index].images.length;
+      return newIndexes;
+    });
   };
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === dataEskul[currentIndex].images.length - 1
-        ? 0
-        : prevIndex + 1
-    );
+  const nextSlide = (index) => {
+    setCurrentImageIndexes((prevIndexes) => {
+      const newIndexes = [...prevIndexes];
+      newIndexes[index] =
+        (newIndexes[index] + 1) % dataEskul[index].images.length;
+      return newIndexes;
+    });
   };
+
   return (
     <>
       <Header />
@@ -121,7 +102,7 @@ function Home() {
 
           <div className="rounded-lg overflow-hidden shadow-lg bg-white p-6 md:p-8 mt-8 mx-8">
             <h2 id="Eskul" className="text-3xl font-semibold mb-4">
-              Ekstrakurikuler dan Prestasi Sekolah
+              Ekstrakurikuler sekolah
             </h2>
             <p className="text-lg md:text-xl lg:text-2xl">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac
@@ -129,230 +110,49 @@ function Home() {
               sed ut nisl. Integer vulputate, nisi nec maximus suscipit, risus
               lacus tempus ipsum, nec placerat arcu metus vel felis.
             </p>
+            {/* carousel eskul */}
             <div
               id="gallery-container"
-              className="flex overflow-x-auto whitespace-nowrap gap-4 scroll-smooth snap-x"
-              style={{
-                cursor: "grab",
-                userSelect: "none",
-              }}
+              className="scroll-smooth flex overflow-x-auto whitespace-nowrap gap-4 scroll-smooth snap-x"
             >
-              <div
-                id="futsal"
-                className="relative m-auto w-80 h-52 snap-center"
-              >
-                {dataEskul[currentIndex].images.map((image, index) => (
-                  <div
-                    key={index}
-                    className={index === currentIndex ? "block" : "hidden"}
-                  >
-                    <div className="inline-block w-80 h-52 rounded-full">
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        className="inline-block w-80 h-52 rounded-full"
-                      />
+              {dataEskul.map((eskul, index) => (
+                <div
+                  key={eskul.id}
+                  className={`relative m-auto w-80 h-52 snap-center my-6`}
+                >
+                  {eskul.images.map((image, i) => (
+                    <div
+                      key={i}
+                      className={
+                        i === currentImageIndexes[index] ? "block" : "hidden"
+                      }
+                    >
+                      <div className="inline-block w-80 h-52 rounded-full">
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          className="inline-block w-80 h-52 rounded-full"
+                        />
+                      </div>
                     </div>
-                  </div>
-                ))}
-                <button
-                  className="absolute top-1/2 transform -translate-y-1/2 left-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
-                  onClick={prevSlide}
-                >
-                  &#10094;
-                </button>
-                <button
-                  className="absolute top-1/2 transform -translate-y-1/2 right-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
-                  onClick={nextSlide}
-                >
-                  &#10095;
-                </button>
-              </div>
-              <div
-                id="badminton"
-                className="relative m-auto w-80 h-52 snap-center"
-              >
-                {carouselData.map((item, index) => (
-                  <div
-                    key={item.id}
-                    className={index === currentIndex ? "block" : "hidden"}
+                  ))}
+                  <button
+                    className="absolute top-1/2 transform -translate-y-1/2 left-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
+                    onClick={() => prevSlide(index)}
                   >
-                    <div className="inline-block w-80 h-52 rounded-full">
-                      <img
-                        src={item.src}
-                        alt={item.title}
-                        className="inline-block w-80 h-52 rounded-full"
-                      />
-                    </div>
-                  </div>
-                ))}
-                <button
-                  className="absolute top-1/2 transform -translate-y-1/2 left-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
-                  onClick={prevSlide}
-                >
-                  &#10094;
-                </button>
-                <button
-                  className="absolute top-1/2 transform -translate-y-1/2 right-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
-                  onClick={nextSlide}
-                >
-                  &#10095;
-                </button>
-              </div>
-
-              <div id="catur" className="relative m-auto w-80 h-52 snap-center">
-                {carouselData.map((item, index) => (
-                  <div
-                    key={item.id}
-                    className={index === currentIndex ? "block" : "hidden"}
+                    &#10094;
+                  </button>
+                  <button
+                    className="absolute top-1/2 transform -translate-y-1/2 right-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
+                    onClick={() => nextSlide(index)}
                   >
-                    <div className="inline-block w-80 h-52 rounded-full">
-                      <img
-                        src={item.src}
-                        alt={item.title}
-                        className="inline-block w-80 h-52 rounded-full"
-                      />
-                    </div>
-                  </div>
-                ))}
-                <button
-                  className="absolute top-1/2 transform -translate-y-1/2 left-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
-                  onClick={prevSlide}
-                >
-                  &#10094;
-                </button>
-                <button
-                  className="absolute top-1/2 transform -translate-y-1/2 right-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
-                  onClick={nextSlide}
-                >
-                  &#10095;
-                </button>
-              </div>
-
-              <div
-                id="menari"
-                className="relative m-auto w-80 h-52 snap-center"
-              >
-                {carouselData.map((item, index) => (
-                  <div
-                    key={item.id}
-                    className={index === currentIndex ? "block" : "hidden"}
-                  >
-                    <div className="inline-block w-80 h-52 rounded-full">
-                      <img
-                        src={item.src}
-                        alt={item.title}
-                        className="inline-block w-80 h-52 rounded-full"
-                      />
-                    </div>
-                  </div>
-                ))}
-                <button
-                  className="absolute top-1/2 transform -translate-y-1/2 left-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
-                  onClick={prevSlide}
-                >
-                  &#10094;
-                </button>
-                <button
-                  className="absolute top-1/2 transform -translate-y-1/2 right-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
-                  onClick={nextSlide}
-                >
-                  &#10095;
-                </button>
-              </div>
-
-              <div
-                id="pramuka"
-                className="relative m-auto w-80 h-52 snap-center"
-              >
-                {carouselData.map((item, index) => (
-                  <div
-                    key={item.id}
-                    className={index === currentIndex ? "block" : "hidden"}
-                  >
-                    <div className="inline-block w-80 h-52 rounded-full">
-                      <img
-                        src={item.src}
-                        alt={item.title}
-                        className="inline-block w-80 h-52 rounded-full"
-                      />
-                    </div>
-                  </div>
-                ))}
-                <button
-                  className="absolute top-1/2 transform -translate-y-1/2 left-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
-                  onClick={prevSlide}
-                >
-                  &#10094;
-                </button>
-                <button
-                  className="absolute top-1/2 transform -translate-y-1/2 right-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
-                  onClick={nextSlide}
-                >
-                  &#10095;
-                </button>
-              </div>
-
-              <div id="suara" className="relative m-auto w-80 h-52 snap-center">
-                {carouselData.map((item, index) => (
-                  <div
-                    key={item.id}
-                    className={index === currentIndex ? "block" : "hidden"}
-                  >
-                    <div className="inline-block w-80 h-52 rounded-full">
-                      <img
-                        src={item.src}
-                        alt={item.title}
-                        className="inline-block w-80 h-52 rounded-full"
-                      />
-                    </div>
-                  </div>
-                ))}
-                <button
-                  className="absolute top-1/2 transform -translate-y-1/2 left-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
-                  onClick={prevSlide}
-                >
-                  &#10094;
-                </button>
-                <button
-                  className="absolute top-1/2 transform -translate-y-1/2 right-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
-                  onClick={nextSlide}
-                >
-                  &#10095;
-                </button>
-              </div>
-
-              <div id="voli" className="relative m-auto w-80 h-52 snap-center">
-                {carouselData.map((item, index) => (
-                  <div
-                    key={item.id}
-                    className={index === currentIndex ? "block" : "hidden"}
-                  >
-                    <div className="inline-block w-80 h-52 rounded-full">
-                      <img
-                        src={item.src}
-                        alt={item.title}
-                        className="inline-block w-80 h-52 rounded-full"
-                      />
-                    </div>
-                  </div>
-                ))}
-                <button
-                  className="absolute top-1/2 transform -translate-y-1/2 left-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
-                  onClick={prevSlide}
-                >
-                  &#10094;
-                </button>
-                <button
-                  className="absolute top-1/2 transform -translate-y-1/2 right-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
-                  onClick={nextSlide}
-                >
-                  &#10095;
-                </button>
-              </div>
+                    &#10095;
+                  </button>
+                </div>
+              ))}
             </div>
 
-            <div className="mt-16 px-4">
+            {/* <div className="mt-16 px-4">
               <div className="relative max-w-lg mx-auto ">
                 {carouselData.map((item, index) => (
                   <div
@@ -387,6 +187,58 @@ function Home() {
                   &#10095;
                 </button>
               </div>
+            </div> */}
+          </div>
+          <div className="rounded-lg overflow-hidden shadow-lg bg-white p-6 md:p-8 mt-8 mx-8">
+            <h2 id="Prestasi" className="text-3xl font-semibold mb-4">
+              Prestasi sekolah
+            </h2>
+            <p className="text-lg md:text-xl lg:text-2xl">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac
+              malesuada justo. Integer id orci quis felis dapibus scelerisque
+              sed ut nisl. Integer vulputate, nisi nec maximus suscipit, risus
+              lacus tempus ipsum, nec placerat arcu metus vel felis.
+            </p>
+            {/* carousel prestasi */}
+            <div
+              id="prestasi-gallery-container"
+              className="scroll-smooth flex overflow-x-auto whitespace-nowrap gap-4 scroll-smooth snap-x"
+            >
+              {dataEskul.map((eskul, index) => (
+                <div
+                  key={eskul.id}
+                  className={`relative m-auto w-80 h-52 snap-center my-6`}
+                >
+                  {eskul.images.map((image, i) => (
+                    <div
+                      key={i}
+                      className={
+                        i === currentImageIndexes[index] ? "block" : "hidden"
+                      }
+                    >
+                      <div className="inline-block w-80 h-52 rounded-full">
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          className="inline-block w-80 h-52 rounded-full"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                  <button
+                    className="absolute top-1/2 transform -translate-y-1/2 left-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
+                    onClick={() => prevSlide(index)}
+                  >
+                    &#10094;
+                  </button>
+                  <button
+                    className="absolute top-1/2 transform -translate-y-1/2 right-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
+                    onClick={() => nextSlide(index)}
+                  >
+                    &#10095;
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
         </div>
