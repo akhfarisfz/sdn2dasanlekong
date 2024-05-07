@@ -1,3 +1,4 @@
+// import keperluan gambar disini
 import futsal from "../../img/eskul futsal.jpeg";
 import badminton from "../../img/badminton.jpeg";
 import catur from "../../img/catur.jpg";
