@@ -42,25 +42,24 @@ function DashboardAdmin() {
     }
   }
 
-  // const onUserPagination = (page) => {
-  //   onUserList({ search: userSearch.current.value, page })
-  // }
-
   useEffect(() => {
     onUserList();
   }, []);
+  const filterguru = daftarUser
+  .filter((user) => !user.roles.includes('Guru')&& !user.roles.includes('Admin'))
+  .sort((a, b) => {
+    const roleA = typeof a.roles === 'string' ? a.roles : '';
+    const roleB = typeof b.roles === 'string' ? b.roles : '';
+    return roleA.localeCompare(roleB);
+  });
 
-  const filteredUsers = daftarUser.filter((user) => !user.roles.includes('Admin'))
-    .sort((a, b) => {
-      if (a.roles < b.roles) {
-        return -1;
-      }
-      if (a.roles > b.roles) {
-        return 1;
-      }
-      return 0;
-    });
-
+const filtersiswa = daftarUser
+  .filter((user) => !user.roles.includes('Siswa')&& !user.roles.includes('Admin'))
+  .sort((a, b) => {
+    const roleA = typeof a.roles === 'string' ? a.roles : '';
+    const roleB = typeof b.roles === 'string' ? b.roles : '';
+    return roleA.localeCompare(roleB);
+  });
   return (
     <div>
       {role ? (
@@ -78,6 +77,7 @@ function DashboardAdmin() {
     </div>
       <table>
         <thead>
+          Data Guru
           <tr>
             <th>Username</th>
             <th>Email</th>
@@ -87,7 +87,31 @@ function DashboardAdmin() {
           </tr>
         </thead>
         <tbody>
-          {filteredUsers.map((user) => (
+          {filterguru.map((user) => (
+            <tr key={user._id}>
+              <td>{user.username}</td>
+              <td>{user.email}</td>
+              <td>{user.profile.firstName}</td>
+              <td>{user.profile.lastName}</td>
+              <td>{user.roles}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <table>
+        <thead>
+          Data Siswa
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filtersiswa.map((user) => (
             <tr key={user._id}>
               <td>{user.username}</td>
               <td>{user.email}</td>
