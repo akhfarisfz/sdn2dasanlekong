@@ -4,15 +4,19 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import Logo from "../../img/tuturi.png";
 import { Link } from "react-scroll";
 import { NavLink } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import useJWT from "../../libs/hooks/useJWT";
 import { useNavigate } from "react-router-dom";
 import { ContextApplication } from "../../libs/config/contexts";
 
 function Header() {
   let [isOpen, setIsOpen] = useState(false);
+
   const token = localStorage.getItem("token");
   const isLoggedIn = !!token;
+
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   const jwt = useJWT();
   const application = useContext(ContextApplication);
@@ -51,23 +55,41 @@ function Header() {
         >
           <li className="font-semibold my-7 md:my-0 md:ml-8">
             <a href="#Sekolah">
-              <Link to="Sekolah" smooth={true} duration={350}>
-                Sekolah
-              </Link>
+              {isHomePage ? (
+                <Link to="Sekolah" smooth={true} duration={350}>
+                  Sekolah
+                </Link>
+              ) : (
+                <NavLink to="/" smooth={true} duration={350}>
+                  Sekolah
+                </NavLink>
+              )}
             </a>
           </li>
           <li className="font-semibold my-7 md:my-0 md:ml-8">
             <a href="#Eskul">
-              <Link to="Eskul" smooth={true} duration={350}>
-                Eskul
-              </Link>
+              {isHomePage ? (
+                <Link to="Eskul" smooth={true} duration={350}>
+                  Eskul
+                </Link>
+              ) : (
+                <NavLink to="/" smooth={true} duration={350}>
+                  Eskul
+                </NavLink>
+              )}
             </a>
           </li>
           <li className="font-semibold my-7 md:my-0 md:ml-8">
-            <a href="#">
-              <Link to="prestasi" smooth={true} duration={350}>
-                Prestasi
-              </Link>
+            <a href="#Prestasi">
+              {isHomePage ? (
+                <Link to="Prestasi" smooth={true} duration={350}>
+                  Prestasi
+                </Link>
+              ) : (
+                <NavLink to="/#Prestasi" smooth={true} duration={350}>
+                  Prestasi
+                </NavLink>
+              )}
             </a>
           </li>
           <li className="font-semibold my-7 md:my-0 md:ml-8">
@@ -83,6 +105,11 @@ function Header() {
               E-Learning
             </NavLink>
           </li>
+          {isLoggedIn && (
+            <li className="font-semibold my-7 md:my-0 md:ml-8">
+              <NavLink to={"/siswa/dashboard"}>Dashboard</NavLink>
+            </li>
+          )}
         </ul>
       </div>
     </div>

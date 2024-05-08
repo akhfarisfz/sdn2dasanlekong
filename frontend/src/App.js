@@ -29,14 +29,10 @@ function App() {
           <Route element={<PageCommonOutlet />}>
             <Route path="/siswa/dashboard" element={<DashboardSiswa />} />
           </Route>
+          <Route path="/siswa/eLearning" element={<E_learningSiswa />}></Route>
+
           <Route element={<PageCommonOutlet />}>
             <Route path="/guru/dashboard" element={<DashboardGuru />} />
-          </Route>
-          <Route element={<PageCommonOutlet />}>
-            <Route
-              path="/siswa/eLearning"
-              element={<E_learningSiswa />}
-            ></Route>
           </Route>
         </Routes>
       </BrowserRouter>

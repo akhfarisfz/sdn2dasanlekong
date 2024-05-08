@@ -11,13 +11,6 @@ function DashboardAdmin() {
   return (
     <>
       <Header />
-      <div className="container">
-        {role ? (
-          <div>Ini adalah dashboard untuk role: {role}</div>
-        ) : (
-          <div>Anda tidak diizinkan</div>
-        )}
-      </div>
     </>
   );
 }

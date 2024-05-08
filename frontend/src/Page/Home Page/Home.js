@@ -3,18 +3,14 @@ import Header from "./Header.js";
 import Footer from "./Footer.js";
 import sekolah1 from "../../img/Gambar-Gedung-Sekolah-Modern-18.jpg";
 import { NavLink } from "react-router-dom";
-import futsal from "../../img/eskul futsal.jpeg";
-import badminton from "../../img/badminton.jpeg";
-import catur from "../../img/catur.jpg";
-import menari from "../../img/menari.jpg";
-import pramuka from "../../img/pramuka.jpg";
-import voli from "../../img/voli.jpg";
-import suara from "../../img/suara.jpg";
-import { useSwipeable } from "react-swipeable";
 import dataEskul from "../../libs/data/data_eskul.js";
+import dataPrestasi from "../../libs/data/data-prestasi.js";
 // import { Carousel } from "@material-tailwind/react";
 
 function Home() {
+  const token = localStorage.getItem("token");
+  const isLoggedIn = !!token;
+  // Data dari eskul menjadi variabel
   const [currentImageIndexes, setCurrentImageIndexes] = useState(
     Array(dataEskul.length).fill(0)
   );
@@ -34,6 +30,29 @@ function Home() {
       const newIndexes = [...prevIndexes];
       newIndexes[index] =
         (newIndexes[index] + 1) % dataEskul[index].images.length;
+      return newIndexes;
+    });
+  };
+
+  // Data dari prestasi menjadi variabel
+  const [currentPrestasiImageIndexes, setCurrentPrestasiImageIndexes] =
+    useState(Array(dataPrestasi.length).fill(0));
+
+  const prevPrestasiSlide = (index) => {
+    setCurrentPrestasiImageIndexes((prevIndexes) => {
+      const newIndexes = [...prevIndexes];
+      newIndexes[index] =
+        (newIndexes[index] - 1 + dataPrestasi[index].images.length) %
+        dataPrestasi[index].images.length;
+      return newIndexes;
+    });
+  };
+
+  const nextPrestasiSlide = (index) => {
+    setCurrentPrestasiImageIndexes((prevIndexes) => {
+      const newIndexes = [...prevIndexes];
+      newIndexes[index] =
+        (newIndexes[index] + 1) % dataPrestasi[index].images.length;
       return newIndexes;
     });
   };
@@ -58,11 +77,13 @@ function Home() {
               SDN 2 Dasan Lekong
             </p>
             <div className="flex flex-col md:flex-row items-center justify-center md:justify-start">
-              <NavLink to="/login">
-                <button className="bg-white text-blue-500 hover:bg-blue-400 text-lg md:text-xl lg:text-2xl font-semibold py-2 px-6 md:py-3 md:px-8 lg:py-4 lg:px-10 rounded-full shadow-md transition duration-300 mb-4 md:mb-0">
-                  Ayokk! masuk ke akun anda
-                </button>
-              </NavLink>
+              {!isLoggedIn && (
+                <NavLink to="/login">
+                  <button className="bg-white text-blue-500 hover:bg-blue-400 text-lg md:text-xl lg:text-2xl font-semibold py-2 px-6 md:py-3 md:px-8 lg:py-4 lg:px-10 rounded-full shadow-md transition duration-300 mb-4 md:mb-0">
+                    Ayokk! masuk ke akun anda
+                  </button>
+                </NavLink>
+              )}
             </div>
           </div>
         </div>
@@ -204,36 +225,38 @@ function Home() {
               id="prestasi-gallery-container"
               className="scroll-smooth flex overflow-x-auto whitespace-nowrap gap-4 scroll-smooth snap-x"
             >
-              {dataEskul.map((eskul, index) => (
+              {dataPrestasi.map((prestasi, index) => (
                 <div
-                  key={eskul.id}
+                  key={prestasi.id}
                   className={`relative m-auto w-80 h-52 snap-center my-6`}
                 >
-                  {eskul.images.map((image, i) => (
+                  {prestasi.images.map((image, i) => (
                     <div
                       key={i}
                       className={
-                        i === currentImageIndexes[index] ? "block" : "hidden"
+                        i === currentPrestasiImageIndexes[index]
+                          ? "block"
+                          : "hidden"
                       }
                     >
-                      <div className="inline-block w-80 h-52 rounded-full">
+                      <div className="inline-block w-80 h-52 rounded-xl">
                         <img
                           src={image.src}
                           alt={image.alt}
-                          className="inline-block w-80 h-52 rounded-full"
+                          className="inline-block w-80 h-52 rounded-xl"
                         />
                       </div>
                     </div>
                   ))}
                   <button
                     className="absolute top-1/2 transform -translate-y-1/2 left-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
-                    onClick={() => prevSlide(index)}
+                    onClick={() => prevPrestasiSlide(index)}
                   >
                     &#10094;
                   </button>
                   <button
                     className="absolute top-1/2 transform -translate-y-1/2 right-0 rounded-full bg-black bg-opacity-50 text-white p-2 mx-2"
-                    onClick={() => nextSlide(index)}
+                    onClick={() => nextPrestasiSlide(index)}
                   >
                     &#10095;
                   </button>
