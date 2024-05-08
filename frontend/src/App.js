@@ -8,6 +8,7 @@ import { ContextApplication } from "./libs/config/contexts.js";
 import { useState } from "react";
 import PageCommonOutlet from "./Page/commons/PageCommonOutlet.js";
 import AdminDetail from "./Page/AdminDetail.js";
+import E_learningSiswa from "./Page/Siswa/E-learningSiswa.js";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -31,7 +32,12 @@ function App() {
           <Route element={<PageCommonOutlet />}>
             <Route path="/guru/dashboard" element={<DashboardGuru />} />
           </Route>
-
+          <Route element={<PageCommonOutlet />}>
+            <Route
+              path="/siswa/eLearning"
+              element={<E_learningSiswa />}
+            ></Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </ContextApplication.Provider>

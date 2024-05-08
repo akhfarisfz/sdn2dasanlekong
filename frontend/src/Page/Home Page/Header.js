@@ -1,12 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { CgMenuGridO } from "react-icons/cg";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import Logo from "../../img/tuturi.png";
 import { Link } from "react-scroll";
 import { NavLink } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import useJWT from "../../libs/hooks/useJWT";
+import { useNavigate } from "react-router-dom";
+import { ContextApplication } from "../../libs/config/contexts";
 
 function Header() {
   let [isOpen, setIsOpen] = useState(false);
+  const token = localStorage.getItem("token");
+  const isLoggedIn = !!token;
+
+  const jwt = useJWT();
+  const application = useContext(ContextApplication);
+  const navigate = useNavigate();
+
+  const signOut = () => {
+    jwt.signOut();
+    navigate("/login");
+    application.setIsAuthenticated(false);
+  };
+
   return (
     <div className="z-10 shadow-md w-screen bg-blue-400 fixed top-0 left-0 ">
       <div className="md:px-10 py-4 px-7 md:flex justify-between items-center">
@@ -54,7 +71,17 @@ function Header() {
             </a>
           </li>
           <li className="font-semibold my-7 md:my-0 md:ml-8">
-            <NavLink to="/login">Masuk</NavLink>
+            <NavLink
+              to={isLoggedIn ? "/login" : "/login"}
+              onClick={isLoggedIn ? signOut : null}
+            >
+              {isLoggedIn ? "Logout" : "Login"}
+            </NavLink>
+          </li>
+          <li className="font-semibold my-7 md:my-0 md:ml-8">
+            <NavLink to={isLoggedIn ? "/siswa/eLearning" : "/login"}>
+              E-Learning
+            </NavLink>
           </li>
         </ul>
       </div>

@@ -127,11 +127,11 @@ function Home() {
                         i === currentImageIndexes[index] ? "block" : "hidden"
                       }
                     >
-                      <div className="inline-block w-80 h-52 rounded-full">
+                      <div className="inline-block w-80 h-52 rounded-xl">
                         <img
                           src={image.src}
                           alt={image.alt}
-                          className="inline-block w-80 h-52 rounded-full"
+                          className="inline-block w-80 h-52 rounded-xl"
                         />
                       </div>
                     </div>
