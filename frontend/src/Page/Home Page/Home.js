@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import Header from "./Header.js";
 import Footer from "./Footer.js";
-import sekolah1 from "../../img/Gambar-Gedung-Sekolah-Modern-18.jpg";
+import sekolah1 from "../../img/gambarGedung.jpg";
 import { NavLink } from "react-router-dom";
 import dataEskul from "../../libs/data/data_eskul.js";
 import dataPrestasi from "../../libs/data/data-prestasi.js";
@@ -61,10 +61,11 @@ function Home() {
     <>
       <Header />
 
-      <div className="container w-screen">
+      <div className="container w-screen box-border">
         <div
           id="cover"
-          className="relative justify-center lg:justify-start bg-blue-500 min-h-screen flex items-center w-screen"
+          className="relative justify-center lg:justify-start bg-blue-500 min-h-screen flex items-center w-screen re;ative bg-cover bg-center bg-no-repeat "
+          style={{ backgroundImage: `url(${sekolah1})` }}
         >
           <div
             id="cover-content"
@@ -134,7 +135,7 @@ function Home() {
             {/* carousel eskul */}
             <div
               id="gallery-container"
-              className="scroll-smooth flex overflow-x-auto whitespace-nowrap gap-4 scroll-smooth snap-x"
+              className="scroll-smooth flex overflow-x-auto whitespace-nowrap gap-10 scroll-smooth snap-x"
             >
               {dataEskul.map((eskul, index) => (
                 <div
@@ -223,7 +224,7 @@ function Home() {
             {/* carousel prestasi */}
             <div
               id="prestasi-gallery-container"
-              className="scroll-smooth flex overflow-x-auto whitespace-nowrap gap-4 scroll-smooth snap-x"
+              className="scroll-smooth flex overflow-x-auto whitespace-nowrap gap-10 scroll-smooth snap-x"
             >
               {dataPrestasi.map((prestasi, index) => (
                 <div

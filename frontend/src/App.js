@@ -3,7 +3,6 @@ import Login from "../src/Page/Login.js";
 import Home from "../src/Page/Home Page/Home.js";
 import DashboardAdmin from "./Page/DashboardAdmin.js";
 import DashboardGuru from "./Page/Guru/DashboardGuru.js";
-import DashboardSiswa from "./Page/Siswa/DashboardSiswa.js";
 import { ContextApplication } from "./libs/config/contexts.js";
 import { useState } from "react";
 import PageCommonOutlet from "./Page/commons/PageCommonOutlet.js";
@@ -26,10 +25,8 @@ function App() {
             <Route path="/admin/dashboard" element={<DashboardAdmin />} />
             <Route path={"detail/:id"} element={<AdminDetail />} />
           </Route>
-          <Route element={<PageCommonOutlet />}>
-            <Route path="/siswa/dashboard" element={<DashboardSiswa />} />
-          </Route>
-          <Route path="/siswa/eLearning" element={<E_learningSiswa />}></Route>
+
+          <Route path="/siswa/eLearning" element={<E_learningSiswa />} />
 
           <Route element={<PageCommonOutlet />}>
             <Route path="/guru/dashboard" element={<DashboardGuru />} />

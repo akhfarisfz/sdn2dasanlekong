@@ -105,11 +105,6 @@ function Header() {
               E-Learning
             </NavLink>
           </li>
-          {isLoggedIn && (
-            <li className="font-semibold my-7 md:my-0 md:ml-8">
-              <NavLink to={"/siswa/dashboard"}>Dashboard</NavLink>
-            </li>
-          )}
         </ul>
       </div>
     </div>
