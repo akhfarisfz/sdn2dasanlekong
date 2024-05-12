@@ -8,6 +8,7 @@ import useJWT from "../../libs/hooks/useJWT";
 import { useNavigate } from "react-router-dom";
 import { ContextApplication } from "../../libs/config/contexts";
 import belajar from "../../img/belajar.jpg";
+import Header from "../Home Page/Header";
 
 function E_learningSiswa() {
   let [isOpen, setIsOpen] = useState(false);
@@ -30,27 +31,31 @@ function E_learningSiswa() {
 
   const products = [
     {
+      id: 1,
       image:
         "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
-      title: "Basic Tee",
+      title: "Matematika",
       price: "£24.00 GBP",
     },
     {
+      id: 2,
       image:
         "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
-      title: "Basic Tee",
+      title: "Bahasa Indonesia",
       price: "£24.00 GBP",
     },
     {
+      id: 3,
       image:
         "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
-      title: "Basic Tee",
+      title: "Ilmu Pengetahuan Alam",
       price: "£24.00 GBP",
     },
     {
+      id: 4,
       image:
         "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
-      title: "Basic Tee",
+      title: "Bahasa Inggris",
       price: "£24.00 GBP",
     },
   ];
@@ -85,69 +90,30 @@ function E_learningSiswa() {
   return (
     <>
       {/* Header */}
-      <header className="z-10 shadow-md w-screen bg-blue-400 fixed top-0 left-0 ">
-        <div className="md:px-10 py-[2px] px-7 md:flex justify-between items-center">
-          <div className="flex text-2xl cursor-pointer items-center gap-5">
-            <a href="/" className="flex items-center">
-              <img className="flexbox size-12" src={Logo} alt="Logo" />
-              <span className="ml-2 font-bold">SDN 2 Dasan Lekong</span>
-            </a>
-          </div>
-          <div
-            onClick={() => setIsOpen(!isOpen)}
-            className="w-7 h-7 absolute right-8 top-6 cursor-pointer md:hidden"
-          >
-            {isOpen ? (
-              <IoCloseCircleOutline className="size-8" />
-            ) : (
-              <CgMenuGridO className="size-8" />
-            )}
-          </div>
-
-          <ul
-            className={`md:flex md:pl-0 pl-9 md:items-center md:pb-0 pb-12 absolute md:static md:z-auto z-[-1] left-0 w-full md:w-auto  bg-blue-400  transition-all duration-500 ease-in ${
-              isOpen ? "top12" : "top-[-490px]"
-            }`}
-          >
-            <li className="font-semibold my-7 md:my-0 md:ml-8">
-              <NavLink
-                to={isLoggedIn ? "/" : "/login"}
-                onClick={isLoggedIn ? signOut : null}
-              >
-                {isLoggedIn ? "Logout" : "Login"}
-              </NavLink>
-            </li>
-          </ul>
-        </div>
-      </header>
+      <Header />
 
       {/* body */}
-      <div
-        id="cover"
-        className="mt-[25px] lg:mt-[50px] relative justify-center lg:justify-start bg-blue-500 min-h-screen flex items-center mx-auto max-w-screen-xl bg-cover bg-center bg-no-repeat "
-        style={{ backgroundImage: `url(${belajar})` }}
-      >
+      <section>
         <div
-          id="cover-content"
-          className="relative text-center md:text-left lg:left-20"
+          id="cover"
+          className="mt-[25px] lg:mt-[50px] relative justify-center lg:justify-start bg-blue-500 min-h-screen flex items-center mx-auto max-w-screen-xl bg-cover bg-center bg-no-repeat "
+          style={{ backgroundImage: `url(${belajar})` }}
         >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl text-white font-bold mb-4">
-            Selamat Datang di halaman
-          </h1>
-          <p className="text-lg md:text-xl lg:text-2xl text-white mb-8">
-            SDN 2 Dasan Lekong
-          </p>
-          <div className="flex flex-col md:flex-row items-center justify-center md:justify-start">
-            {!isLoggedIn && (
-              <NavLink to="/login">
-                <button className="bg-white text-blue-500 hover:bg-blue-400 text-lg md:text-xl lg:text-2xl font-semibold py-2 px-6 md:py-3 md:px-8 lg:py-4 lg:px-10 rounded-full shadow-md transition duration-300 mb-4 md:mb-0">
-                  Ayokk! masuk ke akun anda
-                </button>
-              </NavLink>
-            )}
+          <div
+            id="cover-content"
+            className="relative text-center md:text-left lg:left-20"
+          >
+            <h1 className="text-4xl md:text-5xl lg:text-6xl text-white font-bold mb-4">
+              Selamat Belajar!!
+            </h1>
+            <p className="text-lg md:text-xl lg:text-2xl text-white mb-8">
+              Mari kita belajar di E-Learning!!
+            </p>
+            <div className="flex flex-col md:flex-row items-center justify-center md:justify-start"></div>
           </div>
         </div>
-      </div>
+      </section>
+
       <section>
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
           <header>
@@ -217,30 +183,38 @@ function E_learningSiswa() {
             </div>
           </div>
 
+          {/* list menggunakan React Router Dom */}
           <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {products.map((product, index) => (
               <li key={index}>
-                <a href="#" className="group block overflow-hidden">
+                <div className="group block overflow-hidden relative">
                   <img
                     src={product.image}
                     alt=""
                     className="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
                   />
-
-                  <div className="relative bg-white pt-3">
-                    <h3 className="text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4">
-                      {product.title}
-                    </h3>
-
-                    <p className="mt-2">
-                      <span className="sr-only">Regular Price</span>
-
-                      <span className="tracking-wider text-gray-900">
-                        {product.price}
-                      </span>
-                    </p>
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <NavLink
+                      to={`/siswa/eLearning/mapel/${product.id}`}
+                      className="opacity-0 group-hover:opacity-100"
+                    >
+                      <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                        Lihat Detail
+                      </button>
+                    </NavLink>
                   </div>
-                </a>
+                </div>
+                <div className="relative bg-white pt-3">
+                  <h3 className="text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                    {product.title}
+                  </h3>
+                  <p className="mt-2">
+                    <span className="sr-only">Regular Price</span>
+                    <span className="tracking-wider text-gray-900">
+                      {product.price}
+                    </span>
+                  </p>
+                </div>
               </li>
             ))}
           </ul>

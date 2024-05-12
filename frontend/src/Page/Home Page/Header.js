@@ -30,7 +30,7 @@ function Header() {
 
   return (
     <div className="z-10 shadow-md w-screen bg-blue-400 fixed top-0 left-0 ">
-      <div className="md:px-10 py-4 px-7 md:flex justify-between items-center">
+      <div className="md:px-10 py-2 px-7 md:flex justify-between items-center">
         <div className="flex text-2xl cursor-pointer items-center gap-5">
           <a href="/" className="flex items-center">
             <img className="flexbox size-12" src={Logo} alt="Logo" />
