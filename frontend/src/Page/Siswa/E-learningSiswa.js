@@ -9,6 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { ContextApplication } from "../../libs/config/contexts";
 import belajar from "../../img/belajar.jpg";
 import Header from "../Home Page/Header";
+import matematika from "../../img/matematika.jpg";
+import IPA from "../../img/IPA.jpg";
+import indonesia from "../../img/bhs indo.jpg";
+import inggris from "../../img/bhs inggris.jpg";
 
 function E_learningSiswa() {
   let [isOpen, setIsOpen] = useState(false);
@@ -32,29 +36,25 @@ function E_learningSiswa() {
   const products = [
     {
       id: 1,
-      image:
-        "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+      image: matematika,
       title: "Matematika",
       price: "£24.00 GBP",
     },
     {
       id: 2,
-      image:
-        "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+      image: indonesia,
       title: "Bahasa Indonesia",
       price: "£24.00 GBP",
     },
     {
       id: 3,
-      image:
-        "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+      image: IPA,
       title: "Ilmu Pengetahuan Alam",
       price: "£24.00 GBP",
     },
     {
       id: 4,
-      image:
-        "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+      image: inggris,
       title: "Bahasa Inggris",
       price: "£24.00 GBP",
     },

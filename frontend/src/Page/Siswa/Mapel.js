@@ -2,7 +2,7 @@ import Header from "../Home Page/Header";
 import belajar from "../../img/belajar.jpg";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getMapel } from "./routeMapel";
+import { getMapel } from "./routeDataMapel";
 
 function Mapel() {
   const { id } = useParams(); // Ambil ID mapel dari URL menggunakan useParams
@@ -26,8 +26,9 @@ function Mapel() {
         <div
           id="cover"
           className="mt-[25px] lg:mt-[50px] relative justify-center lg:justify-start bg-blue-500 min-h-screen flex items-center mx-auto max-w-screen-xl bg-cover bg-center bg-no-repeat "
-          style={{ backgroundImage: `url(${belajar})` }}
+          style={{ backgroundImage: `url(${mapel.image})` }}
         >
+          {console.log(mapel.image)}
           <div
             id="cover-content"
             className="relative text-center md:text-left lg:left-20"
@@ -46,6 +47,7 @@ function Mapel() {
         <h2>{mapel.title}</h2>
         <p>{mapel.description}</p>
         <p>{mapel.teacher}</p>
+        <img src={mapel.image}></img>
       </div>
     </>
   );

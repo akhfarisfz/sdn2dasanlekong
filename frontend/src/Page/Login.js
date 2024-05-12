@@ -72,7 +72,7 @@ const Login = () => {
                   : Role === "Guru"
                   ? "/guru/dashboard"
                   : Role === "Siswa"
-                  ? "/siswa/dashboard"
+                  ? "/siswa/eLearning"
                   : "/login",
             }}
             state={{ role: Role }}
