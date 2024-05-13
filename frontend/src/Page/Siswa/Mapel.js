@@ -25,18 +25,18 @@ function Mapel() {
       <section>
         <div
           id="cover"
-          className="mt-[25px] lg:mt-[50px] relative justify-center lg:justify-start bg-blue-500 min-h-screen flex items-center mx-auto max-w-screen-xl bg-cover bg-center bg-no-repeat "
-          style={{ backgroundImage: `url(${mapel.image})` }}
+          className="relative justify-center lg:justify-start bg-blue-500 min-h-screen flex items-center mx-auto bg-cover bg-center bg-no-repeat "
+          style={{ backgroundImage: `url(${mapel.gambar})` }}
         >
-          {console.log(mapel.image)}
+          {console.log(mapel.gambar)}
           <div
             id="cover-content"
             className="relative text-center md:text-left lg:left-20"
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl text-white font-bold mb-4">
+            <h1 className="bg-gray-500 p-4 text-4xl md:text-5xl lg:text-6xl text-white font-bold mb-4">
               Selamat Belajar!!
             </h1>
-            <p className="text-lg md:text-xl lg:text-2xl text-white mb-8">
+            <p className="bg-gray-500 p-4 w-fit text-lg md:text-xl lg:text-2xl text-white mb-8">
               Mari kita belajar di E-Learning!!
             </p>
             <div className="flex flex-col md:flex-row items-center justify-center md:justify-start"></div>
