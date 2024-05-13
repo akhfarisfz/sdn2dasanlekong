@@ -16,6 +16,7 @@ const dataEskul = [
     images: [
       { src: futsal, alt: "Eskul Futsal 1" },
       { src: voli, alt: "Eskul Futsal 2" },
+      { src: suara, alt: "Eskul Futsal 2" },
       // Tambahkan gambar-gambar eskul futsal sesuai kebutuhan
     ],
   },
