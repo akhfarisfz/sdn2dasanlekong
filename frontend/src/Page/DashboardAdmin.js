@@ -48,7 +48,7 @@ function DashboardAdmin() {
     onUserList();
   }, []);
   const filterguru = daftarUser
-    .filter((user) => !user.roles.includes('Guru') && !user.roles.includes('Admin'))
+    .filter((user) => !user.roles.includes('Siswa') && !user.roles.includes('Admin'))
     .sort((a, b) => {
       const roleA = typeof a.roles === 'string' ? a.roles : '';
       const roleB = typeof b.roles === 'string' ? b.roles : '';
@@ -56,7 +56,7 @@ function DashboardAdmin() {
     });
 
   const filtersiswa = daftarUser
-    .filter((user) => !user.roles.includes('Siswa') && !user.roles.includes('Admin'))
+    .filter((user) => !user.roles.includes('Guru') && !user.roles.includes('Admin'))
     .sort((a, b) => {
       const roleA = typeof a.roles === 'string' ? a.roles : '';
       const roleB = typeof b.roles === 'string' ? b.roles : '';
@@ -111,8 +111,8 @@ function DashboardAdmin() {
           <tr>
             <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
             <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">First Name</th>
-            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Name</th>
+            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Lengkap</th>
+            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal Lahir</th> 
             <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
             <th class="px-6 py-3 bg-gray-100">
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Guru</button>
@@ -124,8 +124,8 @@ function DashboardAdmin() {
             <tr key={user._id} class="bg-white divide-y divide-gray-200 cursor-pointer hover:bg-gray-100" onClick={() => handleRowClick(user)}>
               <td class="px-6 py-4 whitespace-nowrap">{user.username}</td>
               <td class="px-6 py-4 whitespace-nowrap">{user.email}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{user.profile.firstName}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{user.profile.lastName}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{user.nama_lengkap}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{user.tanggal_lahir}</td>
               <td class="px-6 py-4 whitespace-nowrap">{user.roles}</td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" onClick={(event) => handleEditButtonClick(event, user)}>Edit</button>
@@ -144,8 +144,8 @@ function DashboardAdmin() {
           <tr>
             <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
             <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">First Name</th>
-            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Name</th>
+            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Lengkap</th>
+            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal Lahir</th>
             <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
             <th class="px-6 py-3 bg-gray-100">
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Siswa</button>
@@ -157,8 +157,8 @@ function DashboardAdmin() {
             <tr key={user._id} class="bg-white divide-y divide-gray-200 cursor-pointer hover:bg-gray-100" onClick={() => handleRowClick(user)}>
               <td class="px-6 py-4 whitespace-nowrap">{user.username}</td>
               <td class="px-6 py-4 whitespace-nowrap">{user.email}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{user.profile.firstName}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{user.profile.lastName}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{user.nama_lengkap}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{new Date(filtersiswa.tanggal_lahir).toLocaleDateString("en-US", { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
               <td class="px-6 py-4 whitespace-nowrap">{user.roles}</td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" onClick={(event) => handleEditButtonClick(event, user)}>Edit</button>

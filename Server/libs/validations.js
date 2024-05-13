@@ -104,19 +104,34 @@ const EmailField = ({host_blacklist=[], host_whitelist=[], allow_ip_domain=true,
 }
 
 /**
- * DateField for date validation
- * @param format
- * @param delimeters
- * @param strictMode
- * @param args
- * @returns {*}
- * @constructor
+ * DateField untuk validasi tanggal
+ * @param {string} format Format tanggal yang diharapkan (opsional)
+ * @param {string[]} delimiters Delimiter yang diperbolehkan untuk pemisah tanggal (opsional)
+ * @param {boolean} strictMode Mode ketat, jika diaktifkan, hanya tanggal yang sesuai dengan format yang diharapkan yang akan diterima (opsional, default: false)
+ * @param {object} args Argumen tambahan untuk validasi (opsional)
+ * @returns {Field} Objek Field yang sudah disetel dengan validasi untuk tanggal
  */
-const DateField = ({format="", delimeters=[], strictMode=false, ...args}) => {
+const DateField = ({format="YYYY MM DD", delimiters=[], strictMode=false, ...args}) => {
   const fieldset = Field(args);
-  fieldset.isDate({format, delimeters, strictMode}).withMessage("Invalid date").bail();
-  return fieldset
+  const formatRegex = format.replace(/(yyyy|mm|dd)/gi, '\\d{4}|\\d{2}');
+  fieldset.matches(new RegExp(`^${formatRegex}$`)).withMessage(`Tanggal tidak valid. Format yang diharapkan: ${format}`).bail();
+  return fieldset;
 }
+
+
+
+const ChoicesValidator = ({ field, choices }) => {
+  const fieldSet = Field({ field });
+
+  fieldSet.custom((value) => {
+    if (!choices.includes(value)) {
+      throw new Error(`Invalid value for ${field}. Must be one of: ${choices.join(', ')}`);
+    }
+    return true;
+  });
+
+  return fieldSet;
+};
 
 const LibValidationsMiddleware = (...args) => {
   return args;
@@ -133,5 +148,6 @@ module.exports = {
     ObjectField,
     EmailField,
     DateField,
+    ChoicesValidator
   },
 };

@@ -29,7 +29,8 @@ const UserMiddlewareDelete = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
-const UserMiddlewareSignUp = LibValidationsMiddleware(
+const UserMiddlewareSignUp  = LibValidationsMiddleware(
+  
   LibValidationFields.CharField({
     field: "username",
     customs: [UserValidatiorUsernameUnique],
@@ -42,11 +43,31 @@ const UserMiddlewareSignUp = LibValidationsMiddleware(
     field: "password",
     sanitizers: [UserSanitizerPasswordHash],
   }),
-  LibValidationFields.CharField({
-    field: "profile.firstName",
-    required: false,
+  LibValidationFields.ChoicesValidator({
+    field: "roles",
+    choices: ['Admin', 'Guru', 'Siswa'],
+    default:'Admin'
   }),
-  LibValidationFields.CharField({ field: "profile.lastName", required: false }),
+  
+  LibValidationFields.CharField({ field: "nama_lengkap" }),
+  LibValidationFields.NumberField({ field: "nomor_induk" }),
+  LibValidationFields.DateField({ field: "tanggal_lahir"}),
+  LibValidationFields.ChoicesValidator({ field: "jenis_kelamin", choices: ['Pria', 'Wanita']}),
+  LibValidationFields.CharField({ field: "alamat" }),
+
+
+  // (req, res, next) => {
+  //   const { roles } = req.body;
+  //   if (roles === 'Guru') {
+  //     LibValidationFields.ObjectField({ field: "guru" })(req, res, next);
+  //     LibValidationFields.CharField({ field: "guru.nip" })(req, res, next);
+  //   } else if (roles === 'Siswa') {
+  //     LibValidationFields.ObjectField({ field: "siswa" })(req, res, next);
+  //     LibValidationFields.CharField({ field: "siswa.nis" })(req, res, next);
+  //   } else {
+  //     next();
+  //   }
+  // },
   LibValidationExceptionMiddleware
 );
 
