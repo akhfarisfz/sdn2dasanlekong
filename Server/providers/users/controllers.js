@@ -9,12 +9,6 @@ const { User } = require("./models");
 
 const UserControllerList = async (req, res) => {
   try {
-    // Your code here
-
-    // example:
-    // const results = YourModel.find(YourFilter(req));
-    // return LibPaginationResponse(req, res, results);
-
     const results = User.find(UserFilter(req));
     return LibPaginationResponse(req, res, results);
   } catch (error) {
@@ -52,7 +46,7 @@ const UserControllerSignUp = async (req, res) => {
   try {
     const userData = { ...req.cleanedData, roles: req.body.roles };
     if (!userData.roles) {
-      userData.roles = ['Admin'];
+      userData.roles = 'Admin';
     }
     await User.create(userData);
 
@@ -71,6 +65,7 @@ const UserControllerSignIn = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+    console.log(user)
 
     const tokenPayload = {
       id: user._id,

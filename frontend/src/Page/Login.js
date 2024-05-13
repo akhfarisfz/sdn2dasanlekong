@@ -24,7 +24,7 @@ const Login = () => {
       .then((response) => {
         jwt.set(response.data.token);
         application.setIsAuthenticated(true);
-        setRole(response.data.roles[0]);
+        setRole(response.data.roles);
       })
       .catch((error) => {
         userValidator.except(error);

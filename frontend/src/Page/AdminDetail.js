@@ -63,6 +63,8 @@ function AdminDetail() {
 
     http.privateHTTP.get(`${BASE_URL}/user/${params.id}/`, config).then((response) => {
       setUser(response.data)
+  console.log(user)
+
     }).catch((error) => {
       message.error(error)
     })
@@ -89,7 +91,7 @@ function AdminDetail() {
   <div className="mt-4">
     <div className="flex justify-center mb-3">
       <div className="md:w-6/12">
-        <h4>Buat user</h4>
+        {/* <h4>{user.nama}</h4> */}
       </div>
     </div>
     <div className="flex justify-center mb-3">
