@@ -12,8 +12,6 @@ const {
   UserValidatorCheckPassword,
 } = require("./validators");
 
-
-
 const UserMiddlewareList = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
@@ -29,8 +27,7 @@ const UserMiddlewareDelete = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
-const UserMiddlewareSignUp  = LibValidationsMiddleware(
-  
+const UserMiddlewareSignUp = LibValidationsMiddleware(
   LibValidationFields.CharField({
     field: "username",
     customs: [UserValidatiorUsernameUnique],
@@ -45,8 +42,8 @@ const UserMiddlewareSignUp  = LibValidationsMiddleware(
   }),
   LibValidationFields.ChoicesValidator({
     field: "roles",
-    choices: ['Admin', 'Guru', 'Siswa'],
-    default:'Admin'
+    choices: ["Admin", "Guru", "Siswa"],
+    default: "Admin",
   }),
   
   // LibValidationFields.CharField({ field: "nama_lengkap" }),
@@ -89,5 +86,5 @@ module.exports = {
   UserMiddlewareList,
   UserMiddlewareDelete,
   UserMiddlewareUpdate,
-  UserMiddlewareDetail
+  UserMiddlewareDetail,
 };

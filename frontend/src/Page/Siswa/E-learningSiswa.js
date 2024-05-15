@@ -33,30 +33,27 @@ function E_learningSiswa() {
   const hariArray = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
   const jamArray = Array.from({ length: 9 }, (_, i) => i + 7);
 
-  const products = [
+  const list_matpel = [
     {
       id: 1,
-      image: matematika,
-      title: "Matematika",
-      price: "£24.00 GBP",
+      image: indonesia,
+      title: "Bahasa Indonesia",
     },
     {
       id: 2,
-      image: indonesia,
-      title: "Bahasa Indonesia",
-      price: "£24.00 GBP",
+
+      image: matematika,
+      title: "Matematika",
     },
     {
       id: 3,
       image: IPA,
       title: "Ilmu Pengetahuan Alam",
-      price: "£24.00 GBP",
     },
     {
       id: 4,
       image: inggris,
       title: "Bahasa Inggris",
-      price: "£24.00 GBP",
     },
   ];
 
@@ -118,7 +115,7 @@ function E_learningSiswa() {
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
           <header>
             <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
-              Product Collection
+              Mata Pelajaran Pilihan
             </h2>
 
             <p className="mt-4 max-w-md text-gray-500">
@@ -185,17 +182,17 @@ function E_learningSiswa() {
 
           {/* list menggunakan React Router Dom */}
           <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {products.map((product, index) => (
+            {list_matpel.map((mapel, index) => (
               <li key={index}>
                 <div className="group block overflow-hidden relative">
                   <img
-                    src={product.image}
+                    src={mapel.image}
                     alt=""
                     className="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
                   />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <NavLink
-                      to={`/siswa/eLearning/mapel/${product.id}`}
+                      to={`/siswa/eLearning/mapel/${mapel.id}`}
                       className="opacity-0 group-hover:opacity-100"
                     >
                       <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
@@ -205,64 +202,52 @@ function E_learningSiswa() {
                   </div>
                 </div>
                 <div className="relative bg-white pt-3">
-                  <h3 className="text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4">
-                    {product.title}
+                  <h3 className="font-bold text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                    {mapel.title}
                   </h3>
-                  <p className="mt-2">
-                    <span className="sr-only">Regular Price</span>
-                    <span className="tracking-wider text-gray-900">
-                      {product.price}
-                    </span>
-                  </p>
                 </div>
               </li>
             ))}
           </ul>
         </div>
       </section>
-      <div className="container mx-auto my-8">
-        <h1 className="text-center font-bold text-2xl mb-4">
-          {today.toLocaleString("default", { month: "long" })} {currentYear}
-        </h1>
-        <div className="grid grid-cols-7 gap-2">
-          {days.map((day) => (
-            <div key={day} className="text-center font-bold">
-              {day}
-            </div>
-          ))}
-        </div>
-        <div className="grid grid-cols-7 gap-2 mt-2">
-          {renderCalendarDays()}
-        </div>
-      </div>
+      <section className="flex m-10 gap-4">
+        <iframe
+          src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FMakassar&bgcolor=%23039BE5&showTitle=0&showPrint=0&src=NmViNzdmYmZjYmIxNGRmZTJjODY4MTUwMGI3YmIxYzlmZWU4YTJhODk1MGYzMjdjODhjZGZmYjZhY2U4MDY5N0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23F4511E"
+          className="border-none w-[700px] h-[600px] "
+        ></iframe>
 
-      <div className="w-3/4 mx-auto bg-white shadow-md rounded-md p-6">
-        <h2 className="text-xl font-semibold mb-4">Jadwal Hari Ini</h2>
-        <table className="w-full border-collapse">
-          <thead>
-            <tr>
-              <th className="border border-gray-300 px-4 py-2">Waktu</th>
-              {hariArray.map((hari) => (
-                <th key={hari} className="border border-gray-300 px-4 py-2">
-                  {hari}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {jamArray.map((jam) => (
-              <tr key={jam}>
-                <td className="border border-gray-300 px-4 py-2">{jam}:00</td>
-                {hariArray.map((hari, index) => (
-                  <td key={index} className="border border-gray-300 px-4 py-2">
-                    Kegiatan
-                  </td>
+        <div className="w-3/4 mx-auto bg-white shadow-md rounded-md p-6">
+          <h2 className="text-xl font-semibold mb-4">Jadwal Mata Pelajaran</h2>
+          <table className="w-full border-collapse">
+            <thead>
+              <tr>
+                <th className="border border-gray-300 px-4 py-2">Waktu</th>
+                {hariArray.map((hari) => (
+                  <th key={hari} className="border border-gray-300 px-4 py-2">
+                    {hari}
+                  </th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {jamArray.map((jam) => (
+                <tr key={jam}>
+                  <td className="border border-gray-300 px-4 py-2">{jam}:00</td>
+                  {hariArray.map((hari, index) => (
+                    <td
+                      key={index}
+                      className="border border-gray-300 px-4 py-2"
+                    >
+                      Kegiatan
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
     </>
   );
 }
