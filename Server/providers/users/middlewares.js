@@ -12,8 +12,6 @@ const {
   UserValidatorCheckPassword,
 } = require("./validators");
 
-
-
 const UserMiddlewareList = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
@@ -29,8 +27,7 @@ const UserMiddlewareDelete = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
-const UserMiddlewareSignUp  = LibValidationsMiddleware(
-  
+const UserMiddlewareSignUp = LibValidationsMiddleware(
   LibValidationFields.CharField({
     field: "username",
     customs: [UserValidatiorUsernameUnique],
@@ -45,16 +42,18 @@ const UserMiddlewareSignUp  = LibValidationsMiddleware(
   }),
   LibValidationFields.ChoicesValidator({
     field: "roles",
-    choices: ['Admin', 'Guru', 'Siswa'],
-    default:'Admin'
+    choices: ["Admin", "Guru", "Siswa"],
+    default: "Admin",
   }),
-  
-  LibValidationFields.CharField({ field: "nama_lengkap" }),
-  LibValidationFields.NumberField({ field: "nomor_induk" }),
-  LibValidationFields.DateField({ field: "tanggal_lahir"}),
-  LibValidationFields.ChoicesValidator({ field: "jenis_kelamin", choices: ['Pria', 'Wanita']}),
-  LibValidationFields.CharField({ field: "alamat" }),
 
+  LibValidationFields.CharField({ field: "nama_lengkap" }),
+  LibValidationFields.CharField({ field: "nomor_induk" }),
+  LibValidationFields.DateField({ field: "tanggal_lahir" }),
+  LibValidationFields.ChoicesValidator({
+    field: "jenis_kelamin",
+    choices: ["Pria", "Wanita"],
+  }),
+  LibValidationFields.CharField({ field: "alamat" }),
 
   // (req, res, next) => {
   //   const { roles } = req.body;
@@ -89,5 +88,5 @@ module.exports = {
   UserMiddlewareList,
   UserMiddlewareDelete,
   UserMiddlewareUpdate,
-  UserMiddlewareDetail
+  UserMiddlewareDetail,
 };
