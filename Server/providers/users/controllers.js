@@ -48,6 +48,7 @@ const UserControllerSignUp = async (req, res) => {
     if (!userData.roles) {
       userData.roles = 'Admin';
     }
+    
     await User.create(userData);
 
     const { password, ...payloadResponse } = userData;

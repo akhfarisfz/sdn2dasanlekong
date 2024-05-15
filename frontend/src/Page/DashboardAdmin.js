@@ -65,8 +65,6 @@ function DashboardAdmin() {
 
 
   function handleRowClick(user) {
-    // Lakukan tindakan yang sesuai saat baris diklik
-    // Misalnya, tampilkan informasi detail pengguna, dll.
     alert(`Roles of ${user.username}: ${user.roles}`);
     window.location.href = `/detail/${user._id}`;
   }
@@ -90,11 +88,6 @@ function DashboardAdmin() {
 
   return (
     <div className="m-8">
-      {role ? (
-        <div>Ini adalah dashboard untuk role: {role}</div>
-      ) : (
-        <div>Anda tidak diizinkan</div>
-      )}
       <div>
         <input
           ref={userSearch}

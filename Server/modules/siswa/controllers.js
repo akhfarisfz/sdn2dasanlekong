@@ -1,20 +1,15 @@
 
 const { LibPaginationResponse } = require("../../libs/paginations");
 const { LibHTTPResponseException } = require("../../libs/https");
+const { Siswa } = require("./models");
+const { SiswaFilter } = require("./filters");
+const { User } = require("../../providers/users/models");
 
 const SiswaControllerList =  async (req, res) => {
   try {
     // Your code here
-
-    // example:
-    // const results = YourModel.find(YourFilter(req));
-    // return LibPaginationResponse(req, res, results);
-
-
-    res.status(201).json({
-      controller: "SiswaControllerList",
-      query: req.query
-    });
+    const results = Siswa.find(SiswaFilter(req));
+    return LibPaginationResponse(req, res, results);
   } catch (error) {
     return LibHTTPResponseException(res, error);
   }
@@ -22,50 +17,56 @@ const SiswaControllerList =  async (req, res) => {
 
 const SiswaControllerCreate = async (req, res) => {
   try {
-    // Your code here
-    res.status(201).json({
-      controller: "SiswaControllerCreate",
-      body: req.body
-    });
+    const userData = {
+      username: req.cleanedData.user.username,
+      email: req.cleanedData.user.email,
+      password: req.cleanedData.user.password,
+      roles: req.cleanedData.user.roles
+    };
+    console.log(userData); // Pastikan data sudah dibersihkan sebelumnya
+    await Siswa.create(req.cleanedData); // Buat entri baru di database
+    await User.create(userData); // Buat entri baru di database
+    return res.status(201).json(req.cleanedData); // Kirimkan respons sukses dengan data yang baru dibuat
   } catch (error) {
-    return LibHTTPResponseException(res, error);
+    return LibHTTPResponseException(res, error); // Tangani kesalahan dengan baik
   }
 }
+
 
 const SiswaControllerDetail = async (req, res) => {
   try {
-    // Your code here
-    res.status(200).json({
-      controller: "SiswaControllerDetail",
-      params: req.params
-    });
+    let siswa = await Siswa.findOne({ _id: req.params.id });
+    if (!siswa) throw { status: 404, message: "Not found" };
+    res.status(200).json(siswa);
+    return res.status(200).json(siswa); // Mengirimkan respons sukses dengan data siswa
   } catch (error) {
-    return LibHTTPResponseException(res, error);
+    return LibHTTPResponseException(res, error); // Menangani kesalahan dengan baik
   }
 }
+
 
 const SiswaControllerUpdate = async (req, res) => {
   try {
-    // Your code here
-    res.status(200).json({
-      controller: "SiswaControllerUpdate",
-      params: req.params,
-      body: req.body
-    });
+    let siswa = await Siswa.findOne({ _id: req.params.id });
+    if (!karyawan) throw { status: 404, message: "Not found" };
+
+    await Siswa.findByIdAndUpdate(req.params.id, req.cleanedData);
+    return res.status(200).json(siswa); // Mengirimkan respons sukses dengan data siswa yang diperbarui
   } catch (error) {
-    return LibHTTPResponseException(res, error);
+    return LibHTTPResponseException(res, error); // Menangani kesalahan dengan baik
   }
 }
 
+
 const SiswaControllerDelete = async (req, res) => {
   try {
-    // Your code here
-    res.status(204).json({
-      controller: "SiswaControllerDelete",
-      params: req.params
-    });
+    let siswa = await Siswa.findOne({ _id: req.params.id });
+    if (!siswa) throw { status: 404, message: "Not found" };
+    await Siswa.findByIdAndDelete(req.params.id);
+    res.status(204).json(null);
+    return res.status(200).json(siswa); // Mengirimkan respons sukses dengan data siswa yang diperbarui
   } catch (error) {
-    return LibHTTPResponseException(res, error);
+    return LibHTTPResponseException(res, error); // Menangani kesalahan dengan baik
   }
 }
 

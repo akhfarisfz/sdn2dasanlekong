@@ -41,7 +41,32 @@ const GuruMiddlewareCreate = LibValidationsMiddleware(
    *  }),
    *  ...
    */
+  LibValidationFields.CharField({ field: "nip", required: true, unique: true }),
+  LibValidationFields.ObjectField({ field: "user" }),
+  LibValidationFields.ObjectField({ field: "user._id",required:false }),
+  LibValidationFields.CharField({
+    field: "user.username",
+    customs: [UserValidatiorUsernameUnique],
+  }),
+  LibValidationFields.CharField({
+    field: "user.email",
+    customs: [UserValidatorEmailUnique
+    ],
+  }),
+  LibValidationFields.CharField({
+    field: "user.password",
+    sanitizers: [UserSanitizerPasswordHash],
+  }),
+  LibValidationFields.ChoicesValidator({
+    field: "user.roles",
+    choices: ['Admin', 'Guru', 'Siswa'],
+    default:'Guru'
+  }),
 
+  LibValidationFields.CharField({ field: "nama_lengkap" }),
+  LibValidationFields.DateField({ field: "tanggal_lahir" }),
+  LibValidationFields.ChoicesValidator({ field: "jenis_kelamin", choices: ['Pria', 'Wanita'] }),
+  LibValidationFields.CharField({ field: "alamat" }),
   LibValidationExceptionMiddleware,
 );
 

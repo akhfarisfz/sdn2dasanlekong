@@ -6,7 +6,7 @@ function UserFilter(req) {
     qSearch = {
       $or: [
 
-        { field1: { $regex: ".*" + search + ".*", $options: "i" } },
+        { nama_lengkap: { $regex: ".*" + search + ".*", $options: "i" } },
       ],
     };
   }

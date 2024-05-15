@@ -49,11 +49,11 @@ const UserMiddlewareSignUp  = LibValidationsMiddleware(
     default:'Admin'
   }),
   
-  LibValidationFields.CharField({ field: "nama_lengkap" }),
-  LibValidationFields.NumberField({ field: "nomor_induk" }),
-  LibValidationFields.DateField({ field: "tanggal_lahir"}),
-  LibValidationFields.ChoicesValidator({ field: "jenis_kelamin", choices: ['Pria', 'Wanita']}),
-  LibValidationFields.CharField({ field: "alamat" }),
+  // LibValidationFields.CharField({ field: "nama_lengkap" }),
+  // LibValidationFields.NumberField({ field: "nomor_induk" }),
+  // LibValidationFields.DateField({ field: "tanggal_lahir"}),
+  // LibValidationFields.ChoicesValidator({ field: "jenis_kelamin", choices: ['Pria', 'Wanita']}),
+  // LibValidationFields.CharField({ field: "alamat" }),
 
 
   // (req, res, next) => {

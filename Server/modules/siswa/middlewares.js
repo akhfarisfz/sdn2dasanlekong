@@ -5,6 +5,8 @@ const {
   LibValidationFields,
   LibValidationsMiddleware,
 } = require("../../libs/validations");
+const { UserSanitizerPasswordHash } = require("../../providers/users/sanitizers");
+const { UserValidatiorUsernameUnique, UserValidatorEmailUnique } = require("../../providers/users/validators");
 
 /**
  * If you want to remove JWT authentication, 
@@ -41,6 +43,33 @@ const SiswaMiddlewareCreate = LibValidationsMiddleware(
    *  }),
    *  ...
    */
+  LibValidationFields.CharField({ field: "nis", required: true, unique: true }),
+  LibValidationFields.ObjectField({ field: "user" }),
+  LibValidationFields.ObjectField({ field: "user._id",required:false }),
+  LibValidationFields.CharField({
+    field: "user.username",
+    customs: [UserValidatiorUsernameUnique],
+  }),
+  LibValidationFields.CharField({
+    field: "user.email",
+    customs: [UserValidatorEmailUnique
+    ],
+  }),
+  LibValidationFields.CharField({
+    field: "user.password",
+    sanitizers: [UserSanitizerPasswordHash],
+  }),
+  LibValidationFields.ChoicesValidator({
+    field: "user.roles",
+    choices: ['Admin', 'Guru', 'Siswa'],
+    default:'Siswa'
+  }),
+
+  LibValidationFields.CharField({ field: "nama_lengkap" }),
+  LibValidationFields.DateField({ field: "tanggal_lahir" }),
+  LibValidationFields.ChoicesValidator({ field: "jenis_kelamin", choices: ['Pria', 'Wanita'] }),
+  LibValidationFields.CharField({ field: "alamat" }),
+
 
   LibValidationExceptionMiddleware,
 );
@@ -62,4 +91,3 @@ module.exports = {
   SiswaMiddlewareList,
   SiswaMiddlewareDelete,
 };
-  

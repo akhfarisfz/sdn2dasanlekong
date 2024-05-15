@@ -94,7 +94,7 @@ function Header() {
           </li>
           <li className="font-semibold my-7 md:my-0 md:ml-8">
             <NavLink
-              to={isLoggedIn ? "/login" : "/login"}
+              to={isLoggedIn ? "/" : "/login"}
               onClick={isLoggedIn ? signOut : null}
             >
               {isLoggedIn ? "Logout" : "Login"}
