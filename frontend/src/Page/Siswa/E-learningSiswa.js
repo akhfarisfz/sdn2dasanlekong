@@ -33,7 +33,7 @@ function E_learningSiswa() {
   const hariArray = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
   const jamArray = Array.from({ length: 9 }, (_, i) => i + 7);
 
-  const products = [
+  const list_matpel = [
     {
       id: 1,
       image: indonesia,
@@ -182,17 +182,17 @@ function E_learningSiswa() {
 
           {/* list menggunakan React Router Dom */}
           <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {products.map((product, index) => (
+            {list_matpel.map((mapel, index) => (
               <li key={index}>
                 <div className="group block overflow-hidden relative">
                   <img
-                    src={product.image}
+                    src={mapel.image}
                     alt=""
                     className="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
                   />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <NavLink
-                      to={`/siswa/eLearning/mapel/${product.id}`}
+                      to={`/siswa/eLearning/mapel/${mapel.id}`}
                       className="opacity-0 group-hover:opacity-100"
                     >
                       <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
@@ -203,7 +203,7 @@ function E_learningSiswa() {
                 </div>
                 <div className="relative bg-white pt-3">
                   <h3 className="font-bold text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4">
-                    {product.title}
+                    {mapel.title}
                   </h3>
                 </div>
               </li>

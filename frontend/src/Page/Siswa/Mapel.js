@@ -3,10 +3,30 @@ import belajar from "../../img/belajar.jpg";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getMapel } from "./routeDataMapel";
+import { NavLink } from "react-router-dom";
 
 function Mapel() {
   const { id } = useParams(); // Ambil ID mapel dari URL menggunakan useParams
   const [mapel, setMapel] = useState(null); // State untuk menyimpan data mapel
+
+  const list_tugas = [
+    {
+      id: 1,
+      title: "Ujian Harian",
+    },
+    {
+      id: 2,
+      title: "Tugas Harian",
+    },
+    {
+      id: 3,
+      title: "Ujian Akhir Semester",
+    },
+    {
+      id: 4,
+      title: "Tugas Harian",
+    },
+  ];
 
   // Ambil data mapel berdasarkan ID saat komponen dimuat
   useEffect(() => {
@@ -31,24 +51,34 @@ function Mapel() {
           {console.log(mapel.gambar)}
           <div
             id="cover-content"
-            className="relative text-center md:text-left lg:left-20"
+            className="relative text-center lg:text-left lg:left-20"
           >
-            <h1 className="bg-gray-500 p-4 text-4xl md:text-5xl lg:text-6xl text-white font-bold mb-4">
+            <h1 className="p-4 bg-gray-500 text-4xl md:text-5xl lg:text-6xl text-white font-bold mb-4">
               Selamat Belajar!!
             </h1>
-            <p className="bg-gray-500 p-4 w-fit text-lg md:text-xl lg:text-2xl text-white mb-8">
-              Mari kita belajar di E-Learning!!
+
+            <p className="lg:w-fit p-4 bg-gray-500 text-lg md:text-xl lg:text-2xl text-white mb-8">
+              Mari kita belajar {mapel.title}!!
             </p>
+
             <div className="flex flex-col md:flex-row items-center justify-center md:justify-start"></div>
           </div>
         </div>
       </section>
-      <div>
-        <h2>{mapel.title}</h2>
-        <p>{mapel.description}</p>
-        <p>{mapel.teacher}</p>
-        <img src={mapel.image}></img>
-      </div>
+
+      <h2>{mapel.title}</h2>
+      <ul className="mt-4 grid m-auto px-4 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {list_tugas.map((tugas, index) => (
+          <li
+            className="my-6 bg-gradient-to-r from-violet-500 to-fuchsia-500 h-[200px] w-full"
+            key={index}
+          >
+            <div className="flex justify-center items-center text-center h-full">
+              <h3 className="text-white">{tugas.title}</h3>
+            </div>
+          </li>
+        ))}
+      </ul>
     </>
   );
 }
