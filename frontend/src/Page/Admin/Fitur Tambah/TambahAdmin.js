@@ -87,7 +87,7 @@ function TambahAdmin() {
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="border-b-2 border-gray-400 font-bold text-xl text-base leading-7 text-gray-900 text-center">
-              Isi data Guru yang ingin ditambahkan
+              Isi data Admin yang ingin ditambahkan
             </h2>
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">

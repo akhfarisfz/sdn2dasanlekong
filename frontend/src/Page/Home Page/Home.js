@@ -64,7 +64,7 @@ function Home() {
       <div className="container w-screen box-border">
         <div
           id="cover"
-          className="relative justify-center lg:justify-start bg-blue-500 min-h-screen flex items-center w-screen re;ative bg-cover bg-center bg-no-repeat "
+          className="relative mt-[25px] lg:mt-[60px] justify-center lg:justify-start bg-blue-500 min-h-screen flex items-center w-screen bg-cover bg-center bg-no-repeat "
           style={{ backgroundImage: `url(${sekolah1})` }}
         >
           <div

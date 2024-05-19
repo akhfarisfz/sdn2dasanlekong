@@ -11,6 +11,7 @@ import E_learningSiswa from "./Page/Siswa/E-learningSiswa.js";
 import Mapel from "./Page/Siswa/Mapel.js";
 import TambahGuru from "./Page/Admin/Fitur Tambah/TambahGuru.js";
 import TambahSiswa from "./Page/Admin/Fitur Tambah/TambahSiswa.js";
+import TambahAdmin from "./Page/Admin/Fitur Tambah/TambahAdmin.js";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -35,6 +36,10 @@ function App() {
             <Route
               path="/admin/dashboard/TambahSiswa"
               element={<TambahSiswa />}
+            />
+            <Route
+              path="/admin/dashboard/TambahAdmin"
+              element={<TambahAdmin />}
             />
           </Route>
           {/* Siswa */}
