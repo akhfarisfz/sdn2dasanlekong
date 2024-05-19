@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import Header from "./Header.js";
+import Header from "../../libs/components/Header.js";
 import Footer from "./Footer.js";
 import sekolah1 from "../../img/gambarGedung.jpg";
 import { NavLink } from "react-router-dom";

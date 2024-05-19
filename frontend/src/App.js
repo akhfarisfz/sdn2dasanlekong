@@ -9,8 +9,8 @@ import PageCommonOutlet from "./Page/commons/PageCommonOutlet.js";
 import AdminDetail from "./Page/Admin/AdminDetail.js";
 import E_learningSiswa from "./Page/Siswa/E-learningSiswa.js";
 import Mapel from "./Page/Siswa/Mapel.js";
-import TambahGuru from "./Page/Admin/TambahGuru.js";
-import TambahSiswa from "./Page/Admin/TambahSiswa.js";
+import TambahGuru from "./Page/Admin/Fitur Tambah/TambahGuru.js";
+import TambahSiswa from "./Page/Admin/Fitur Tambah/TambahSiswa.js";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);

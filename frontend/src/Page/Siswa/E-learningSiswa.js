@@ -1,14 +1,10 @@
 import React, { useState, useContext } from "react";
-import { CgMenuGridO } from "react-icons/cg";
-import { IoCloseCircleOutline } from "react-icons/io5";
-import Logo from "../../img/tuturi.png";
-import { Link } from "react-scroll";
 import { NavLink } from "react-router-dom";
 import useJWT from "../../libs/hooks/useJWT";
 import { useNavigate } from "react-router-dom";
 import { ContextApplication } from "../../libs/config/contexts";
 import belajar from "../../img/belajar.jpg";
-import Header from "../Home Page/Header";
+import Header from "../../libs/components/Header";
 import matematika from "../../img/matematika.jpg";
 import IPA from "../../img/IPA.jpg";
 import indonesia from "../../img/bhs indo.jpg";

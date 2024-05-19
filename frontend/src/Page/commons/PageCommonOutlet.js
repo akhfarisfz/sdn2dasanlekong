@@ -3,6 +3,7 @@ import { ContextApplication } from "../../libs/config/contexts";
 import { Outlet } from "react-router-dom";
 import LibComponentNavbar from "../../libs/components/LibComponentNavbar.js";
 import Login from "../Login.js";
+import Header from "../../libs/components/Header.js";
 
 const PageCommonOutlet = () => {
   const application = useContext(ContextApplication);
@@ -18,8 +19,7 @@ const PageCommonOutlet = () => {
         <Login />
       )}
     </>
-  )
-
-}
+  );
+};
 
 export default PageCommonOutlet;

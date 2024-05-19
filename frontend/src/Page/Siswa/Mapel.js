@@ -1,5 +1,4 @@
-import Header from "../Home Page/Header";
-import belajar from "../../img/belajar.jpg";
+import Header from "../../libs/components/Header";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getMapel } from "./routeDataMapel";

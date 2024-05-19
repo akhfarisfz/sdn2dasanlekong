@@ -5,9 +5,9 @@ import Logo from "../../img/tuturi.png";
 import { Link } from "react-scroll";
 import { NavLink } from "react-router-dom";
 import { useHistory, useLocation } from "react-router-dom";
-import useJWT from "../../libs/hooks/useJWT";
+import useJWT from "../hooks/useJWT";
 import { useNavigate } from "react-router-dom";
-import { ContextApplication } from "../../libs/config/contexts";
+import { ContextApplication } from "../config/contexts";
 
 function Header() {
   let [isOpen, setIsOpen] = useState(false);
