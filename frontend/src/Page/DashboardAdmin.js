@@ -17,12 +17,14 @@ function DashboardAdmin() {
   const jwt = useJWT();
   const message = useMessage();
 
-  const [daftarUser, setDaftarUser] = useState([]);
-  const [daftarUserPagination, setDaftarUserPagination] = useState({})
+  const [daftarGuru, setDaftarGuru] = useState([]);
+  const [daftarSiswa, setDaftarSiswa] = useState([]);
+  const [daftarGuruPagination, setDaftarGuruPagination] = useState({})
+  const [daftarSiswaPagination, setDaftarSiswaPagination] = useState({})
   const userSearch = useRef({ value: "" })
 
-  const onUserList = (params) => {
-    const url = `${BASE_URL}/users/`;
+  const onGuruList = (params) => {
+    const url = `${BASE_URL}/guru/`;
     const config = {
       headers: {
         Authorization: jwt.get(),
@@ -31,37 +33,41 @@ function DashboardAdmin() {
     }
     http.privateHTTP.get(url, config).then((response) => {
       const { results, ...pagination } = response.data;
-      setDaftarUserPagination(pagination);
-      setDaftarUser(results)
+      setDaftarGuruPagination(pagination);
+      setDaftarGuru(results)
     }).catch((error) => {
       message.error(error);
     })
   }
 
+  const onSiswaList = (params) => {
+    const url = `${BASE_URL}/siswa/`;
+    const config = {
+      headers: {
+        Authorization: jwt.get(),
+      },
+      params
+    }
+    http.privateHTTP.get(url, config).then((response) => {
+      const { results, ...pagination } = response.data;
+      setDaftarSiswaPagination(pagination);
+      setDaftarSiswa(results)
+    }).catch((error) => {
+      message.error(error);
+    })
+  }
   const onUserSearch = (e) => {
     if (e.key === 'Enter') {
-      onUserList({ search: userSearch.current.value })
+      onGuruList({ search: userSearch.current.value })
+      onSiswaList({ search: userSearch.current.value })
     }
   }
 
   useEffect(() => {
-    onUserList();
+    onGuruList();
+    onSiswaList();
   }, []);
-  const filterguru = daftarUser
-    .filter((user) => !user.roles.includes('Siswa') && !user.roles.includes('Admin'))
-    .sort((a, b) => {
-      const roleA = typeof a.roles === 'string' ? a.roles : '';
-      const roleB = typeof b.roles === 'string' ? b.roles : '';
-      return roleA.localeCompare(roleB);
-    });
-
-  const filtersiswa = daftarUser
-    .filter((user) => !user.roles.includes('Guru') && !user.roles.includes('Admin'))
-    .sort((a, b) => {
-      const roleA = typeof a.roles === 'string' ? a.roles : '';
-      const roleB = typeof b.roles === 'string' ? b.roles : '';
-      return roleA.localeCompare(roleB);
-    });
+  
 
 
   function handleRowClick(user) {
@@ -113,7 +119,7 @@ function DashboardAdmin() {
           </tr>
         </thead>
         <tbody>
-          {filterguru.map((user) => (
+          {daftarGuru.map((user) => (
             <tr key={user._id} class="bg-white divide-y divide-gray-200 cursor-pointer hover:bg-gray-100" onClick={() => handleRowClick(user)}>
               <td class="px-6 py-4 whitespace-nowrap">{user.username}</td>
               <td class="px-6 py-4 whitespace-nowrap">{user.email}</td>
@@ -146,7 +152,7 @@ function DashboardAdmin() {
           </tr>
         </thead>
         <tbody>
-          {filtersiswa.map((user) => (
+          {daftarSiswa.map((user) => (
             <tr key={user._id} class="bg-white divide-y divide-gray-200 cursor-pointer hover:bg-gray-100" onClick={() => handleRowClick(user)}>
               <td class="px-6 py-4 whitespace-nowrap">{user.username}</td>
               <td class="px-6 py-4 whitespace-nowrap">{user.email}</td>

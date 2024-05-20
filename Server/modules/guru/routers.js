@@ -1,4 +1,6 @@
-
+const express = require("express");
+const multer = require("multer");
+const path = require("path");
 const { LibHTTPRouter } = require("../../libs/https");
 const {
   GuruControllerList,
@@ -17,26 +19,26 @@ const {
 
 const GuruRouter = LibHTTPRouter();
 
+// Konfigurasi multer untuk menyimpan file
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // Tentukan folder tujuan penyimpanan gambar
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  }
+});
+
+const upload = multer({ storage: storage });
+
+// Middleware yang ada di GuruMiddlewareCreate tetap dipanggil setelah upload middleware
 GuruRouter.get("", GuruMiddlewareList, GuruControllerList);
-GuruRouter.post("", GuruMiddlewareCreate, GuruControllerCreate);
+GuruRouter.post("", upload.single('gambar'), GuruMiddlewareCreate, GuruControllerCreate);
 GuruRouter.get("/:id", GuruMiddlewareDetail, GuruControllerDetail);
 GuruRouter.put("/:id", GuruMiddlewareUpdate, GuruControllerUpdate);
 GuruRouter.delete("/:id", GuruMiddlewareDelete, GuruControllerDelete);
 
-/**
- * You need to register your application in the index.js file 
- * so that it can be accessed and used as an API, as in the following example:
- *  
- *  // ...
- *  const { GuruRouter } = require("./modules/guru/routers");
- *  
- *  // ...
- *  LibModuleRegister(app, "guru", GuruRouter);
- * 
- * Copy and paste the registration code above inside your index.js file.
- * Run the application and try accessing your API with a client tool such as postman.
- */
-
 module.exports = {
   GuruRouter,
-};  
+};
+  

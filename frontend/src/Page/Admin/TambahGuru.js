@@ -1,7 +1,56 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import useHTTP from "../../libs/hooks/useHTTP";
+import useJWT from "../../libs/hooks/useJWT";
+import useMessage from "../../libs/hooks/useMessage";
+import useChangeListener from "../../libs/hooks/useChangeListener";
+import useValidator from "../../libs/hooks/useValidator";
+import { BASE_URL } from "../../libs/config/settings";
 function TambahGuru() {
+  const navigate = useNavigate();
+  const http = useHTTP();
+  const jwt = useJWT();
+  const message = useMessage();
+
+  const [guru, setGuru] = useState({});
+  // const [ImageData, setImageData] = useState({});
+  const guruChangeListener = useChangeListener();
+  const guruValidator = useValidator([]);
+  const onGuruCreate = () => {
+
+    const config = {
+      headers: {
+        Authorization: jwt.get(),
+      },
+    };
+    const handleImageChange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+          setGuru(prevGuru => ({
+              ...prevGuru,
+              gambar: file // Menyimpan data gambar ke dalam bidang gambar guru
+          }));
+  
+          const reader = new FileReader();
+          reader.onloadend = () => {
+              const imageData = reader.result;
+              // setImageDate(imageData);
+          };
+          reader.readAsDataURL(file);
+      }
+  };
+    http.privateHTTP
+      .post(`${BASE_URL}/guru/`, config)
+      .then((response) => {
+        message.success(response);
+        navigate("/admin/dashboard");
+      })
+      .catch((error) => {
+        message.error(error);
+        guruValidator.except(error);
+      });
+  };
   return (
     <>
       <Link
@@ -25,20 +74,20 @@ function TambahGuru() {
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-4">
                 <label
-                  htmlFor="nama"
+                  htmlFor="nama_lengkap"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Nama Lenkap
                 </label>
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                    <input
+                  <input
                       type="text"
-                      name="nama"
-                      id="nama"
-                      autoComplete="nama"
+                      placeholder="Masukkan Nama"
+                      value={guru.nama_lengkap}
+                      name="nama_lengkap"
+                      onChange={(e) => guruChangeListener.onChangeText(e, guru, setGuru)}
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Masukkan nama lengkap"
                     />
                   </div>
                 </div>
@@ -48,17 +97,17 @@ function TambahGuru() {
                   htmlFor="NIK"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  NIK
+                  NIP
                 </label>
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                     <input
-                      type="number"
-                      name="NIK"
-                      id="NIK"
-                      autoComplete="NIK"
+                      type="text"
+                      placeholder="Masukkan NIP anda"
+                      value={guru.nip}
+                      name="nip"
+                      onChange={(e) => guruChangeListener.onChangeText(e, guru, setGuru)}
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Masukkan NIK"
                     />
                   </div>
                 </div>
@@ -74,12 +123,12 @@ function TambahGuru() {
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                     <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      autoComplete="email"
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      type="text"
                       placeholder="Masukkan Email"
+                      value={guru.email}
+                      name="email"
+                      onChange={(e) => guruChangeListener.onChangeText(e, guru, setGuru)}
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -94,9 +143,10 @@ function TambahGuru() {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="street-address"
-                    id="street-address"
-                    autoComplete="street-address"
+                    placeholder="Masukkan Nama"
+                    value={guru.alamat}
+                    name="alamat"
+                    onChange={(e) => guruChangeListener.onChangeText(e, guru, setGuru)}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -112,8 +162,10 @@ function TambahGuru() {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="city"
-                    id="city"
+                    placeholder="Masukkan Kota"
+                    value={guru.kota}
+                    name="kota"
+                    onChange={(e) => guruChangeListener.onChangeText(e, guru, setGuru)}
                     autoComplete="address-level2"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -130,8 +182,10 @@ function TambahGuru() {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="region"
-                    id="region"
+                    placeholder="Masukkan Kota"
+                    value={guru.kota}
+                    name="kota"
+                    onChange={(e) => guruChangeListener.onChangeText(e, guru, setGuru)}
                     autoComplete="address-level1"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -147,9 +201,11 @@ function TambahGuru() {
                 </label>
                 <div className="mt-2">
                   <input
-                    type="text"
-                    name="postal-code"
-                    id="postal-code"
+                     type="text"
+                     placeholder="Masukkan Nama"
+                     value={guru.kodepos}
+                     name="kodepos"
+                     onChange={(e) => guruChangeListener.onChangeText(e, guru, setGuru)}
                     autoComplete="postal-code"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -163,16 +219,17 @@ function TambahGuru() {
                   Photo
                 </label>
                 <div className="mt-2 flex items-center gap-x-3">
-                  <UserCircleIcon
-                    className="h-12 w-12 text-gray-300"
-                    aria-hidden="true"
-                  />
-                  <button
-                    type="button"
-                    className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                  >
-                    Change
-                  </button>
+                          <input
+                          type="file"
+                          accept="image/*"
+                          // onChange={handleImageChange}
+                      />
+                      {/* {imageData && (
+                          <div>
+                              <h2>Preview Gambar</h2>
+                              <img src={imageData} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                          </div>
+                      )} */}
                 </div>
               </div>
 

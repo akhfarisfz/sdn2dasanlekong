@@ -5,6 +5,8 @@ const {
   LibValidationFields,
   LibValidationsMiddleware,
 } = require("../../libs/validations");
+const { UserSanitizerPasswordHash } = require("../../providers/users/sanitizers");
+const { UserValidatiorUsernameUnique, UserValidatorEmailUnique } = require("../../providers/users/validators");
 
 /**
  * If you want to remove JWT authentication, 

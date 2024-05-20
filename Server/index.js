@@ -4,7 +4,7 @@ const express = require("express");
 const { DatabaseMongoDBConnector } = require("./libs/databases");
 const { LibModuleRegister } = require("./libs/modules");
 const { UserRouter } = require("./providers/users/routers");
-// const { GuruRouter } = require("./modules/guru/routers");
+const { GuruRouter } = require("./modules/guru/routers");
 const { SiswaRouter } = require("./modules/siswa/routers");
 const app = express();
 // Mendefinisikan koneksi ke MongoDB dengan opsi tambahan
@@ -31,9 +31,13 @@ DatabaseMongoDBConnector({ hideSuccessMessage: false });
 
 app.use(express.json());
 
+app.use('/uploads', express.static('uploads'));
+
+
 LibModuleRegister(app, "users", UserRouter);
 LibModuleRegister(app, "siswa", SiswaRouter);
-// LibModuleRegister(app, "guru", GuruRouter);
+LibModuleRegister(app, "guru", GuruRouter);
+
 
 app.listen(process.env.APP_PORT, function () {
   console.log(`Server berjalan di port ${process.env.APP_PORT}.`);
