@@ -12,6 +12,7 @@ import Mapel from "./Page/Siswa/Mapel.js";
 import TambahGuru from "./Page/Admin/Fitur Tambah/TambahGuru.js";
 import TambahSiswa from "./Page/Admin/Fitur Tambah/TambahSiswa.js";
 import TambahAdmin from "./Page/Admin/Fitur Tambah/TambahAdmin.js";
+import TambahSoalGuru from "./Page/Guru/TambahSoalGuru.js";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -48,6 +49,10 @@ function App() {
           {/* Guru */}
           <Route element={<PageCommonOutlet />}>
             <Route path="/guru/dashboard" element={<DashboardGuru />} />
+            <Route
+              path="/guru/dashboard/tambah_soal"
+              element={<TambahSoalGuru />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>
