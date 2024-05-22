@@ -3,11 +3,12 @@ const { LibPaginationResponse } = require("../../libs/paginations");
 const { LibHTTPResponseException } = require("../../libs/https");
 const { Guru } = require("./models");
 const { User } = require("../../providers/users/models");
+const { GuruFilter } = require("./filters");
 
 const GuruControllerList =  async (req, res) => {
   try {
     // Your code here
-    const results = Guru.find(SiswaFilter(req));
+    const results = Guru.find(GuruFilter(req));
     return LibPaginationResponse(req, res, results);
   } catch (error) {
     return LibHTTPResponseException(res, error);

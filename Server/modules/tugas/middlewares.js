@@ -11,15 +11,15 @@ const {
  * you can remove 'LibAuthenticationMiddleware' from your middleware list.
  */
 
-const MateriElearningMiddlewareList = LibValidationsMiddleware(
+const TugasMiddlewareList = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
-const MateriElearningMiddlewareDetail = LibValidationsMiddleware(
+const TugasMiddlewareDetail = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
-const MateriElearningMiddlewareCreate = LibValidationsMiddleware(
+const TugasMiddlewareCreate = LibValidationsMiddleware(
   LibAuthenticationMiddleware,
   /** Your middleware here (validations, sanitizing, etc..) */
 
@@ -33,37 +33,33 @@ const MateriElearningMiddlewareCreate = LibValidationsMiddleware(
    *  LibValidationFields.CharField({ field: "field2" }),
    *  LibValidationFields.CharField({
    *    field: "field3",
-   *    customs: [MateriElearningValidatorField3Unique],
+   *    customs: [TugasValidatorField3Unique],
    *  }),
    *  LibValidationFields.CharField({
    *    field: "field4",
-   *    sanitizers: [MateriElearningSanitizerField4ToHash],
+   *    sanitizers: [TugasSanitizerField4ToHash],
    *  }),
    *  ...
    */
-  LibValidationFields.CharField({ field: "id_guru" }),
-  LibValidationFields.CharField({ field: "judul" }),
-  LibValidationFields.CharField({ field: "deskripsi" }),
-  LibValidationFields.CharField({ field: "kelas" }),
-  LibValidationFields.CharField({ field: "mata_pelajaran" }),
+
   LibValidationExceptionMiddleware,
 );
 
-const MateriElearningMiddlewareUpdate = LibValidationsMiddleware(
+const TugasMiddlewareUpdate = LibValidationsMiddleware(
   LibAuthenticationMiddleware,
   /** Your middleware here (validations, sanitizing, etc..) */
   LibValidationExceptionMiddleware,
 );
 
-const MateriElearningMiddlewareDelete = LibValidationsMiddleware(
+const TugasMiddlewareDelete = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
 module.exports = {
-  MateriElearningMiddlewareCreate,
-  MateriElearningMiddlewareUpdate,
-  MateriElearningMiddlewareDetail,
-  MateriElearningMiddlewareList,
-  MateriElearningMiddlewareDelete,
+  TugasMiddlewareCreate,
+  TugasMiddlewareUpdate,
+  TugasMiddlewareDetail,
+  TugasMiddlewareList,
+  TugasMiddlewareDelete,
 };
   
