@@ -7,7 +7,7 @@ const FileMateriSchema = new mongoose.Schema({
   ukuran_file: { type: Number, required: true } // ukuran file dalam bytes
 }, { _id: false });
 
-module.exports = mongoose.model('FileMateri', FileMateriSchema);
+const FileMateri= mongoose.model('FileMateri', FileMateriSchema);
 
 module.exports = {
   FileMateri,

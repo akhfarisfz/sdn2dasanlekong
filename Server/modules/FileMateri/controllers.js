@@ -36,10 +36,10 @@ const FileMateriControllerDetail = async (req, res) => {
 
 const FileMateriControllerUpdate = async (req, res) => {
   try {
-    let file = await FileMateriFilter.findOne({ _id: req.params.id });
-    if (!fie) throw { status: 404, message: "Not found" };
+    let file = await FileMateri.findOne({ _id: req.params.id });
+    if (!file) throw { status: 404, message: "Not found" };
 
-    await FileMateriFilter.findByIdAndUpdate(req.params.id, req.cleanedData);
+    await FileMateri.findByIdAndUpdate(req.params.id, req.cleanedData);
     return res.status(200).json(file); 
   } catch (error) {
     return LibHTTPResponseException(res, error);
@@ -48,10 +48,10 @@ const FileMateriControllerUpdate = async (req, res) => {
 
 const FileMateriControllerDelete = async (req, res) => {
   try {
-    let file = await FileMateriFilter.findOne({ _id: req.params.id });
+    let file = await FileMateri.findOne({ _id: req.params.id });
     if (!file) throw { status: 404, message: "Not found" };
 
-    await FileMateriFilter.findByIdAndDelete(req.params.id, req.cleanedData);
+    await FileMateri.findByIdAndDelete(req.params.id, req.cleanedData);
     return res.status(200).json(file); 
   } catch (error) {
     return LibHTTPResponseException(res, error);
