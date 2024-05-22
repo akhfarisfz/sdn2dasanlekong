@@ -7,8 +7,10 @@ const MateriElearningSchema = new mongoose.Schema(
     judul:{type:String},
     deskripsi:{type:String},
     kelas:{type:Number},
-    // mata_pelajaran:{type: Schema.Types.ObjectId, ref:"Mata_Pelajaran"},// nanti bakal referensi 
-    mata_pelajaran:{type: String},// nanti bakal referensi 
+    mata_pelajaran:{
+      nama_mapel:{type:String},
+    },
+    url_file_materi:{type:String},
     tangal_post: { type: Date, default: Date.now },
   },
   { versionKey: false }

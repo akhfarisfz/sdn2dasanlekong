@@ -11,15 +11,15 @@ const {
  * you can remove 'LibAuthenticationMiddleware' from your middleware list.
  */
 
-const Mata_pelajaranMiddlewareList = LibValidationsMiddleware(
+const FileMateriMiddlewareList = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
-const Mata_pelajaranMiddlewareDetail = LibValidationsMiddleware(
+const FileMateriMiddlewareDetail = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
-const Mata_pelajaranMiddlewareCreate = LibValidationsMiddleware(
+const FileMateriMiddlewareCreate = LibValidationsMiddleware(
   LibAuthenticationMiddleware,
   /** Your middleware here (validations, sanitizing, etc..) */
 
@@ -33,33 +33,36 @@ const Mata_pelajaranMiddlewareCreate = LibValidationsMiddleware(
    *  LibValidationFields.CharField({ field: "field2" }),
    *  LibValidationFields.CharField({
    *    field: "field3",
-   *    customs: [Mata_pelajaranValidatorField3Unique],
+   *    customs: [FileMateriValidatorField3Unique],
    *  }),
    *  LibValidationFields.CharField({
    *    field: "field4",
-   *    sanitizers: [Mata_pelajaranSanitizerField4ToHash],
+   *    sanitizers: [FileMateriSanitizerField4ToHash],
    *  }),
    *  ...
    */
-  LibValidationFields.CharField({ field: "nama_mapel" }),
+  LibValidationFields.CharField({ field: "nama_file" }),
+  LibValidationFields.CharField({ field: "url" }),
+  LibValidationFields.CharField({ field: "tipe_file" }),
+  LibValidationFields.NumberField({ field: "ukuran_file" }),
   LibValidationExceptionMiddleware,
 );
 
-const Mata_pelajaranMiddlewareUpdate = LibValidationsMiddleware(
+const FileMateriMiddlewareUpdate = LibValidationsMiddleware(
   LibAuthenticationMiddleware,
   /** Your middleware here (validations, sanitizing, etc..) */
   LibValidationExceptionMiddleware,
 );
 
-const Mata_pelajaranMiddlewareDelete = LibValidationsMiddleware(
+const FileMateriMiddlewareDelete = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
 module.exports = {
-  Mata_pelajaranMiddlewareCreate,
-  Mata_pelajaranMiddlewareUpdate,
-  Mata_pelajaranMiddlewareDetail,
-  Mata_pelajaranMiddlewareList,
-  Mata_pelajaranMiddlewareDelete,
+  FileMateriMiddlewareCreate,
+  FileMateriMiddlewareUpdate,
+  FileMateriMiddlewareDetail,
+  FileMateriMiddlewareList,
+  FileMateriMiddlewareDelete,
 };
   

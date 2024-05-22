@@ -1,20 +1,13 @@
 
 const { LibPaginationResponse } = require("../../libs/paginations");
 const { LibHTTPResponseException } = require("../../libs/https");
+const { Jawabansiswa } = require("./models");
+const { JawabansiswaFilter } = require("./filters");
 
 const JawabansiswaControllerList =  async (req, res) => {
   try {
-    // Your code here
-
-    // example:
-    // const results = YourModel.find(YourFilter(req));
-    // return LibPaginationResponse(req, res, results);
-
-
-    res.status(201).json({
-      controller: "JawabansiswaControllerList",
-      query: req.query
-    });
+    const results = Jawabansiswa.find(JawabansiswaFilter(req));
+    return LibPaginationResponse(req, res, results);
   } catch (error) {
     return LibHTTPResponseException(res, error);
   }
@@ -22,11 +15,8 @@ const JawabansiswaControllerList =  async (req, res) => {
 
 const JawabansiswaControllerCreate = async (req, res) => {
   try {
-    // Your code here
-    res.status(201).json({
-      controller: "JawabansiswaControllerCreate",
-      body: req.body
-    });
+    await Jawabansiswa.create(req.cleanedData); // Buat entri baru di database
+    return res.status(201).json(req.cleanedData);
   } catch (error) {
     return LibHTTPResponseException(res, error);
   }
@@ -34,11 +24,9 @@ const JawabansiswaControllerCreate = async (req, res) => {
 
 const JawabansiswaControllerDetail = async (req, res) => {
   try {
-    // Your code here
-    res.status(200).json({
-      controller: "JawabansiswaControllerDetail",
-      params: req.params
-    });
+    let jawaban_siswa = await Jawabansiswa.findOne({ _id: req.params.id });
+    if (!jawaban_siswa) throw { status: 404, message: "Not found" };
+    res.status(200).json(jawaban_siswa);
   } catch (error) {
     return LibHTTPResponseException(res, error);
   }
@@ -46,12 +34,11 @@ const JawabansiswaControllerDetail = async (req, res) => {
 
 const JawabansiswaControllerUpdate = async (req, res) => {
   try {
-    // Your code here
-    res.status(200).json({
-      controller: "JawabansiswaControllerUpdate",
-      params: req.params,
-      body: req.body
-    });
+    let jawaban_siswa = await Jawabansiswa.findOne({ _id: req.params.id });
+    if (!jawaban_siswa) throw { status: 404, message: "Not found" };
+
+    await Jawabansiswa.findByIdAndUpdate(req.params.id, req.cleanedData);
+    return res.status(200).json(jawaban_siswa); // Mengirimkan respons sukses dengan 
   } catch (error) {
     return LibHTTPResponseException(res, error);
   }
@@ -59,11 +46,11 @@ const JawabansiswaControllerUpdate = async (req, res) => {
 
 const JawabansiswaControllerDelete = async (req, res) => {
   try {
-    // Your code here
-    res.status(204).json({
-      controller: "JawabansiswaControllerDelete",
-      params: req.params
-    });
+    let jawaban_siswa = await Jawabansiswa.findOne({ _id: req.params.id });
+    if (!jawaban_siswa) throw { status: 404, message: "Not found" };
+
+    await Jawabansiswa.findByIdAndDelete(req.params.id, req.cleanedData);
+    return res.status(200).json(jawaban_siswa); 
   } catch (error) {
     return LibHTTPResponseException(res, error);
   }

@@ -7,7 +7,6 @@ const { GuruFilter } = require("./filters");
 
 const GuruControllerList =  async (req, res) => {
   try {
-    // Your code here
     const results = Guru.find(GuruFilter(req));
     return LibPaginationResponse(req, res, results);
   } catch (error) {
@@ -46,7 +45,7 @@ const GuruControllerDetail = async (req, res) => {
 const GuruControllerUpdate = async (req, res) => {
   try {
     let guru = await Guru.findOne({ _id: req.params.id });
-    if (!karyawan) throw { status: 404, message: "Not found" };
+    if (!guru) throw { status: 404, message: "Not found" };
 
     await Guru.findByIdAndUpdate(req.params.id, req.cleanedData);
     return res.status(200).json(guru); // Mengirimkan respons sukses dengan data siswa yang diperbarui
@@ -57,11 +56,11 @@ const GuruControllerUpdate = async (req, res) => {
 
 const GuruControllerDelete = async (req, res) => {
   try {
-    // Your code here
-    res.status(204).json({
-      controller: "GuruControllerDelete",
-      params: req.params
-    });
+    let guru = await Guru.findOne({ _id: req.params.id });
+    if (!guru) throw { status: 404, message: "Not found" };
+
+    await Guru.findByIdAndDelete(req.params.id, req.cleanedData);
+    return res.status(200).json(guru); // Mengirimkan respons sukses dengan data siswa yang diperb
   } catch (error) {
     return LibHTTPResponseException(res, error);
   }

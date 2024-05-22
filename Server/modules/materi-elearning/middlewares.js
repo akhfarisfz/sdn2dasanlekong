@@ -45,7 +45,9 @@ const MateriElearningMiddlewareCreate = LibValidationsMiddleware(
   LibValidationFields.CharField({ field: "judul" }),
   LibValidationFields.CharField({ field: "deskripsi" }),
   LibValidationFields.CharField({ field: "kelas" }),
-  LibValidationFields.CharField({ field: "mata_pelajaran" }),
+  LibValidationFields.CharField({ field: "url_file_materi" }),
+  LibValidationFields.ObjectField({ field: "mata_pelajaran" }),
+  LibValidationFields.CharField({ field: "mata_pelajaran.nama_mapel" }),
   LibValidationExceptionMiddleware,
 );
 

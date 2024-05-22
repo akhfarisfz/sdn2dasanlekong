@@ -48,7 +48,7 @@ const SiswaControllerDetail = async (req, res) => {
 const SiswaControllerUpdate = async (req, res) => {
   try {
     let siswa = await Siswa.findOne({ _id: req.params.id });
-    if (!karyawan) throw { status: 404, message: "Not found" };
+    if (!siswa) throw { status: 404, message: "Not found" };
 
     await Siswa.findByIdAndUpdate(req.params.id, req.cleanedData);
     return res.status(200).json(siswa); // Mengirimkan respons sukses dengan data siswa yang diperbarui
