@@ -1,20 +1,14 @@
 
 const { LibPaginationResponse } = require("../../libs/paginations");
 const { LibHTTPResponseException } = require("../../libs/https");
+const { MateriElearning } = require("./models");
+const { MateriElearningFilter } = require("./filters");
 
 const MateriElearningControllerList =  async (req, res) => {
   try {
-    // Your code here
-
-    // example:
-    // const results = YourModel.find(YourFilter(req));
-    // return LibPaginationResponse(req, res, results);
-
-
-    res.status(201).json({
-      controller: "MateriElearningControllerList",
-      query: req.query
-    });
+    
+    const results = MateriElearning.find(MateriElearningFilter(req));
+    return LibPaginationResponse(req, res, results);
   } catch (error) {
     return LibHTTPResponseException(res, error);
   }
@@ -22,11 +16,8 @@ const MateriElearningControllerList =  async (req, res) => {
 
 const MateriElearningControllerCreate = async (req, res) => {
   try {
-    // Your code here
-    res.status(201).json({
-      controller: "MateriElearningControllerCreate",
-      body: req.body
-    });
+    await MateriElearning.create(req.cleanedData);
+    res.status(201).json(req.cleanedData);
   } catch (error) {
     return LibHTTPResponseException(res, error);
   }
@@ -34,11 +25,9 @@ const MateriElearningControllerCreate = async (req, res) => {
 
 const MateriElearningControllerDetail = async (req, res) => {
   try {
-    // Your code here
-    res.status(200).json({
-      controller: "MateriElearningControllerDetail",
-      params: req.params
-    });
+    let elearning = await MateriElearning.findOne({ _id: req.params.id });
+    if (!elearning) throw { status: 404, message: "Not found" };
+    res.status(200).json(elearning);
   } catch (error) {
     return LibHTTPResponseException(res, error);
   }
@@ -47,11 +36,11 @@ const MateriElearningControllerDetail = async (req, res) => {
 const MateriElearningControllerUpdate = async (req, res) => {
   try {
     // Your code here
-    res.status(200).json({
-      controller: "MateriElearningControllerUpdate",
-      params: req.params,
-      body: req.body
-    });
+    let elearning = await MateriElearning.findOne({ _id: req.params.id });
+    if (!elearning) throw { status: 404, message: "Not found" };
+
+    await MateriElearning.findByIdAndUpdate(req.params.id, req.cleanedData);
+    res.status(200).json(req.cleanedData);
   } catch (error) {
     return LibHTTPResponseException(res, error);
   }
@@ -59,11 +48,10 @@ const MateriElearningControllerUpdate = async (req, res) => {
 
 const MateriElearningControllerDelete = async (req, res) => {
   try {
-    // Your code here
-    res.status(204).json({
-      controller: "MateriElearningControllerDelete",
-      params: req.params
-    });
+    let elearning = await MateriElearning.findOne({ _id: req.params.id });
+    if (!elearning) throw { status: 404, message: "Not found" };
+    await MateriElearning.findByIdAndDelete(req.params.id);
+    res.status(204).json(null);
   } catch (error) {
     return LibHTTPResponseException(res, error);
   }

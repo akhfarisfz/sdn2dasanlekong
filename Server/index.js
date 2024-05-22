@@ -6,6 +6,11 @@ const { LibModuleRegister } = require("./libs/modules");
 const { UserRouter } = require("./providers/users/routers");
 const { GuruRouter } = require("./modules/guru/routers");
 const { SiswaRouter } = require("./modules/siswa/routers");
+const { MateriElearningRouter } = require("./modules/materi-elearning/routers");
+const { Mata_pelajaranRouter } = require("./modules/mata_pelajaran/routers");
+const { TugasRouter } = require("./modules/tugas/routers");
+const { FileMateriRouter } = require("./modules/FileMateri/routers");
+const { JawabansiswaRouter } = require("./modules/jawabansiswa/routers");
 const app = express();
 // Mendefinisikan koneksi ke MongoDB dengan opsi tambahan
 const connectToMongoDB = async () => {
@@ -37,6 +42,12 @@ app.use('/uploads', express.static('uploads'));
 LibModuleRegister(app, "users", UserRouter);
 LibModuleRegister(app, "siswa", SiswaRouter);
 LibModuleRegister(app, "guru", GuruRouter);
+LibModuleRegister(app, "elearning", MateriElearningRouter);
+LibModuleRegister(app, "mapel", Mata_pelajaranRouter);
+LibModuleRegister(app, "file", FileMateriRouter);
+LibModuleRegister(app, "tugas", TugasRouter);
+LibModuleRegister(app, "jawaban", JawabansiswaRouter);
+
 
 
 app.listen(process.env.APP_PORT, function () {

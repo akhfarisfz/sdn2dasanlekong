@@ -11,15 +11,15 @@ const {
  * you can remove 'LibAuthenticationMiddleware' from your middleware list.
  */
 
-const MateriElearningMiddlewareList = LibValidationsMiddleware(
+const Mata_pelajaranMiddlewareList = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
-const MateriElearningMiddlewareDetail = LibValidationsMiddleware(
+const Mata_pelajaranMiddlewareDetail = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
-const MateriElearningMiddlewareCreate = LibValidationsMiddleware(
+const Mata_pelajaranMiddlewareCreate = LibValidationsMiddleware(
   LibAuthenticationMiddleware,
   /** Your middleware here (validations, sanitizing, etc..) */
 
@@ -33,39 +33,33 @@ const MateriElearningMiddlewareCreate = LibValidationsMiddleware(
    *  LibValidationFields.CharField({ field: "field2" }),
    *  LibValidationFields.CharField({
    *    field: "field3",
-   *    customs: [MateriElearningValidatorField3Unique],
+   *    customs: [Mata_pelajaranValidatorField3Unique],
    *  }),
    *  LibValidationFields.CharField({
    *    field: "field4",
-   *    sanitizers: [MateriElearningSanitizerField4ToHash],
+   *    sanitizers: [Mata_pelajaranSanitizerField4ToHash],
    *  }),
    *  ...
    */
-  LibValidationFields.CharField({ field: "id_guru" }),
-  LibValidationFields.CharField({ field: "judul" }),
-  LibValidationFields.CharField({ field: "deskripsi" }),
-  LibValidationFields.CharField({ field: "kelas" }),
-  LibValidationFields.CharField({ field: "url_file_materi" }),
-  LibValidationFields.ObjectField({ field: "mata_pelajaran" }),
-  LibValidationFields.CharField({ field: "mata_pelajaran.nama_mapel" }),
+  LibValidationFields.CharField({ field: "nama_mapel" }),
   LibValidationExceptionMiddleware,
 );
 
-const MateriElearningMiddlewareUpdate = LibValidationsMiddleware(
+const Mata_pelajaranMiddlewareUpdate = LibValidationsMiddleware(
   LibAuthenticationMiddleware,
   /** Your middleware here (validations, sanitizing, etc..) */
   LibValidationExceptionMiddleware,
 );
 
-const MateriElearningMiddlewareDelete = LibValidationsMiddleware(
+const Mata_pelajaranMiddlewareDelete = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
 module.exports = {
-  MateriElearningMiddlewareCreate,
-  MateriElearningMiddlewareUpdate,
-  MateriElearningMiddlewareDetail,
-  MateriElearningMiddlewareList,
-  MateriElearningMiddlewareDelete,
+  Mata_pelajaranMiddlewareCreate,
+  Mata_pelajaranMiddlewareUpdate,
+  Mata_pelajaranMiddlewareDetail,
+  Mata_pelajaranMiddlewareList,
+  Mata_pelajaranMiddlewareDelete,
 };
   

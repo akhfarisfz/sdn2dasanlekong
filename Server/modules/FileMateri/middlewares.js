@@ -11,15 +11,15 @@ const {
  * you can remove 'LibAuthenticationMiddleware' from your middleware list.
  */
 
-const MateriElearningMiddlewareList = LibValidationsMiddleware(
+const FileMateriMiddlewareList = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
-const MateriElearningMiddlewareDetail = LibValidationsMiddleware(
+const FileMateriMiddlewareDetail = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
-const MateriElearningMiddlewareCreate = LibValidationsMiddleware(
+const FileMateriMiddlewareCreate = LibValidationsMiddleware(
   LibAuthenticationMiddleware,
   /** Your middleware here (validations, sanitizing, etc..) */
 
@@ -33,39 +33,36 @@ const MateriElearningMiddlewareCreate = LibValidationsMiddleware(
    *  LibValidationFields.CharField({ field: "field2" }),
    *  LibValidationFields.CharField({
    *    field: "field3",
-   *    customs: [MateriElearningValidatorField3Unique],
+   *    customs: [FileMateriValidatorField3Unique],
    *  }),
    *  LibValidationFields.CharField({
    *    field: "field4",
-   *    sanitizers: [MateriElearningSanitizerField4ToHash],
+   *    sanitizers: [FileMateriSanitizerField4ToHash],
    *  }),
    *  ...
    */
-  LibValidationFields.CharField({ field: "id_guru" }),
-  LibValidationFields.CharField({ field: "judul" }),
-  LibValidationFields.CharField({ field: "deskripsi" }),
-  LibValidationFields.CharField({ field: "kelas" }),
-  LibValidationFields.CharField({ field: "url_file_materi" }),
-  LibValidationFields.ObjectField({ field: "mata_pelajaran" }),
-  LibValidationFields.CharField({ field: "mata_pelajaran.nama_mapel" }),
+  LibValidationFields.CharField({ field: "nama_file" }),
+  LibValidationFields.CharField({ field: "url" }),
+  LibValidationFields.CharField({ field: "tipe_file" }),
+  LibValidationFields.NumberField({ field: "ukuran_file" }),
   LibValidationExceptionMiddleware,
 );
 
-const MateriElearningMiddlewareUpdate = LibValidationsMiddleware(
+const FileMateriMiddlewareUpdate = LibValidationsMiddleware(
   LibAuthenticationMiddleware,
   /** Your middleware here (validations, sanitizing, etc..) */
   LibValidationExceptionMiddleware,
 );
 
-const MateriElearningMiddlewareDelete = LibValidationsMiddleware(
+const FileMateriMiddlewareDelete = LibValidationsMiddleware(
   LibAuthenticationMiddleware
 );
 
 module.exports = {
-  MateriElearningMiddlewareCreate,
-  MateriElearningMiddlewareUpdate,
-  MateriElearningMiddlewareDetail,
-  MateriElearningMiddlewareList,
-  MateriElearningMiddlewareDelete,
+  FileMateriMiddlewareCreate,
+  FileMateriMiddlewareUpdate,
+  FileMateriMiddlewareDetail,
+  FileMateriMiddlewareList,
+  FileMateriMiddlewareDelete,
 };
   
