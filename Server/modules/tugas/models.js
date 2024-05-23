@@ -14,17 +14,16 @@ const TugasSchema = new mongoose.Schema(
         pilihan_jawaban: { type: String }
       }],
       kunci_jawaban: { type: Number, required: true },//Pakai index
-      skor: { type: Number, default: 1 }
+      skor_benar: { type: Number, default: 1 }
     }],
     jawaban_siswa: [{
       id_tugas: { type: mongoose.Schema.Types.ObjectId, ref: "Tugas", required: true },  
-      id_siswa: { type: mongoose.Schema.Types.ObjectId, ref: "Siswa", required: true }, 
+      kelas: { type: String}, 
       jawaban: [{
-        pertanyaan_id: { type: mongoose.Schema.Types.ObjectId, ref: "Tugas.pertanyaan" },  
         jawaban_siswa: { type: String }
       }],
       tanggal_pengumpulan: { type: Date, default: Date.now }, 
-      nilai: { type: Number }
+      skor: { type: Number }
     }],
     total_skor: { type: Number, default: 0 }
   },
