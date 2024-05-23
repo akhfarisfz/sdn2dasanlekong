@@ -41,6 +41,28 @@ const TugasMiddlewareCreate = LibValidationsMiddleware(
    *  }),
    *  ...
    */
+  LibValidationFields.CharField({ field: "deskripsi" }),
+  LibValidationFields.DateField({ field: "deadline" }),
+  LibValidationFields.CharField({ field: "id_materi" }),
+  LibValidationFields.CharField({ field: "id_guru_pembuat" }),
+  LibValidationFields.ArrayField({ field: "pertanyaan" }),
+  LibValidationFields.CharField({ field: "pertanyaan.teks_soal" }),
+  LibValidationFields.ArrayField({ field: "pertanyaan.opsi_jawaban" }),
+  LibValidationFields.CharField({ field: "pertanyaan.opsi_jawaban.pilihan_jawaban" }),
+  LibValidationFields.NumberField({ field: "pertanyaan.kunci_jawaban" }), // Perbaiki tipe validasi
+  LibValidationFields.NumberField({ field: "pertanyaan.skor" }), // Perbaiki tipe validasi
+  LibValidationFields.ArrayField({ field: "jawaban_siswa" }),
+  LibValidationFields.CharField({ field: "jawaban_siswa.id_tugas" }),
+  LibValidationFields.CharField({ field: "jawaban_siswa.id_siswa" }),
+  LibValidationFields.ArrayField({ field: "jawaban_siswa.jawaban" }),
+  LibValidationFields.CharField({ field: "jawaban_siswa.jawaban.jawaban_siswa" }),
+  LibValidationFields.DateField({ field: "jawaban_siswa.tanggal_pengumpulan" }),
+  LibValidationFields.NumberField({ field: "jawaban_siswa.skor" }),
+  // LibValidationFields.NumberField({ field: "total_skor" }), // Memperbaiki total_skor menjadi field langsung di schema tugas
+
+
+
+
 
   LibValidationExceptionMiddleware,
 );
@@ -62,4 +84,3 @@ module.exports = {
   TugasMiddlewareList,
   TugasMiddlewareDelete,
 };
-  
