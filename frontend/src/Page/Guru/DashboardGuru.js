@@ -66,10 +66,27 @@ function E_learningSiswa() {
             id="cover-content"
             className="relative text-center md:text-left lg:left-20"
           >
-            <UserCircleIcon
-              className="h-24 w-24 text-gray-300"
-              aria-hidden="true"
-            />
+            <NavLink
+              to={"/guru/dashboard/tambah_soal"}
+              className="group cursor-pointer outline-none hover:rotate-90 duration-300"
+              title="Add New"
+            >
+              <svg
+                class="stroke-teal-500 fill-none group-hover:fill-teal-800 group-active:stroke-teal-200 group-active:fill-teal-600 group-active:duration-0 duration-300"
+                viewBox="0 0 24 24"
+                height="50px"
+                width="50px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-width="1.5"
+                  d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                ></path>
+                <path stroke-width="1.5" d="M8 12H16"></path>
+                <path stroke-width="1.5" d="M12 16V8"></path>
+              </svg>
+              <h2>Tambah Soal</h2>
+            </NavLink>
 
             <div className="flex flex-col md:flex-row items-center justify-center md:justify-start"></div>
           </div>
@@ -83,11 +100,13 @@ function E_learningSiswa() {
             {list_matpel.map((mapel, index) => (
               <li key={index}>
                 <div className="relative h-48 rounded-lg w-full bg-red-200">
-                  <h2 className="text-xl font-bold text-gray-700 text-center p-6">
-                    {mapel.title}
-                  </h2>
+                  <div>
+                    <h2 className="text-xl font-bold text-gray-700 text-center p-6">
+                      {mapel.title}
+                    </h2>
+                  </div>
 
-                  <div className="flex mx-auto items-end h-12 w-fit gap-4">
+                  <div className="flex mx-auto items-end h-12 w-fit gap-4 absolute bottom-2 left-2 right-2">
                     <button
                       class="cursor-pointer transition-all bg-blue-500 text-white h-11 px-4 py-1 rounded-lg
 border-blue-600
