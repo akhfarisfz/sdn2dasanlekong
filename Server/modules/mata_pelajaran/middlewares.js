@@ -42,6 +42,7 @@ const Mata_pelajaranMiddlewareCreate = LibValidationsMiddleware(
    *  ...
    */
   LibValidationFields.CharField({ field: "nama_mapel" }),
+  LibValidationFields.CharField({ field: "images" }),
   LibValidationExceptionMiddleware,
 );
 

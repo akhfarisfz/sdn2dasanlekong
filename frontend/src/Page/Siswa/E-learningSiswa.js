@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import useJWT from "../../libs/hooks/useJWT";
 import { useNavigate } from "react-router-dom";
@@ -9,14 +9,22 @@ import matematika from "../../img/matematika.jpg";
 import IPA from "../../img/IPA.jpg";
 import indonesia from "../../img/bhs indo.jpg";
 import inggris from "../../img/bhs inggris.jpg";
+import { BASE_URL } from "../../libs/config/settings";
+import useMessage from "../../libs/hooks/useMessage";
+import useHTTP from "../../libs/hooks/useHTTP";
 
 function E_learningSiswa() {
   let [isOpen, setIsOpen] = useState(false);
   const [daftarMapel, setDaftarMapel] = useState([]);
+  const [daftarMapelPagination, setDaftarMapelPagination] = useState({});
+
   const token = localStorage.getItem("token");
   const isLoggedIn = !!token;
 
+  const http = useHTTP();
   const jwt = useJWT();
+  const message = useMessage();
+
   const application = useContext(ContextApplication);
   const navigate = useNavigate();
 
@@ -39,8 +47,8 @@ function E_learningSiswa() {
       .get(url, config)
       .then((response) => {
         const { results, ...pagination } = response.data;
-        setDaftarUserPagination(pagination);
-        setDaftarUser(results);
+        setDaftarMapelPagination(pagination);
+        setDaftarMapel(results);
       })
       .catch((error) => {
         message.error(error);
@@ -53,29 +61,29 @@ function E_learningSiswa() {
   const hariArray = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
   const jamArray = Array.from({ length: 9 }, (_, i) => i + 7);
 
-  const list_matpel = [
-    {
-      id: 1,
-      image: indonesia,
-      title: "Bahasa Indonesia",
-    },
-    {
-      id: 2,
+  // const list_matpel = [
+  //   {
+  //     id: 1,
+  //     image: indonesia,
+  //     title: "Bahasa Indonesia",
+  //   },
+  //   {
+  //     id: 2,
 
-      image: matematika,
-      title: "Matematika",
-    },
-    {
-      id: 3,
-      image: IPA,
-      title: "Ilmu Pengetahuan Alam",
-    },
-    {
-      id: 4,
-      image: inggris,
-      title: "Bahasa Inggris",
-    },
-  ];
+  //     image: matematika,
+  //     title: "Matematika",
+  //   },
+  //   {
+  //     id: 3,
+  //     image: IPA,
+  //     title: "Ilmu Pengetahuan Alam",
+  //   },
+  //   {
+  //     id: 4,
+  //     image: inggris,
+  //     title: "Bahasa Inggris",
+  //   },
+  // ];
 
   return (
     <>
@@ -108,17 +116,19 @@ function E_learningSiswa() {
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
           {/* list menggunakan React Router Dom */}
           <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {list_matpel.map((mapel, index) => (
+            {daftarMapel.map((mapel, index) => (
+              
               <li key={index}>
+
                 <div className="group block overflow-hidden relative border drop-shadow-lg">
                   <img
-                    src={mapel.image}
+                    src={mapel.images}
                     alt=""
                     className="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
                   />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <NavLink
-                      to={`/siswa/eLearning/mapel/${mapel.id}`}
+                      to={`/siswa/eLearning/mapel/${mapel._id}`}
                       className="opacity-0 group-hover:opacity-100"
                     >
                       <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
@@ -129,7 +139,7 @@ function E_learningSiswa() {
                 </div>
                 <div className="relative bg-white pt-3">
                   <h3 className="font-bold text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4">
-                    {mapel.title}
+                    {mapel.nama_mapel}
                   </h3>
                 </div>
               </li>
