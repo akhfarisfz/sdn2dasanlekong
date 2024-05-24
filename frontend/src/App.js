@@ -46,13 +46,10 @@ function App() {
           {/* Siswa */}
           <Route path="/siswa/eLearning" element={<E_learningSiswa />} />
           <Route path="/siswa/eLearning/mapel/:id" element={<Mapel />}></Route>
-          <Route path="/siswa/eLearning/mapel/:id" element={<Mapel />}></Route>
           {/* Guru */}
           <Route element={<PageCommonOutlet />}>
             <Route path="/guru/dashboard" element={<DashboardGuru />} />
-            <Route
-              path="/guru/dashboard/tambah_soal"
-              element={<TambahSoalGuru />}
+            <Route path="/guru/dashboard/tambah_soal"element={<TambahSoalGuru />}
             />
           </Route>
         </Routes>

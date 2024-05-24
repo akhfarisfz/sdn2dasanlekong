@@ -96,17 +96,7 @@ function TambahSoalGuru() {
     setKunciJawaban(e.target.value);
   };
 
-  const handleOpsiChange = (e, index) => {
-    const newOpsiJawaban = [...formData.opsi_jawaban];
-    newOpsiJawaban[index] = e.target.value;
-    setFormData({ ...formData, opsi_jawaban: newOpsiJawaban });
-  };
-
-  const handleAddOpsi = () => {
-    setFormData({ ...formData, opsi_jawaban: [...formData.opsi_jawaban, ""] });
-  };
-
-  const handleSubmit = async (e, type) => {
+  const handleSubmit = (e, type) => {
     e.preventDefault();
     const newSoal = {
       id: editId !== null ? editId : idCounter,
@@ -124,6 +114,12 @@ function TambahSoalGuru() {
       setSoalList([...soalList, newSoal]);
       setIdCounter(idCounter + 1);
     }
+    // Send the data to the server
+    // await fetch("/api/tambah-soal", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(newSoal),
+    // });
 
     // Reset form and select value
     setIsFormPGVisible(false);
@@ -198,25 +194,109 @@ function TambahSoalGuru() {
             <div className="m-[10px] border rounded-lg box-shadow border-black p-[10px] w-full">
               <form onSubmit={(e) => handleSubmit(e, "PG")}>
                 <h1>Form Pilihan Ganda</h1>
-                <div>
-                  <label htmlFor="name">Name:</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                  />
+                <div className="col-span-full">
+                  <label
+                    htmlFor="soal_PG"
+                    className="ml-4 block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Soal
+                  </label>
+                  <div className="mt-2">
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                      <textarea
+                        name="soal_PG"
+                        id="soal_PG"
+                        value={formData.soal_PG}
+                        onChange={handleInputChange}
+                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                        placeholder="Masukkan soal"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor="email">Email:</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                  />
+
+                {/* Jawaban */}
+                {jawabanList.map((jawaban) => (
+                  <div key={jawaban.id} className="col-span-full">
+                    <label
+                      htmlFor={`jawaban_${jawaban.id}`}
+                      className="ml-4 block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Jawaban {String.fromCharCode(64 + jawaban.id)}
+                    </label>
+                    <div className="mt-2">
+                      <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                        <input
+                          type="text"
+                          id={`jawaban_${jawaban.id}`}
+                          value={jawaban.text}
+                          onChange={(e) =>
+                            handleJawabanChange(jawaban.id, e.target.value)
+                          }
+                          className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                <button
+                  type="button"
+                  onClick={TambahJawabanPG}
+                  className="mt-2 mb-4 flex items-center text-teal-500 hover:text-teal-800"
+                >
+                  <svg
+                    className="stroke-teal-500 fill-none hover:fill-teal-800 duration-300"
+                    viewBox="0 0 24 24"
+                    height="24px"
+                    width="24px"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeWidth="1.5"
+                      d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                    ></path>
+                    <path strokeWidth="1.5" d="M8 12H16"></path>
+                    <path strokeWidth="1.5" d="M12 16V8"></path>
+                  </svg>
+                  <span className="ml-1">Tambah Jawaban</span>
+                </button>
+
+                <div className="col-span-full">
+                  <label
+                    htmlFor="kunciJawaban"
+                    className="ml-4 block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Kunci Jawaban
+                  </label>
+                  <div className="mt-2">
+                    <ul className="mt-3 space-y-3">
+                      {jawabanList.map((jawaban) => (
+                        <li
+                          key={jawaban.id}
+                          className="flex items-center gap-x-2.5"
+                        >
+                          <input
+                            type="radio"
+                            name="kunciJawaban"
+                            value={String.fromCharCode(64 + jawaban.id)}
+                            checked={
+                              kunciJawaban ===
+                              String.fromCharCode(64 + jawaban.id)
+                            }
+                            onChange={handleKunciJawabanChange}
+                            className="form-radio border-gray-400 text-indigo-600 focus:ring-indigo-600 duration-150"
+                          />
+                          <label
+                            htmlFor={`kunciJawaban_${jawaban.id}`}
+                            className="text-sm text-gray-700 font-medium"
+                          >
+                            {String.fromCharCode(64 + jawaban.id)}
+                          </label>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
 
                 <button
@@ -235,25 +315,47 @@ function TambahSoalGuru() {
             <div className="m-[10px] border rounded-lg box-shadow border-black p-[10px] w-full">
               <form onSubmit={(e) => handleSubmit(e, "Essay")}>
                 <h1>Form Essay</h1>
-                <div>
-                  <label htmlFor="name">Name:</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                  />
+                <div className="col-span-full">
+                  <label
+                    htmlFor="soal_essay"
+                    className="ml-4 block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Soal
+                  </label>
+                  <div className="mt-2">
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                      <textarea
+                        type="text"
+                        name="soal_essay"
+                        id="soal_essay"
+                        autoComplete="soal_essay"
+                        value={formData.soal_essay}
+                        onChange={handleInputChange}
+                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                        placeholder="Masukkan soal"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor="email">Email:</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                  />
+                <label
+                  htmlFor="jawaban_essay"
+                  className="ml-4 block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Jawaban
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                    <input
+                      type="text"
+                      name="jawaban_essay"
+                      id="jawaban_essay"
+                      autoComplete="jawaban_essay"
+                      value={formData.jawaban_essay}
+                      onChange={handleInputChange}
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Masukkan jawaban"
+                    />
+                  </div>
                 </div>
 
                 <button
