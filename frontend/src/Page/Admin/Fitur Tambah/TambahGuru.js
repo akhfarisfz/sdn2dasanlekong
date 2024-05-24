@@ -6,13 +6,12 @@ function TambahGuru() {
   const [formData, setFormData] = useState({
     nama_lengkap: "",
     nip: "",
-    user:{
-      username:"",
+    user: {
+      username: "",
       email: "",
       password: "",
-      roles:"Guru",
+      roles: "Guru",
     },
-    
     tanggal_lahir: "",
     alamat: "",
     kota: "",
@@ -20,8 +19,6 @@ function TambahGuru() {
     kode_pos: "",
     jenis_kelamin: "",
     photo: null,
-
-    
   });
 
   const [previewImage, setPreviewImage] = useState(null);
@@ -51,18 +48,32 @@ function TambahGuru() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { tanggal_lahir, photo, ...restData } = formData;
-      const [tahun, bulan, tanggal] = tanggal_lahir.split("-");
-      const formattedTanggalLahir = `${tahun}/${bulan}/${tanggal}`;
-      const updatedFormData = {
-        ...restData,
-        tanggal_lahir: formattedTanggalLahir,
-      };
+      const {
+        nama_lengkap,
+        nip,
+        user,
+        tanggal_lahir,
+        alamat,
+        kota,
+        provinsi,
+        kode_pos,
+        jenis_kelamin,
+        photo,
+      } = formData;
 
       const formDataToSend = new FormData();
-      for (const key in updatedFormData) {
-        formDataToSend.append(key, updatedFormData[key]);
-      }
+      formDataToSend.append("nama_lengkap", nama_lengkap);
+      formDataToSend.append("nip", nip);
+      formDataToSend.append("user[username]", user.username);
+      formDataToSend.append("user[email]", user.email);
+      formDataToSend.append("user[password]", user.password);
+      formDataToSend.append("user[roles]", user.roles);
+      formDataToSend.append("tanggal_lahir", tanggal_lahir);
+      formDataToSend.append("alamat", alamat);
+      formDataToSend.append("kota", kota);
+      formDataToSend.append("provinsi", provinsi);
+      formDataToSend.append("kode_pos", kode_pos);
+      formDataToSend.append("jenis_kelamin", jenis_kelamin);
       if (photo) {
         formDataToSend.append("photo", photo);
       }
@@ -100,7 +111,7 @@ function TambahGuru() {
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="col-span-full">
                 <label
-                  htmlFor="nama"
+                  htmlFor="nama_lengkap"
                   className="ml-4 block text-sm font-medium leading-6 text-gray-900"
                 >
                   Nama Lengkap
@@ -109,10 +120,10 @@ function TambahGuru() {
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
                     <input
                       type="text"
-                      name="nama"
-                      id="nama"
+                      name="nama_lengkap"
+                      id="nama_lengkap"
                       autoComplete="nama"
-                      value={formData.nama}
+                      value={formData.nama_lengkap}
                       onChange={handleChange}
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="Masukkan nama lengkap"
@@ -122,22 +133,22 @@ function TambahGuru() {
               </div>
               <div className="col-span-full">
                 <label
-                  htmlFor="NIK"
+                  htmlFor="nip"
                   className="ml-4 block text-sm font-medium leading-6 text-gray-900"
                 >
-                  NIK
+                  NIP
                 </label>
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
                     <input
-                      type="number"
-                      name="NIP"
-                      id="NIP"
-                      autoComplete="NIP"
+                      type="text"
+                      name="nip"
+                      id="nip"
+                      autoComplete="nip"
                       value={formData.nip}
                       onChange={handleChange}
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Masukkan NIK"
+                      placeholder="Masukkan NIP"
                     />
                   </div>
                 </div>
@@ -167,7 +178,7 @@ function TambahGuru() {
               </div>
               <div className="col-span-full">
                 <label
-                  htmlFor="Alamat"
+                  htmlFor="alamat"
                   className="ml-4 block text-sm font-medium leading-6 text-gray-900"
                 >
                   Alamat
