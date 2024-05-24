@@ -8,7 +8,7 @@ const TugasSchema = new mongoose.Schema(
     id_materi: { type: mongoose.Schema.Types.ObjectId, ref: "MateriElearning", required: true },
     id_guru_pembuat: { type: mongoose.Schema.Types.ObjectId, ref: "Guru", required: true },
     created: { type: Date, default: Date.now },
-    pertanyaan: [{
+    pilihan_ganda: [{
       teks_soal: { type: String, required: true },
       opsi_jawaban: [{
         pilihan_jawaban: { type: String }

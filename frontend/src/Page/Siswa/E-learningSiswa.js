@@ -12,7 +12,7 @@ import inggris from "../../img/bhs inggris.jpg";
 
 function E_learningSiswa() {
   let [isOpen, setIsOpen] = useState(false);
-
+  const [daftarMapel, setDaftarMapel] = useState([]);
   const token = localStorage.getItem("token");
   const isLoggedIn = !!token;
 
@@ -26,6 +26,30 @@ function E_learningSiswa() {
     application.setIsAuthenticated(false);
   };
 
+
+  const onMapelList = (params) => {
+    const url = `${BASE_URL}/mapel/`;
+    const config = {
+      headers: {
+        Authorization: jwt.get(),
+      },
+      params,
+    };
+    http.privateHTTP
+      .get(url, config)
+      .then((response) => {
+        const { results, ...pagination } = response.data;
+        setDaftarUserPagination(pagination);
+        setDaftarUser(results);
+      })
+      .catch((error) => {
+        message.error(error);
+      });
+  };
+
+  useEffect(() => {
+    onMapelList();
+  }, []);
   const hariArray = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
   const jamArray = Array.from({ length: 9 }, (_, i) => i + 7);
 

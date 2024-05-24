@@ -4,11 +4,15 @@ import React, { useState } from "react";
 
 function TambahGuru() {
   const [formData, setFormData] = useState({
-    nama: "",
+    nama_lengkap: "",
     nip: "",
-    username:"",
-    email: "",
-    password: "",
+    user:{
+      username:"",
+      email: "",
+      password: "",
+      roles:"Guru",
+    },
+    
     tanggal_lahir: "",
     alamat: "",
     kota: "",
@@ -16,6 +20,8 @@ function TambahGuru() {
     kode_pos: "",
     jenis_kelamin: "",
     photo: null,
+
+    
   });
 
   const [previewImage, setPreviewImage] = useState(null);
