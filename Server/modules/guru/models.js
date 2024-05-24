@@ -5,7 +5,6 @@ const GuruSchema = new mongoose.Schema(
   { 
     nip: { type: String, unique: true, required: true },
     user:{
-      // _id:{type:Object, required:false},
       username: { type: String, required: true, unique: true },
       email: { type: String, required: true, unique: true },
       password: { type: String, required: true }, 
@@ -15,6 +14,7 @@ const GuruSchema = new mongoose.Schema(
     tanggal_lahir: { type: Date },
     jenis_kelamin: { type: String, enum: ['Pria', 'Wanita'], default: 'Pria' },
     alamat: { type: String }, 
+
     created: { type: Date, default: Date.now },
   },
   { versionKey: false }

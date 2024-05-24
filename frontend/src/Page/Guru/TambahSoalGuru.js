@@ -6,21 +6,27 @@ function TambahSoalGuru() {
   const [isFormEssayVisible, setIsFormEssayVisible] = useState(false);
   const [soalList, setSoalList] = useState([]);
   const [idCounter, setIdCounter] = useState(1);
-  const [formData, setFormData] = useState({ name: "", email: "" });
+  const [formData, setFormData] = useState({
+    teks_soal: "",
+    opsi_jawaban: [],
+    kunci_jawaban: "",
+    skor: 1,
+  });
 
   const handleOnChange = (e) => {
     const value = e.target.value;
     if (value === "PG") {
       setIsFormPGVisible(true);
       setIsFormEssayVisible(false);
+      setFormData({ teks_soal: "", opsi_jawaban: [], kunci_jawaban: "", skor: 1 });
     } else if (value === "Essay") {
       setIsFormPGVisible(false);
       setIsFormEssayVisible(true);
+      setFormData({ teks_soal: "", skor: 1 });
     } else {
       setIsFormPGVisible(false);
       setIsFormEssayVisible(false);
     }
-    setFormData({ name: "", email: "" });
   };
 
   const handleInputChange = (e) => {
@@ -28,7 +34,17 @@ function TambahSoalGuru() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e, type) => {
+  const handleOpsiChange = (e, index) => {
+    const newOpsiJawaban = [...formData.opsi_jawaban];
+    newOpsiJawaban[index] = e.target.value;
+    setFormData({ ...formData, opsi_jawaban: newOpsiJawaban });
+  };
+
+  const handleAddOpsi = () => {
+    setFormData({ ...formData, opsi_jawaban: [...formData.opsi_jawaban, ""] });
+  };
+
+  const handleSubmit = async (e, type) => {
     e.preventDefault();
     const newSoal = {
       id: idCounter,
@@ -37,9 +53,17 @@ function TambahSoalGuru() {
     };
     setSoalList([...soalList, newSoal]);
     setIdCounter(idCounter + 1);
+
+    // Send the data to the server
+    await fetch("/api/tambah-soal", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newSoal),
+    });
+
     setIsFormPGVisible(false);
     setIsFormEssayVisible(false);
-    setFormData({ name: "", email: "" });
+    setFormData({ teks_soal: "", opsi_jawaban: [], kunci_jawaban: "", skor: 1 });
   };
 
   return (
@@ -72,22 +96,46 @@ function TambahSoalGuru() {
               <form onSubmit={(e) => handleSubmit(e, "PG")}>
                 <h1>Form Pilihan Ganda</h1>
                 <div>
-                  <label htmlFor="name">Name:</label>
+                  <label htmlFor="teks_soal">Teks Soal:</label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
+                    id="teks_soal"
+                    name="teks_soal"
+                    value={formData.teks_soal}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                {formData.opsi_jawaban.map((opsi, index) => (
+                  <div key={index}>
+                    <label htmlFor={`opsi_${index}`}>Opsi {index + 1}:</label>
+                    <input
+                      type="text"
+                      id={`opsi_${index}`}
+                      value={opsi}
+                      onChange={(e) => handleOpsiChange(e, index)}
+                    />
+                  </div>
+                ))}
+                <button type="button" onClick={handleAddOpsi}>
+                  Tambah Opsi
+                </button>
+                <div>
+                  <label htmlFor="kunci_jawaban">Kunci Jawaban:</label>
+                  <input
+                    type="number"
+                    id="kunci_jawaban"
+                    name="kunci_jawaban"
+                    value={formData.kunci_jawaban}
                     onChange={handleInputChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor="email">Email:</label>
+                  <label htmlFor="skor">Skor:</label>
                   <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
+                    type="number"
+                    id="skor"
+                    name="skor"
+                    value={formData.skor}
                     onChange={handleInputChange}
                   />
                 </div>
@@ -100,22 +148,22 @@ function TambahSoalGuru() {
               <form onSubmit={(e) => handleSubmit(e, "Essay")}>
                 <h1>Form Essay</h1>
                 <div>
-                  <label htmlFor="name">Name:</label>
+                  <label htmlFor="teks_soal">Teks Soal:</label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
+                    id="teks_soal"
+                    name="teks_soal"
+                    value={formData.teks_soal}
                     onChange={handleInputChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor="email">Email:</label>
+                  <label htmlFor="skor">Skor:</label>
                   <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
+                    type="number"
+                    id="skor"
+                    name="skor"
+                    value={formData.skor}
                     onChange={handleInputChange}
                   />
                 </div>
@@ -126,16 +174,20 @@ function TambahSoalGuru() {
         </div>
 
         <div className="m-4">
-          <h2 className="text-lg font-semibold">
-            Soal yang sudah ditambahkan:
-          </h2>
+          <h2 className="text-lg font-semibold">Soal yang sudah ditambahkan:</h2>
           <ul>
             {soalList.map((soal) => (
               <li key={soal.id} className="border-b border-gray-300 py-2">
                 <p>ID: {soal.id}</p>
                 <p>Jenis: {soal.type === "PG" ? "Pilihan Ganda" : "Essay"}</p>
-                <p>Nama: {soal.name}</p>
-                <p>Email: {soal.email}</p>
+                <p>Teks Soal: {soal.teks_soal}</p>
+                {soal.type === "PG" && (
+                  <>
+                    <p>Opsi Jawaban: {soal.opsi_jawaban.join(", ")}</p>
+                    <p>Kunci Jawaban: {soal.kunci_jawaban}</p>
+                  </>
+                )}
+                <p>Skor: {soal.skor}</p>
               </li>
             ))}
           </ul>
