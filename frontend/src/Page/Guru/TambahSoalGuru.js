@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Header from "../../libs/components/Header";
 
 function TambahSoalGuru() {
@@ -13,13 +13,22 @@ function TambahSoalGuru() {
   });
   const [jawabanList, setJawabanList] = useState([{ id: 1, text: "" }]);
   const [kunciJawaban, setKunciJawaban] = useState("");
+  const [editId, setEditId] = useState(null);
+  const inputRef = useRef(null);
+  const [selectValue, setSelectValue] = useState("");
 
   const handleOnChange = (e) => {
     const value = e.target.value;
+    setSelectValue(value); // Update select value state
     if (value === "PG") {
       setIsFormPGVisible(true);
       setIsFormEssayVisible(false);
-      setFormData({ teks_soal: "", opsi_jawaban: [], kunci_jawaban: "", skor: 1 });
+      setFormData({
+        teks_soal: "",
+        opsi_jawaban: [],
+        kunci_jawaban: "",
+        skor: 1,
+      });
     } else if (value === "Essay") {
       setIsFormPGVisible(false);
       setIsFormEssayVisible(true);
@@ -28,6 +37,10 @@ function TambahSoalGuru() {
       setIsFormPGVisible(false);
       setIsFormEssayVisible(false);
     }
+    setFormData({ soal_PG: "", soal_essay: "", jawaban_essay: "" });
+    setJawabanList([{ id: 1, text: "" }]);
+    setKunciJawaban("");
+    setEditId(null);
   };
 
   const handleInputChange = (e) => {
@@ -44,6 +57,41 @@ function TambahSoalGuru() {
     setJawabanList([...jawabanList, { id: newId, text: "" }]);
   };
 
+  const handleDeleteSoal = (id) => {
+    const filteredSoalList = soalList.filter((soal) => soal.id !== id);
+    const updatedSoalList = filteredSoalList.map((soal) => {
+      if (soal.id > id) {
+        return { ...soal, id: soal.id - 1 };
+      }
+      return soal;
+    });
+    setSoalList(updatedSoalList);
+    setIdCounter(updatedSoalList.length + 1);
+  };
+
+  const handleEditSoal = (id) => {
+    const soalToEdit = soalList.find((soal) => soal.id === id);
+    if (soalToEdit.type === "PG") {
+      setIsFormPGVisible(true);
+      setIsFormEssayVisible(false);
+      setFormData({
+        soal_PG: soalToEdit.soal_PG,
+        soal_essay: "",
+        jawaban_essay: "",
+      });
+      setJawabanList(soalToEdit.jawabanList);
+      setKunciJawaban(soalToEdit.kunciJawaban);
+    } else if (soalToEdit.type === "Essay") {
+      setIsFormPGVisible(false);
+      setIsFormEssayVisible(true);
+      setFormData({
+        soal_PG: "",
+        soal_essay: soalToEdit.soal_essay,
+        jawaban_essay: soalToEdit.jawaban_essay,
+      });
+    }
+    setEditId(id);
+  };
   const handleKunciJawabanChange = (e) => {
     setKunciJawaban(e.target.value);
   };
@@ -51,15 +99,21 @@ function TambahSoalGuru() {
   const handleSubmit = (e, type) => {
     e.preventDefault();
     const newSoal = {
-      id: idCounter,
+      id: editId !== null ? editId : idCounter,
       type,
       ...formData,
       jawabanList: type === "PG" ? jawabanList : [],
       kunciJawaban: type === "PG" ? kunciJawaban : "",
     };
-    setSoalList([...soalList, newSoal]);
-    setIdCounter(idCounter + 1);
 
+    if (editId !== null) {
+      setSoalList(
+        soalList.map((soal) => (soal.id === editId ? newSoal : soal))
+      );
+    } else {
+      setSoalList([...soalList, newSoal]);
+      setIdCounter(idCounter + 1);
+    }
     // Send the data to the server
     // await fetch("/api/tambah-soal", {
     //   method: "POST",
@@ -67,12 +121,48 @@ function TambahSoalGuru() {
     //   body: JSON.stringify(newSoal),
     // });
 
+    // Reset form and select value
     setIsFormPGVisible(false);
     setIsFormEssayVisible(false);
     setFormData({ soal_PG: "", soal_essay: "", jawaban_essay: "" });
     setJawabanList([{ id: 1, text: "" }]);
     setKunciJawaban("");
+    setEditId(null);
+    setSelectValue(""); // Reset select value to empty
   };
+
+  // const handleEditSoalFromList = (soal) => {
+  //   const {
+  //     id,
+  //     type,
+  //     soal_PG,
+  //     soal_essay,
+  //     jawaban_essay,
+  //     jawabanList,
+  //     kunciJawaban,
+  //   } = soal;
+
+  //   if (type === "PG") {
+  //     setIsFormPGVisible(true);
+  //     setIsFormEssayVisible(false);
+  //     setFormData({
+  //       soal_PG,
+  //       soal_essay: "",
+  //       jawaban_essay: "",
+  //     });
+  //     setJawabanList(jawabanList);
+  //     setKunciJawaban(kunciJawaban);
+  //   } else if (type === "Essay") {
+  //     setIsFormPGVisible(false);
+  //     setIsFormEssayVisible(true);
+  //     setFormData({
+  //       soal_PG: "",
+  //       soal_essay,
+  //       jawaban_essay,
+  //     });
+  //   }
+  //   setEditId(id);
+  // };
 
   return (
     <>
@@ -83,7 +173,7 @@ function TambahSoalGuru() {
             htmlFor="HeadlineAct"
             className="block text-sm font-medium text-gray-900"
           >
-            Headliner
+            Pilih jenis soal yang ingin ditambahkan
           </label>
 
           <select
@@ -91,10 +181,9 @@ function TambahSoalGuru() {
             id="HeadlineAct"
             className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
             onChange={handleOnChange}
+            value={selectValue} // Bind select value to state
           >
-            <option selected value="">
-              Jenis soal ....
-            </option>
+            <option value="">Jenis soal ....</option>
             <option value="PG">Pilihan ganda</option>
             <option value="Essay">Essay</option>
           </select>
@@ -216,7 +305,7 @@ function TambahSoalGuru() {
                   className="my-4 cursor-pointer flex items-center fill-cyan-300 bg-cyan-600 hover:bg-cyan-500 active:border active:border-cyan-300 rounded-md duration-100 p-2"
                 >
                   <span className="text-sm text-cyan-950 font-bold pr-1">
-                    Tambah
+                    Simpan
                   </span>
                 </button>
               </form>
@@ -269,25 +358,33 @@ function TambahSoalGuru() {
                   </div>
                 </div>
 
-                <button type="submit">Submit</button>
+                <button
+                  title="Save"
+                  type="submit"
+                  className="my-4 cursor-pointer flex items-center fill-cyan-300 bg-cyan-600 hover:bg-cyan-500 active:border active:border-cyan-300 rounded-md duration-100 p-2"
+                >
+                  <span className="text-sm text-cyan-950 font-bold pr-1">
+                    Simpan
+                  </span>
+                </button>
               </form>
             </div>
           )}
         </div>
 
         <div className="m-4">
-          <h2 className="text-lg font-semibold">Soal yang sudah ditambahkan:</h2>
+          <h2 className="text-lg font-semibold">
+            Soal yang sudah ditambahkan:
+          </h2>
           <ul>
             {soalList.map((soal) => (
               <li key={soal.id} className="border-b border-gray-300 py-2">
-                <p>ID: {soal.id}</p>
-                {console.log(soal.soal_PG)}
+                <p>Nomor {soal.id}</p>
                 <p>
-                  Jenis soal: {soal.type === "PG" ? "Pilihan Ganda" : "Essay"}
+                  Jenis soal : {soal.type === "PG" ? "Pilihan Ganda" : "Essay"}
                 </p>
                 <p>
-                  Nomor Soal {soal.id} :{" "}
-                  {soal.type === "PG" ? soal.soal_PG : soal.soal_essay}
+                  Soal : {soal.type === "PG" ? soal.soal_PG : soal.soal_essay}
                 </p>
                 {soal.type === "PG" && (
                   <>
@@ -304,6 +401,20 @@ function TambahSoalGuru() {
                   </>
                 )}
                 {soal.type === "Essay" && <p>Jawaban: {soal.jawaban_essay}</p>}
+                <div className="flex space-x-4 mt-2">
+                  <button
+                    onClick={() => handleEditSoal(soal.id)}
+                    className="text-blue-500 hover:text-blue-700"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDeleteSoal(soal.id)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    Hapus
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
