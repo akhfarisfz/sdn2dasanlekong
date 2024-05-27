@@ -16,15 +16,16 @@ const GuruControllerList =  async (req, res) => {
 
 const GuruControllerCreate = async (req, res) => {
   try {
+    console.log(req.cleanedData);
     const userData = {
       username: req.cleanedData.user.username,
       email: req.cleanedData.user.email,
       password: req.cleanedData.user.password,
       roles: req.cleanedData.user.roles
     };
-    await Guru.create(req.cleanedData); // Buat entri baru di database
-    await User.create(userData); // Buat entri baru di database
-    console.log(userData._id); // Pastikan data sudah dibersihkan sebelumnya
+    // await Guru.create(req.cleanedData); // Buat entri baru di database
+    // await User.create(userData); // Buat entri baru di database
+    // console.log(userData._id); 
     return res.status(201).json(req.cleanedData); // Kirimkan respons sukses dengan data yang baru dibuat
   } catch (error) {
     return LibHTTPResponseException(res, error); // Tangani kesalahan dengan baik

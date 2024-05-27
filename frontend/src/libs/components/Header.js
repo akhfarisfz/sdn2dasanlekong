@@ -91,6 +91,11 @@ function Header() {
               )}
             </a>
           </li>
+          {isLoggedIn ? (
+            <li className="font-semibold my-7 md:my-0 md:ml-8">
+              <NavLink to="/siswa/eLearning">E-Learning</NavLink>
+            </li>
+          ) : null}
           <li className="font-semibold my-7 md:my-0 md:ml-8">
             <NavLink
               to={isLoggedIn ? "/" : "/login"}
@@ -99,11 +104,7 @@ function Header() {
               {isLoggedIn ? "Logout" : "Login"}
             </NavLink>
           </li>
-          {isLoggedIn ? (
-            <li className="font-semibold my-7 md:my-0 md:ml-8">
-              <NavLink to="/siswa/eLearning">E-Learning</NavLink>
-            </li>
-          ) : null}
+          
         </ul>
       </div>
     </div>
