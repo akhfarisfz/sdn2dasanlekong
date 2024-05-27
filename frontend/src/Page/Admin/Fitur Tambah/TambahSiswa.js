@@ -65,20 +65,13 @@ function TambahSiswa() {
   };
   return (
     <>
-      <Link
-        to="/admin/dashboard"
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
-      >
-        Back to Admin Dashboard
-      </Link>
-
       <form
         className="m-6 lg:m-12 p-6 lg:p-16 border-2 border-solid border-zinc-800 shadow-md rounded-lg"
         onSubmit={handleSubmit}
       >
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="border-b-2 border-gray-400 font-bold text-xl text-base leading-7 text-gray-900 text-center">
+            <h2 className="border-b-2 border-gray-400 font-bold text-xl text-base leading-7 text-gray-900 mb-4 text-center">
               Isi data Siswa yang ingin ditambahkan
             </h2>
 
