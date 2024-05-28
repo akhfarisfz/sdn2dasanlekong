@@ -12,11 +12,14 @@ import inggris from "../../img/bhs inggris.jpg";
 import { BASE_URL } from "../../libs/config/settings";
 import useMessage from "../../libs/hooks/useMessage";
 import useHTTP from "../../libs/hooks/useHTTP";
+import { jwtDecode } from "jwt-decode";
+
 
 function E_learningSiswa() {
   let [isOpen, setIsOpen] = useState(false);
   const [daftarMapel, setDaftarMapel] = useState([]);
-  const [daftarMapelPagination, setDaftarMapelPagination] = useState({});
+  const[idUser,setIdUser]=useState([]);
+  // const [daftarMapelPagination, setDaftarMapelPagination] = useState({});
 
   const token = localStorage.getItem("token");
   const isLoggedIn = !!token;
@@ -47,7 +50,7 @@ function E_learningSiswa() {
       .get(url, config)
       .then((response) => {
         const { results, ...pagination } = response.data;
-        setDaftarMapelPagination(pagination);
+        // setDaftarMapelPagination(pagination);
         setDaftarMapel(results);
       })
       .catch((error) => {
@@ -57,33 +60,17 @@ function E_learningSiswa() {
 
   useEffect(() => {
     onMapelList();
+    if (isLoggedIn) {
+      const decodedToken = jwtDecode(token);
+      const { id } = decodedToken;
+      setIdUser(id);
+    }
   }, []);
   const hariArray = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
   const jamArray = Array.from({ length: 9 }, (_, i) => i + 7);
 
-  // const list_matpel = [
-  //   {
-  //     id: 1,
-  //     image: indonesia,
-  //     title: "Bahasa Indonesia",
-  //   },
-  //   {
-  //     id: 2,
 
-  //     image: matematika,
-  //     title: "Matematika",
-  //   },
-  //   {
-  //     id: 3,
-  //     image: IPA,
-  //     title: "Ilmu Pengetahuan Alam",
-  //   },
-  //   {
-  //     id: 4,
-  //     image: inggris,
-  //     title: "Bahasa Inggris",
-  //   },
-  // ];
+
 
   return (
     <>
@@ -92,6 +79,7 @@ function E_learningSiswa() {
 
       {/* body */}
       <section>
+      
         <div
           id="cover"
           className="mt-[25px] lg:mt-[50px] relative justify-center lg:justify-start bg-blue-500 min-h-screen flex items-center mx-auto max-w-screen-xl bg-cover bg-center bg-no-repeat "
@@ -109,10 +97,15 @@ function E_learningSiswa() {
             </p>
             <div className="flex flex-col md:flex-row items-center justify-center md:justify-start"></div>
           </div>
-        </div>
+        </div> 
       </section>
 
       <section>
+      {isLoggedIn && (
+          <div className="text-center mt-4">
+            <p>User ID: {idUser}</p>
+          </div>
+        )}
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
           {/* list menggunakan React Router Dom */}
           <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -131,6 +124,7 @@ function E_learningSiswa() {
                       to={`/siswa/eLearning/mapel/${mapel._id}`}
                       className="opacity-0 group-hover:opacity-100"
                     >
+                      <p>{mapel._id}</p>
                       <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
                         Lihat Detail
                       </button>
