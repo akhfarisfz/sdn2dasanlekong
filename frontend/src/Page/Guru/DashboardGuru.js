@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import useJWT from "../../libs/hooks/useJWT";
 import { useNavigate } from "react-router-dom";
@@ -10,17 +10,27 @@ import IPA from "../../img/IPA.jpg";
 import indonesia from "../../img/bhs indo.jpg";
 import inggris from "../../img/bhs inggris.jpg";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { BASE_URL } from "../../libs/config/settings";
+import useMessage from "../../libs/hooks/useMessage";
+import useHTTP from "../../libs/hooks/useHTTP";
 
 function E_learningSiswa() {
   let [isOpen, setIsOpen] = useState(false);
 
   const token = localStorage.getItem("token");
   const isLoggedIn = !!token;
+  const [daftarMapel, setDaftarMapel] = useState([]);
+  const [daftarMapelPagination, setDaftarMapelPagination] = useState({});
+
 
   const jwt = useJWT();
   const application = useContext(ContextApplication);
   const navigate = useNavigate();
+  const http = useHTTP();
+  const message = useMessage();
 
+
+  //Kelas , Tanggal, Rombel
   const signOut = () => {
     jwt.signOut();
     navigate("/login");
@@ -30,29 +40,53 @@ function E_learningSiswa() {
   const hariArray = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
   const jamArray = Array.from({ length: 9 }, (_, i) => i + 7);
 
-  const list_matpel = [
-    {
-      id: 1,
-      image: indonesia,
-      title: "Bahasa Indonesia",
-    },
-    {
-      id: 2,
 
-      image: matematika,
-      title: "Matematika",
-    },
-    {
-      id: 3,
-      image: IPA,
-      title: "Ilmu Pengetahuan Alam",
-    },
-    {
-      id: 4,
-      image: inggris,
-      title: "Bahasa Inggris",
-    },
-  ];
+  const onMapelList = (params) => {
+    const url = `${BASE_URL}/mapel/`;
+    const config = {
+      headers: {
+        Authorization: jwt.get(),
+      },
+      params,
+    };
+    http.privateHTTP
+      .get(url, config)
+      .then((response) => {
+        const { results, ...pagination } = response.data;
+        setDaftarMapelPagination(pagination);
+        setDaftarMapel(results);
+      })
+      .catch((error) => {
+        message.error(error);
+      });
+  };
+
+  useEffect(() => {
+    onMapelList();
+  }, []);
+  // const list_matpel = [
+  //   {
+  //     id: 1,
+  //     image: indonesia,
+  //     title: "Bahasa Indonesia",
+  //   },
+  //   {
+  //     id: 2,
+
+  //     image: matematika,
+  //     title: "Matematika",
+  //   },
+  //   {
+  //     id: 3,
+  //     image: IPA,
+  //     title: "Ilmu Pengetahuan Alam",
+  //   },
+  //   {
+  //     id: 4,
+  //     image: inggris,
+  //     title: "Bahasa Inggris",
+  //   },
+  // ];
 
   return (
     <>
@@ -97,21 +131,18 @@ function E_learningSiswa() {
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
           {/* list menggunakan React Router Dom */}
           <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {list_matpel.map((mapel, index) => (
+            {daftarMapel.map((mapel, index) => (
               <li key={index}>
                 <div className="relative h-48 rounded-lg w-full bg-red-200">
                   <div>
                     <h2 className="text-xl font-bold text-gray-700 text-center p-6">
-                      {mapel.title}
+                      {mapel.nama_mapel}
                     </h2>
                   </div>
 
                   <div className="flex mx-auto items-end h-12 w-fit gap-4 absolute bottom-2 left-2 right-2">
                     <button
-                      class="cursor-pointer transition-all bg-blue-500 text-white h-11 px-4 py-1 rounded-lg
-border-blue-600
-border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
-active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                      class="cursor-pointer transition-all bg-blue-500 text-white h-11 px-4 py-1 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
                     >
                       Buka
                     </button>

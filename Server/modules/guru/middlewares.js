@@ -44,8 +44,7 @@ const GuruMiddlewareCreate = LibValidationsMiddleware(
    *  ...
    */
   LibValidationFields.CharField({ field: "nip", required: true, unique: true }),
-  LibValidationFields.ObjectField({ field: "user" }),
-  LibValidationFields.ObjectField({ field: "user._id",required:false }),
+  // LibValidationFields.ObjectField({ field: "user" }),
   LibValidationFields.CharField({
     field: "user.username",
     customs: [UserValidatiorUsernameUnique],
@@ -62,10 +61,12 @@ const GuruMiddlewareCreate = LibValidationsMiddleware(
   LibValidationFields.ChoicesValidator({
     field: "user.roles",
     choices: ['Admin', 'Guru', 'Siswa'],
-    default:'Guru'
+    default:'Guru',
+    required:false
   }),
 
   LibValidationFields.CharField({ field: "nama_lengkap" }),
+  LibValidationFields.CharField({ field: "kelas" }),
   LibValidationFields.DateField({ field: "tanggal_lahir" }),
   LibValidationFields.ChoicesValidator({ field: "jenis_kelamin", choices: ['Pria', 'Wanita'] }),
   LibValidationFields.CharField({ field: "alamat" }),
