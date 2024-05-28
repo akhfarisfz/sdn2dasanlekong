@@ -18,42 +18,55 @@ function TambahSoalGuru() {
   const [kunciJawaban, setKunciJawaban] = useState("");
   const [editId, setEditId] = useState(null);
   const inputRef = useRef(null);
-  const [selectValue, setSelectValue] = useState("");
-  const [pilihKelas, setpilihKelas] = useState("");
-  const [pilihRombel, setPilihRombel] = useState("");
+  const [selectMapel, setSelectMapel] = useState("");
+  const [selectKelas, setSelectKelas] = useState("");
+  const [selectRombel, setSelectRombel] = useState("");
+  const [selectType, setSelectType] = useState("");
 
   // Pilih jenis soal (PG dan Essay)
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    if (
-      name === "TambahTugasMapel" ||
-      name === "PilihKelas" ||
-      name === "PilihRombel" ||
-      name === "HeadlineAct"
-    ) {
-      setFormData({ ...formData, [name]: value });
+  const handleTypeChange = (e) => {
+    const value = e.target.value;
+    setSelectType(value); // Update select value state
+    if (value === "PG") {
+      setIsFormPGVisible(true);
+      setIsFormEssayVisible(false);
+      setFormData({
+        ...formData,
+        soal_PG: "",
+        soal_essay: "",
+        jawaban_essay: "",
+      });
+      setJawabanList([{ id: 1, text: "" }]);
+      setKunciJawaban("");
+      setEditId(null);
+    } else if (value === "Essay") {
+      setIsFormPGVisible(false);
+      setIsFormEssayVisible(true);
+      setFormData({
+        ...formData,
+        soal_PG: "",
+        soal_essay: "",
+        jawaban_essay: "",
+      });
     } else {
-      setSelectValue(value); // Update select value state
-      console.log(setSelectValue);
-      console.log(value);
-      if (value === "PG") {
-        setIsFormPGVisible(true);
-        setIsFormEssayVisible(false);
-        setFormData({
-          teks_soal: "",
-          opsi_jawaban: [],
-          kunci_jawaban: "",
-          skor: 1,
-        });
-      } else if (value === "Essay") {
-        setIsFormPGVisible(false);
-        setIsFormEssayVisible(true);
-        setFormData({ teks_soal: "", skor: 1 });
-      } else {
-        setIsFormPGVisible(false);
-        setIsFormEssayVisible(false);
-      }
+      setIsFormPGVisible(false);
+      setIsFormEssayVisible(false);
     }
+  };
+
+  const handleMapelChange = (e) => {
+    setSelectMapel(e.target.value);
+    setFormData({ ...formData, mapel: e.target.value });
+  };
+
+  const handleKelasChange = (e) => {
+    setSelectKelas(e.target.value);
+    setFormData({ ...formData, kelas: e.target.value });
+  };
+
+  const handleRombelChange = (e) => {
+    setSelectRombel(e.target.value);
+    setFormData({ ...formData, rombel: e.target.value });
   };
 
   const handleInputChange = (e) => {
@@ -69,7 +82,6 @@ function TambahSoalGuru() {
     const newId = jawabanList.length + 1;
     setJawabanList([...jawabanList, { id: newId, text: "" }]);
   };
-
   const handleDeleteSoal = (id) => {
     const filteredSoalList = soalList.filter((soal) => soal.id !== id);
     const updatedSoalList = filteredSoalList.map((soal) => {
@@ -109,7 +121,7 @@ function TambahSoalGuru() {
     setKunciJawaban(e.target.value);
   };
 
-  const handleSubmit = (e, type) => {
+  const handleSave = (e, type) => {
     e.preventDefault();
     const newSoal = {
       id: editId !== null ? editId : idCounter,
@@ -128,6 +140,7 @@ function TambahSoalGuru() {
       setIdCounter(idCounter + 1);
     }
 
+    // const handleSubmit = (e) => {};
     // Reset form and select value
     setIsFormPGVisible(false);
     setIsFormEssayVisible(false);
@@ -142,7 +155,10 @@ function TambahSoalGuru() {
     setJawabanList([{ id: 1, text: "" }]);
     setKunciJawaban("");
     setEditId(null);
-    setSelectValue(""); // Reset select value to empty
+    setSelectMapel("");
+    setSelectKelas("");
+    setSelectRombel("");
+    setSelectType("");
   };
 
   // const handleEditSoalFromList = (soal) => {
@@ -191,37 +207,41 @@ function TambahSoalGuru() {
           >
             Pilih mata pelajaran yang ingin ditambahkan tugasnya
           </label>
+
           <select
             name="TambahTugasMapel"
             id="TambahTugasMapel"
             className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
-            onChange={handleOnChange}
-            value={formData.mapel} // Bind select value to state
+            onChange={handleMapelChange}
+            value={selectMapel} // Bind select value to state
           >
             <option value="">Pilih mata pelajaran ....</option>
-            <option value="Bhs_Indonesia">Bahasa Indonesia</option>
-            <option value="Bhs_Inggris">Bahasa Inggris</option>
+            <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+            <option value="Bahasa Inggris">Bahasa Inggris</option>
             <option value="Matematika">Matematika</option>
-            <option value="IPA_Soal">Ilmu Pengetahuan Alam</option>
-            <option value="IPS_Soal">Ilmu Pengetahuan Sosial</option>
+            <option value="Ilmu Pengetahuan Alam">Ilmu Pengetahuan Alam</option>
+            <option value="Ilmu Pengetahuan Sosial">
+              Ilmu Pengetahuan Sosial
+            </option>
           </select>
         </div>
 
         {/* Pilih kelas dan rombel */}
         <div className="m-4 flex gap-4">
-          <div className="w-3/4">
+          <div className=" w-3/4">
             <label
               htmlFor="PilihKelas"
               className="block text-sm font-medium text-gray-900"
             >
               Pilih kelas
             </label>
+
             <select
               name="PilihKelas"
               id="PilihKelas"
               className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
-              onChange={handleOnChange}
-              value={formData.kelas} // Bind select value to state
+              onChange={handleKelasChange}
+              value={selectKelas} // Bind select value to state
             >
               <option value="">Pilih kelas ....</option>
               <option value="1">1</option>
@@ -232,6 +252,7 @@ function TambahSoalGuru() {
               <option value="6">6</option>
             </select>
           </div>
+
           <div className="w-1/4">
             <label
               htmlFor="PilihRombel"
@@ -239,12 +260,13 @@ function TambahSoalGuru() {
             >
               Pilih rombel
             </label>
+
             <select
               name="PilihRombel"
               id="PilihRombel"
               className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
-              onChange={handleOnChange}
-              value={formData.rombel} // Bind select value to state
+              onChange={handleRombelChange}
+              value={selectRombel} // Bind select value to state
             >
               <option value="">Pilih rombel ....</option>
               <option value="A">A</option>
@@ -261,12 +283,13 @@ function TambahSoalGuru() {
           >
             Pilih jenis soal yang ingin ditambahkan
           </label>
+
           <select
             name="HeadlineAct"
             id="HeadlineAct"
             className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
-            onChange={handleOnChange}
-            value={selectValue} // Bind select value to state
+            onChange={handleTypeChange}
+            value={selectType} // Bind select value to state
           >
             <option value="">Jenis soal ....</option>
             <option value="PG">Pilihan ganda</option>
@@ -277,7 +300,7 @@ function TambahSoalGuru() {
         <div className="flex">
           {isFormPGVisible && (
             <div className="m-[10px] border rounded-lg box-shadow border-black p-[10px] w-full">
-              <form onSubmit={(e) => handleSubmit(e, "PG")}>
+              <form onSubmit={(e) => handleSave(e, "PG")}>
                 <h1>Form Pilihan Ganda</h1>
                 <div className="col-span-full">
                   <label
@@ -398,7 +421,7 @@ function TambahSoalGuru() {
           )}
           {isFormEssayVisible && (
             <div className="m-[10px] border rounded-lg box-shadow border-black p-[10px] w-full">
-              <form onSubmit={(e) => handleSubmit(e, "Essay")}>
+              <form onSubmit={(e) => handleSave(e, "Essay")}>
                 <h1>Form Essay</h1>
                 <div className="col-span-full">
                   <label
@@ -464,6 +487,11 @@ function TambahSoalGuru() {
           <ul>
             {soalList.map((soal) => (
               <li key={soal.id} className="border-b border-gray-300 py-2">
+                <p>
+                  Kelas : {soal.kelas}
+                  {soal.rombel}
+                </p>
+                <p>Mata pelajaran : {soal.mapel}</p>
                 <p>Nomor {soal.id}</p>
                 <p>
                   Jenis soal : {soal.type === "PG" ? "Pilihan Ganda" : "Essay"}
@@ -486,7 +514,14 @@ function TambahSoalGuru() {
                   </>
                 )}
                 {soal.type === "Essay" && <p>Jawaban: {soal.jawaban_essay}</p>}
+
                 <div className="flex space-x-4 mt-2">
+                  <button
+                    // onClick={() => handleSubmit(soal.id)}
+                    className="text-green-500 hover:text-blue-700"
+                  >
+                    Submit
+                  </button>
                   <button
                     onClick={() => handleEditSoal(soal.id)}
                     className="text-blue-500 hover:text-blue-700"
