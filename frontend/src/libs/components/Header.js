@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { ContextApplication } from "../config/contexts";
 
 function Header() {
+  
   let [isOpen, setIsOpen] = useState(false);
 
   const token = localStorage.getItem("token");

@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useHTTP from "../../libs/hooks/useHTTP.js";
 import useJWT from "../../libs/hooks/useJWT.js";
 import { useEffect, useRef, useState } from "react";
@@ -7,20 +7,22 @@ import { BASE_URL } from "../../libs/config/settings.js";
 
 function DashboardAdmin() {
   // Gunakan useLocation untuk mengakses location dan state
+  const navigate = useNavigate();
   const location = useLocation();
   const { state } = location;
-  const role = state && state.role;
 
   const http = useHTTP();
   const jwt = useJWT();
   const message = useMessage();
 
-  const [daftarUser, setDaftarUser] = useState([]);
-  const [daftarUserPagination, setDaftarUserPagination] = useState({});
+  const [guruList, setguruList] = useState([]);
+  const [siswaList, setsiswaList] = useState([]);
+  const [daftarGuruPagination, setdaftarGuruPagination] = useState({});
+  const [daftarSiswaPagination, setdaftarSiswaPagination] = useState({});
   const userSearch = useRef({ value: "" });
 
-  const onUserList = (params) => {
-    const url = `${BASE_URL}/users/`;
+  const onGuruList = (params) => {
+    const url = `${BASE_URL}/guru/`;
     const config = {
       headers: {
         Authorization: jwt.get(),
@@ -31,8 +33,27 @@ function DashboardAdmin() {
       .get(url, config)
       .then((response) => {
         const { results, ...pagination } = response.data;
-        setDaftarUserPagination(pagination);
-        setDaftarUser(results);
+        setdaftarGuruPagination(pagination);
+        setguruList(results);
+      })
+      .catch((error) => {
+        message.error(error);
+      });
+  };
+  const onSiswaList = (params) => {
+    const url = `${BASE_URL}/siswa/`;
+    const config = {
+      headers: {
+        Authorization: jwt.get(),
+      },
+      params,
+    };
+    http.privateHTTP
+      .get(url, config)
+      .then((response) => {
+        const { results, ...pagination } = response.data;
+        setdaftarSiswaPagination(pagination);
+        setsiswaList(results);
       })
       .catch((error) => {
         message.error(error);
@@ -41,32 +62,15 @@ function DashboardAdmin() {
 
   const onUserSearch = (e) => {
     if (e.key === "Enter") {
-      onUserList({ search: userSearch.current.value });
+      onGuruList({ search: userSearch.current.value });
+      onSiswaList({ search: userSearch.current.value });
     }
   };
 
   useEffect(() => {
-    onUserList();
+    onSiswaList();
+    onGuruList();
   }, []);
-  const filterguru = daftarUser
-    .filter(
-      (user) => !user.roles.includes("Siswa") && !user.roles.includes("Admin")
-    )
-    .sort((a, b) => {
-      const roleA = typeof a.roles === "string" ? a.roles : "";
-      const roleB = typeof b.roles === "string" ? b.roles : "";
-      return roleA.localeCompare(roleB);
-    });
-
-  const filtersiswa = daftarUser
-    .filter(
-      (user) => !user.roles.includes("Guru") && !user.roles.includes("Admin")
-    )
-    .sort((a, b) => {
-      const roleA = typeof a.roles === "string" ? a.roles : "";
-      const roleB = typeof b.roles === "string" ? b.roles : "";
-      return roleA.localeCompare(roleB);
-    });
 
   function addGuruButton() {
     window.location.href = `/admin/dashboard/tambahGuru`;
@@ -90,15 +94,46 @@ function DashboardAdmin() {
     // Misalnya, tampilkan formulir untuk mengedit data pengguna ini
   }
 
-  function handleDeleteButtonClick(event, user) {
-    // Lakukan tindakan yang sesuai saat tombol "Delete" diklik
+  const onSiswaDelete = (event,user) => {
     event.stopPropagation();
-    alert(`Delete for ${user.username}: ${user.roles}`);
+    message.confirmRemove(() => {
+      const config = {
+        headers: {
+          Authorization: jwt.get(),
+        },
+      };
 
-    // Misalnya, tampilkan konfirmasi dialog untuk menghapus data pengguna ini
-  }
+      http.privateHTTP
+        .delete(`${BASE_URL}/siswa/${user._id}/`, config)
+        .then((response) => {
+          message.success(response);
+          navigate("/admin/dashboard");
+        })
+        .catch((error) => {
+          message.error(error);
+        });
+    });
+  };
+  const onGuruDelete = (event,user) => {
+    event.stopPropagation();
+    message.confirmRemove(() => {
+      const config = {
+        headers: {
+          Authorization: jwt.get(),
+        },
+      };
 
-  // Sidebar
+      http.privateHTTP
+        .delete(`${BASE_URL}/guru/${user._id}/`, config)
+        .then((response) => {
+          message.success(response);
+          navigate("/admin/dashboard");
+        })
+        .catch((error) => {
+          message.error(error);
+        });
+    });
+  };
   const navigation = [
     {
       href: "javascript:void(0)",
@@ -184,15 +219,14 @@ function DashboardAdmin() {
 
   return (
     <div className="m-8">
-      {role ? (
-        <div>Ini adalah dashboard untuk role: {role}</div>
-      ) : (
-        <div>Anda tidak diizinkan</div>
-      )}
+
       <div>
         <input
           ref={userSearch}
-          onKeyDown={onUserSearch}
+          onKeyDown={(e) => {
+            onGuruList(e);
+            onSiswaList(e);
+          }}
           placeholder="Search..."
           className="w-1/2 bg-gray-100 my-3 py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
         />
@@ -208,19 +242,19 @@ function DashboardAdmin() {
           </tr>
           <tr>
             <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Username
-            </th>
-            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Email
+              NIP
             </th>
             <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Nama Lengkap
             </th>
             <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Tanggal Lahir
+              Email
             </th>
             <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Role
+            </th>
+            <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Kelas diampu
             </th>
             <th class="px-6 py-3 bg-gray-100">
               <button
@@ -233,17 +267,22 @@ function DashboardAdmin() {
           </tr>
         </thead>
         <tbody>
-          {filterguru.map((user) => (
+          {guruList.map((user) => (
             <tr
               key={user._id}
               class="bg-white divide-y divide-gray-200 cursor-pointer hover:bg-gray-100"
               onClick={() => handleRowClick(user)}
             >
-              <td class="px-6 py-4 whitespace-nowrap">{user.username}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{user.email}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{user.nip}</td>
               <td class="px-6 py-4 whitespace-nowrap">{user.nama_lengkap}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{user.tanggal_lahir}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{user.roles}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{user.user.email}</td>
+              {/* <td class="px-6 py-4 whitespace-nowrap">
+              {new Date(user.tanggal_lahir).toLocaleDateString(
+                  "en-US",
+                  { year: "numeric", month: "2-digit", day: "2-digit" }
+                )}</td> */}
+              <td class="px-6 py-4 whitespace-nowrap">{user.user.roles}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{user.kelas.join(', ')}</td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <button
                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
@@ -253,8 +292,9 @@ function DashboardAdmin() {
                 </button>
                 <button
                   class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={(event) => handleDeleteButtonClick(event, user)}
+                  onClick={(event) => onGuruDelete(event, user)}
                 >
+                  
                   Delete
                 </button>
               </td>
@@ -284,7 +324,7 @@ function DashboardAdmin() {
               Tanggal Lahir
             </th>
             <th class="px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Role
+              Kelas
             </th>
             <th class="px-6 py-3 bg-gray-100">
               <button
@@ -297,22 +337,22 @@ function DashboardAdmin() {
           </tr>
         </thead>
         <tbody>
-          {filtersiswa.map((user) => (
+          {siswaList.map((user) => (
             <tr
               key={user._id}
               class="bg-white divide-y divide-gray-200 cursor-pointer hover:bg-gray-100"
               onClick={() => handleRowClick(user)}
             >
-              <td class="px-6 py-4 whitespace-nowrap">{user.username}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{user.email}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{user.user.username}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{user.user.email}</td>
               <td class="px-6 py-4 whitespace-nowrap">{user.nama_lengkap}</td>
               <td class="px-6 py-4 whitespace-nowrap">
-                {new Date(filtersiswa.tanggal_lahir).toLocaleDateString(
+                {new Date(user.tanggal_lahir).toLocaleDateString(
                   "en-US",
                   { year: "numeric", month: "2-digit", day: "2-digit" }
                 )}
               </td>
-              <td class="px-6 py-4 whitespace-nowrap">{user.roles}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{user.kelas}{user.rombel}</td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <button
                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
@@ -322,7 +362,7 @@ function DashboardAdmin() {
                 </button>
                 <button
                   class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={(event) => handleDeleteButtonClick(event, user)}
+                  onClick={(event) => onSiswaDelete(event, user)}
                 >
                   Delete
                 </button>
@@ -332,7 +372,7 @@ function DashboardAdmin() {
         </tbody>
       </table>
 
-      <table class="min-w-full divide-y divide-gray-200 ">
+      {/* <table class="min-w-full divide-y divide-gray-200 ">
         <thead>
           <tr>
             <th colspan="6" class="bg-gray-100 py-2">
@@ -366,7 +406,7 @@ function DashboardAdmin() {
           </tr>
         </thead>
         <tbody>
-          {filterguru.map((user) => (
+          {guruList.map((user) => (
             <tr
               key={user._id}
               class="bg-white divide-y divide-gray-200 cursor-pointer hover:bg-gray-100"
@@ -386,7 +426,7 @@ function DashboardAdmin() {
                 </button>
                 <button
                   class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={(event) => handleDeleteButtonClick(event, user)}
+                  // onClick={(event) => handleDeleteButtonClick(event, user)}
                 >
                   Delete
                 </button>
@@ -394,7 +434,7 @@ function DashboardAdmin() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
     </div>
   );
 }

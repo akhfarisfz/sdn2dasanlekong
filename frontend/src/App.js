@@ -10,7 +10,7 @@ import AdminDetail from "./Page/Admin/AdminDetail.js";
 import E_learningSiswa from "./Page/Siswa/E-learningSiswa.js";
 import Mapel from "./Page/Siswa/Mapel.js";
 import TambahGuru from "./Page/Admin/TambahGuru.js";
-import TambahSiswa from "./Page/Admin/Fitur Tambah/TambahSiswa.js";
+import TambahSiswa from "./Page/Admin/TambahSiswa.js";
 import TambahAdmin from "./Page/Admin/Fitur Tambah/TambahAdmin.js";
 import TambahSoalGuru from "./Page/Guru/TambahSoalGuru.js";
 

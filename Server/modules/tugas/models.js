@@ -3,29 +3,25 @@ const mongoose = require("mongoose");
 
 const TugasSchema = new mongoose.Schema(
   {
-    deskripsi: { type: String, required: true },
-    deadline: { type: Date, required: true },
-    id_materi: { type: mongoose.Schema.Types.ObjectId, ref: "MateriElearning", required: true },
+    // deskripsi: { type: String, required: true },
+    // deadline: { type: Date, required: true },
+    // id_materi: { type: mongoose.Schema.Types.ObjectId, ref: "MateriElearning", required: true },
     id_guru_pembuat: { type: mongoose.Schema.Types.ObjectId, ref: "Guru", required: true },
+    kelas: { type: String, enum: ['1', '2', '3', '4', '5', '6'], required: true },
+    rombel:{type : String, enum:['a','b']},
     created: { type: Date, default: Date.now },
-    pilihan_ganda: [{
-      teks_soal: { type: String, required: true },
-      opsi_jawaban: [{
-        pilihan_jawaban: { type: String }
-      }],
-      kunci_jawaban: { type: Number, required: true },//Pakai index
-      skor_benar: { type: Number, default: 1 }
-    }],
-    jawaban_siswa: [{
-      id_tugas: { type: mongoose.Schema.Types.ObjectId, ref: "Tugas", required: true },  
-      kelas: { type: String}, 
-      jawaban: [{
-        jawaban_siswa: { type: String }
-      }],
-      tanggal_pengumpulan: { type: Date, default: Date.now }, 
-      skor: { type: Number }
-    }],
-    total_skor: { type: Number, default: 0 }
+    mata_pelajaran:{type:String},
+    type: { type: String, enum: ['PG', 'Essay'], required: true },
+    teks_soal: { type: String, required: true },
+    opsi_jawaban: [
+      {
+        id: {type:Number},
+        text: {type:String},
+      }
+    ], // Only for PG type
+    kunci_jawaban: { type: String }, // Only for PG type
+    skor: { type: Number, required: true },
+    jawaban_essay: { type: String }, // Only for Essay type
   },
   { versionKey: false }
 );

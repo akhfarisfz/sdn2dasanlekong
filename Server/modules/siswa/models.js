@@ -5,16 +5,18 @@ const SiswaSchema = new mongoose.Schema(
   { 
     nis: { type: String, unique: true, required: true },
     user:{
-      _id:{type:Object, required:false},
       username: { type: String, required: true, unique: true },
       email: { type: String, required: true, unique: true },
       password: { type: String, required: true }, 
-      roles: { type: String, default:'Siswa'},
+      roles: { type: String, default:'Guru',required:false},
     },
+    kelas:{type:String},
+    rombel:{type:String},
     nama_lengkap: { type: String },
     tanggal_lahir: { type: Date },
     jenis_kelamin: { type: String, enum: ['Pria', 'Wanita'], default: 'Pria' },
     alamat: { type: String }, 
+
     created: { type: Date, default: Date.now },
   },
   { versionKey: false }

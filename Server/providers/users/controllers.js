@@ -50,7 +50,6 @@ const UserControllerSignUp = async (req, res) => {
     }
     
     await User.create(userData);
-
     const { password, ...payloadResponse } = userData;
     return res.status(200).json(payloadResponse);
   } catch (error) {
@@ -62,6 +61,7 @@ const UserControllerSignUp = async (req, res) => {
 
 const UserControllerSignIn = async (req, res) => {
   try {
+    console.log(req.cleanedData);
     const user = await User.findOne({ email: req.cleanedData.email });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
