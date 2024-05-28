@@ -7,6 +7,9 @@ function TambahSoalGuru() {
   const [soalList, setSoalList] = useState([]);
   const [idCounter, setIdCounter] = useState(1);
   const [formData, setFormData] = useState({
+    mapel: "",
+    kelas: "",
+    rombel: "",
     soal_PG: "",
     soal_essay: "",
     jawaban_essay: "",
@@ -16,31 +19,41 @@ function TambahSoalGuru() {
   const [editId, setEditId] = useState(null);
   const inputRef = useRef(null);
   const [selectValue, setSelectValue] = useState("");
+  const [pilihKelas, setpilihKelas] = useState("");
+  const [pilihRombel, setPilihRombel] = useState("");
 
+  // Pilih jenis soal (PG dan Essay)
   const handleOnChange = (e) => {
-    const value = e.target.value;
-    setSelectValue(value); // Update select value state
-    if (value === "PG") {
-      setIsFormPGVisible(true);
-      setIsFormEssayVisible(false);
-      setFormData({
-        teks_soal: "",
-        opsi_jawaban: [],
-        kunci_jawaban: "",
-        skor: 1,
-      });
-    } else if (value === "Essay") {
-      setIsFormPGVisible(false);
-      setIsFormEssayVisible(true);
-      setFormData({ teks_soal: "", skor: 1 });
+    const { name, value } = e.target;
+    if (
+      name === "TambahTugasMapel" ||
+      name === "PilihKelas" ||
+      name === "PilihRombel" ||
+      name === "HeadlineAct"
+    ) {
+      setFormData({ ...formData, [name]: value });
     } else {
-      setIsFormPGVisible(false);
-      setIsFormEssayVisible(false);
+      setSelectValue(value); // Update select value state
+      console.log(setSelectValue);
+      console.log(value);
+      if (value === "PG") {
+        setIsFormPGVisible(true);
+        setIsFormEssayVisible(false);
+        setFormData({
+          teks_soal: "",
+          opsi_jawaban: [],
+          kunci_jawaban: "",
+          skor: 1,
+        });
+      } else if (value === "Essay") {
+        setIsFormPGVisible(false);
+        setIsFormEssayVisible(true);
+        setFormData({ teks_soal: "", skor: 1 });
+      } else {
+        setIsFormPGVisible(false);
+        setIsFormEssayVisible(false);
+      }
     }
-    setFormData({ soal_PG: "", soal_essay: "", jawaban_essay: "" });
-    setJawabanList([{ id: 1, text: "" }]);
-    setKunciJawaban("");
-    setEditId(null);
   };
 
   const handleInputChange = (e) => {
@@ -114,17 +127,18 @@ function TambahSoalGuru() {
       setSoalList([...soalList, newSoal]);
       setIdCounter(idCounter + 1);
     }
-    // Send the data to the server
-    // await fetch("/api/tambah-soal", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(newSoal),
-    // });
 
     // Reset form and select value
     setIsFormPGVisible(false);
     setIsFormEssayVisible(false);
-    setFormData({ soal_PG: "", soal_essay: "", jawaban_essay: "" });
+    setFormData({
+      mapel: "",
+      kelas: "",
+      rombel: "",
+      soal_PG: "",
+      soal_essay: "",
+      jawaban_essay: "",
+    });
     setJawabanList([{ id: 1, text: "" }]);
     setKunciJawaban("");
     setEditId(null);
@@ -164,10 +178,82 @@ function TambahSoalGuru() {
   //   setEditId(id);
   // };
 
+  console.log(formData);
   return (
     <>
       <Header />
       <div className="h-full mx-4 mt-4 shadow-lg border border-black rounded-xl">
+        {/* Pilih mapel */}
+        <div className="m-4">
+          <label
+            htmlFor="TambahTugasMapel"
+            className="block text-sm font-medium text-gray-900"
+          >
+            Pilih mata pelajaran yang ingin ditambahkan tugasnya
+          </label>
+          <select
+            name="TambahTugasMapel"
+            id="TambahTugasMapel"
+            className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+            onChange={handleOnChange}
+            value={formData.mapel} // Bind select value to state
+          >
+            <option value="">Pilih mata pelajaran ....</option>
+            <option value="Bhs_Indonesia">Bahasa Indonesia</option>
+            <option value="Bhs_Inggris">Bahasa Inggris</option>
+            <option value="Matematika">Matematika</option>
+            <option value="IPA_Soal">Ilmu Pengetahuan Alam</option>
+            <option value="IPS_Soal">Ilmu Pengetahuan Sosial</option>
+          </select>
+        </div>
+
+        {/* Pilih kelas dan rombel */}
+        <div className="m-4 flex gap-4">
+          <div className="w-3/4">
+            <label
+              htmlFor="PilihKelas"
+              className="block text-sm font-medium text-gray-900"
+            >
+              Pilih kelas
+            </label>
+            <select
+              name="PilihKelas"
+              id="PilihKelas"
+              className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+              onChange={handleOnChange}
+              value={formData.kelas} // Bind select value to state
+            >
+              <option value="">Pilih kelas ....</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </div>
+          <div className="w-1/4">
+            <label
+              htmlFor="PilihRombel"
+              className="block text-sm font-medium text-gray-900"
+            >
+              Pilih rombel
+            </label>
+            <select
+              name="PilihRombel"
+              id="PilihRombel"
+              className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+              onChange={handleOnChange}
+              value={formData.rombel} // Bind select value to state
+            >
+              <option value="">Pilih rombel ....</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+            </select>
+          </div>
+        </div>
+
+        {/* pilih jenis soal */}
         <div className="m-4">
           <label
             htmlFor="HeadlineAct"
@@ -175,7 +261,6 @@ function TambahSoalGuru() {
           >
             Pilih jenis soal yang ingin ditambahkan
           </label>
-
           <select
             name="HeadlineAct"
             id="HeadlineAct"
