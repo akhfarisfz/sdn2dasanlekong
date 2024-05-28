@@ -82,6 +82,32 @@ function DashboardGuru() {
     setFormData({ ...formData, rombel: e.target.value });
   };
 
+  // !!! TOlong ini error karena undifined
+
+  // const onMapelList = (params) => {
+  //   const url = `${BASE_URL}/mapel/`;
+  //   const config = {
+  //     headers: {
+  //       Authorization: jwt.get(),
+  //     },
+  //     params,
+  //   };
+  //   http.privateHTTP
+  //     .get(url, config)
+  //     .then((response) => {
+  //       const { results, ...pagination } = response.data;
+  //       setDaftarMapelPagination(pagination);
+  //       setDaftarMapel(results);
+  //     })
+  //     .catch((error) => {
+  //       message.error(error);
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   onMapelList();
+  // }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
