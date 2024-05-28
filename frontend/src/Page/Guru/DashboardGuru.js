@@ -82,52 +82,31 @@ function DashboardGuru() {
     setFormData({ ...formData, rombel: e.target.value });
   };
 
-  const onMapelList = (params) => {
-    const url = `${BASE_URL}/mapel/`;
-    const config = {
-      headers: {
-        Authorization: jwt.get(),
-      },
-      params,
-    };
-    http.privateHTTP
-      .get(url, config)
-      .then((response) => {
-        const { results, ...pagination } = response.data;
-        setDaftarMapelPagination(pagination);
-        setDaftarMapel(results);
-      })
-      .catch((error) => {
-        message.error(error);
-      });
-  };
+  // !!! TOlong ini error karena undifined
 
-  useEffect(() => {
-    onMapelList();
-  }, []);
-  // const list_matpel = [
-  //   {
-  //     id: 1,
-  //     image: indonesia,
-  //     title: "Bahasa Indonesia",
-  //   },
-  //   {
-  //     id: 2,
+  // const onMapelList = (params) => {
+  //   const url = `${BASE_URL}/mapel/`;
+  //   const config = {
+  //     headers: {
+  //       Authorization: jwt.get(),
+  //     },
+  //     params,
+  //   };
+  //   http.privateHTTP
+  //     .get(url, config)
+  //     .then((response) => {
+  //       const { results, ...pagination } = response.data;
+  //       setDaftarMapelPagination(pagination);
+  //       setDaftarMapel(results);
+  //     })
+  //     .catch((error) => {
+  //       message.error(error);
+  //     });
+  // };
 
-  //     image: matematika,
-  //     title: "Matematika",
-  //   },
-  //   {
-  //     id: 3,
-  //     image: IPA,
-  //     title: "Ilmu Pengetahuan Alam",
-  //   },
-  //   {
-  //     id: 4,
-  //     image: inggris,
-  //     title: "Bahasa Inggris",
-  //   },
-  // ];
+  // useEffect(() => {
+  //   onMapelList();
+  // }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
