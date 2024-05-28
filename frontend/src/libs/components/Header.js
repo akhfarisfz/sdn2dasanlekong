@@ -30,7 +30,7 @@ function Header() {
 
   return (
     <div className="z-10 shadow-md w-screen bg-blue-400 fixed top-0 left-0 ">
-      <div className="md:px-10 py-2 px-7 md:flex justify-between items-center">
+      <div className="md:px-10 py-4 px-7 md:flex justify-between items-center">
         <div className="flex text-2xl cursor-pointer items-center gap-5">
           <a href="/" className="flex items-center">
             <img className="flexbox size-12" src={Logo} alt="Logo" />
@@ -49,8 +49,9 @@ function Header() {
         </div>
 
         <ul
-          className={`md:flex md:pl-0 pl-9 md:items-center md:pb-0 pb-12 absolute md:static md:z-auto z-[-1] left-0 w-full md:w-auto  bg-blue-400  transition-all duration-500 ease-in ${isOpen ? "top12" : "top-[-490px]"
-            }`}
+          className={`md:flex md:pl-0 pl-9 md:items-center md:pb-0 pb-12 absolute md:static md:z-auto z-[-1] left-0 w-full md:w-auto  bg-blue-400  transition-all duration-500 ease-in ${
+            isOpen ? "top12" : "top-[-490px]"
+          }`}
         >
           <li className="font-semibold my-7 md:my-0 md:ml-8">
             <a href="#Sekolah">
@@ -104,7 +105,6 @@ function Header() {
               {isLoggedIn ? "Logout" : "Login"}
             </NavLink>
           </li>
-          
         </ul>
       </div>
     </div>
