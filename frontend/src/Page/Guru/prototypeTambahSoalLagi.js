@@ -5,9 +5,7 @@ import { BASE_URL } from "../../libs/config/settings";
 import useMessage from "../../libs/hooks/useMessage";
 import useHTTP from "../../libs/hooks/useHTTP";
 import { NavLink } from "react-router-dom";
-import { NavLink } from "react-router-dom";
 
-function DashboardGuru() {
 function DashboardGuru() {
   let [isOpen, setIsOpen] = useState(false);
   const [isFormPGVisible, setIsFormPGVisible] = useState(false);
@@ -232,9 +230,6 @@ function DashboardGuru() {
             <button
               onClick={handleOpenPopUp}
               className="group cursor-pointer outline-none"
-            <button
-              onClick={handleOpenPopUp}
-              className="group cursor-pointer outline-none"
               title="Add New"
             >
               <svg
@@ -252,7 +247,6 @@ function DashboardGuru() {
                 <path stroke-width="1.5" d="M12 16V8"></path>
               </svg>
               <h2>Tambah Soal</h2>
-            </button>
             </button>
 
             <div className="flex flex-col md:flex-row items-center justify-center md:justify-start"></div>
@@ -683,5 +677,4 @@ function DashboardGuru() {
   );
 }
 
-export default DashboardGuru;
 export default DashboardGuru;

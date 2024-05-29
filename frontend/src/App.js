@@ -51,9 +51,7 @@ function App() {
           {/* Guru */}
           <Route element={<PageCommonOutlet />}>
             <Route path="/guru/dashboard" element={<DashboardGuru />} />
-            <Route
-              path="/guru/dashboard/tambah_soal"
-              element={<TambahSoalGuru />}
+            <Route path="/guru/dashboard/tambah_soal"element={<TambahSoalGuru />}
             />
             <Route path="/guru/dashboard/soal/:id" element={<SoalDetail />} />
           </Route>
