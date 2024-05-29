@@ -1,24 +1,24 @@
 import React, { useState, useContext, useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import useJWT from "../../libs/hooks/useJWT";
-import { useNavigate } from "react-router-dom";
-import { ContextApplication } from "../../libs/config/contexts";
-import belajar from "../../img/belajar.jpg";
+
 import Header from "../../libs/components/Header";
-import matematika from "../../img/matematika.jpg";
-import IPA from "../../img/IPA.jpg";
-import indonesia from "../../img/bhs indo.jpg";
-import inggris from "../../img/bhs inggris.jpg";
+
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { BASE_URL } from "../../libs/config/settings";
 import useMessage from "../../libs/hooks/useMessage";
 import useHTTP from "../../libs/hooks/useHTTP";
+import { NavLink } from "react-router-dom";
 
 function DashboardGuru() {
   let [isOpen, setIsOpen] = useState(false);
   const [isFormPGVisible, setIsFormPGVisible] = useState(false);
   const [isFormEssayVisible, setIsFormEssayVisible] = useState(false);
-  const [soalList, setSoalList] = useState([]);
+  const LOCAL_STORAGE_KEY = "soal-list";
+
+  const [soalList, setSoalList] = useState(() => {
+    // Inisialisasi state dari localStorage
+    const savedSoalList = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+    return savedSoalList || [];
+  });
   const [idCounter, setIdCounter] = useState(1);
   const [formData, setFormData] = useState({
     mapel: "",
@@ -66,6 +66,11 @@ function DashboardGuru() {
       setIsFormEssayVisible(false);
     }
   };
+
+  // Simpan soalList ke localStorage setiap kali soalList berubah
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(soalList));
+  }, [soalList]);
 
   const handleMapelChange = (e) => {
     setSelectMapel(e.target.value);
@@ -246,8 +251,8 @@ function DashboardGuru() {
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
           {/* list menggunakan React Router Dom */}
           <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {soalList.map((soal, index) => (
-              <li key={index}>
+            {soalList.map((soal) => (
+              <li key={soal.id}>
                 <div className="relative h-48 rounded-lg w-full bg-red-200">
                   <div>
                     <h2 className="text-xl font-bold text-gray-700 text-center p-6">
@@ -256,12 +261,15 @@ function DashboardGuru() {
                   </div>
 
                   <div className="flex mx-auto items-end h-12 w-fit gap-4 absolute bottom-2 left-2 right-2">
-                    <button class="cursor-pointer transition-all bg-blue-500 text-white h-11 px-4 py-1 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">
+                    <NavLink
+                      to={`/guru/dashboard/soal/${soal.id}`}
+                      className="cursor-pointer transition-all bg-blue-500 text-white h-11 px-4 py-1 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                    >
                       Buka
-                    </button>
+                    </NavLink>
                     <button
                       onClick={() => handleDeleteSoal(soal.id)}
-                      class="cursor-pointer transition-all bg-blue-500 h-11 text-white px-4 py-1 rounded-lg
+                      className="cursor-pointer transition-all bg-blue-500 h-11 text-white px-4 py-1 rounded-lg
 border-blue-600
 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
 active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
