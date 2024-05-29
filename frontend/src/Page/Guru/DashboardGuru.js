@@ -1,7 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-
 import Header from "../../libs/components/Header";
-
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { BASE_URL } from "../../libs/config/settings";
 import useMessage from "../../libs/hooks/useMessage";
@@ -22,6 +20,7 @@ function DashboardGuru() {
   const [idCounter, setIdCounter] = useState(1);
   const [formData, setFormData] = useState({
     mapel: "",
+    jenis: "",
     kelas: "",
     rombel: "",
     soal_PG: "",
@@ -32,6 +31,7 @@ function DashboardGuru() {
   const [kunciJawaban, setKunciJawaban] = useState("");
   const [editId, setEditId] = useState(null);
   const [selectMapel, setSelectMapel] = useState("");
+  const [selectJenisTugas, setSelectJenisTugas] = useState("");
   const [selectKelas, setSelectKelas] = useState("");
   const [selectRombel, setSelectRombel] = useState("");
   const [selectType, setSelectType] = useState("");
@@ -75,6 +75,11 @@ function DashboardGuru() {
   const handleMapelChange = (e) => {
     setSelectMapel(e.target.value);
     setFormData({ ...formData, mapel: e.target.value });
+  };
+
+  const handleJenisTugas = (e) => {
+    setSelectJenisTugas(e.target.value);
+    setFormData({ ...formData, jenis: e.target.value });
   };
 
   const handleKelasChange = (e) => {
@@ -190,6 +195,7 @@ function DashboardGuru() {
     setIsFormEssayVisible(false);
     setFormData({
       mapel: "",
+      jenis: "",
       kelas: "",
       rombel: "",
       soal_PG: "",
@@ -248,38 +254,103 @@ function DashboardGuru() {
         </div>
       </section>
       <section>
-        <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+        <div className="mx-auto  px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
           {/* list menggunakan React Router Dom */}
-          <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {soalList.map((soal) => (
-              <li key={soal.id}>
-                <div className="relative h-48 rounded-lg w-full bg-red-200">
-                  <div>
-                    <h2 className="text-xl font-bold text-gray-700 text-center p-6">
-                      {soal.mapel}
-                    </h2>
-                  </div>
-
-                  <div className="flex mx-auto items-end h-12 w-fit gap-4 absolute bottom-2 left-2 right-2">
-                    <NavLink
-                      to={`/guru/dashboard/soal/${soal.id}`}
-                      className="cursor-pointer transition-all bg-blue-500 text-white h-11 px-4 py-1 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
-                    >
-                      Buka
-                    </NavLink>
-                    <button
-                      onClick={() => handleDeleteSoal(soal.id)}
-                      className="cursor-pointer transition-all bg-blue-500 h-11 text-white px-4 py-1 rounded-lg
-border-blue-600
-border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
-active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
-                    >
-                      Hapus
-                    </button>
-                  </div>
+          <ul className="mt-4 flex gap-8 overflow-auto">
+            <li>
+              <div className="relative h-48 w-64 rounded-lg bg-red-200">
+                <div>
+                  <h2 className="text-xl font-bold text-gray-700 text-center p-6">
+                    Bahasa Indonesia
+                  </h2>
                 </div>
-              </li>
-            ))}
+
+                <div className="flex mx-auto items-end h-12 w-fit gap-4 absolute bottom-2 left-2 right-2">
+                  <NavLink
+                    to={`/guru/dashboard/soal/Bahasa Indonesia`}
+                    className="cursor-pointer transition-all bg-blue-500 text-white h-11 px-4 py-1 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                  >
+                    Buka
+                  </NavLink>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div className="relative h-48 rounded-lg  w-64 bg-red-200">
+                <div>
+                  <h2 className="text-xl font-bold text-gray-700 text-center p-6">
+                    Bahasa Inggris
+                  </h2>
+                </div>
+
+                <div className="flex mx-auto items-end h-12 w-fit gap-4 absolute bottom-2 left-2 right-2">
+                  <NavLink
+                    to={`/guru/dashboard/soal/Bahasa Inggris`}
+                    className="cursor-pointer transition-all bg-blue-500 text-white h-11 px-4 py-1 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                  >
+                    Buka
+                  </NavLink>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div className="relative h-48 rounded-lg  w-64 bg-red-200">
+                <div>
+                  <h2 className="text-xl font-bold text-gray-700 text-center p-6">
+                    Matematika
+                  </h2>
+                </div>
+
+                <div className="flex mx-auto items-end h-12 w-fit gap-4 absolute bottom-2 left-2 right-2">
+                  <NavLink
+                    to={`/guru/dashboard/soal/Matematika`}
+                    className="cursor-pointer transition-all bg-blue-500 text-white h-11 px-4 py-1 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                  >
+                    Buka
+                  </NavLink>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div className="relative h-48 rounded-lg  w-64 bg-red-200">
+                <div>
+                  <h2 className="text-xl font-bold text-gray-700 text-center p-6">
+                    Ilmu Pengetahuan Alam
+                  </h2>
+                </div>
+
+                <div className="flex mx-auto items-end h-12 w-fit gap-4 absolute bottom-2 left-2 right-2">
+                  <NavLink
+                    to={`/guru/dashboard/soal/Ilmu Pengetahuan Alam`}
+                    className="cursor-pointer transition-all bg-blue-500 text-white h-11 px-4 py-1 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                  >
+                    Buka
+                  </NavLink>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div className="relative h-48 rounded-lg  w-64 bg-red-200">
+                <div>
+                  <h2 className="text-xl font-bold text-gray-700 text-center p-6">
+                    Ilmu Pengetahuan Sosial
+                  </h2>
+                </div>
+
+                <div className="flex mx-auto items-end h-12 w-fit gap-4 absolute bottom-2 left-2 right-2">
+                  <NavLink
+                    to={`/guru/dashboard/soal/Ilmu Pengetahuan Sosial`}
+                    className="cursor-pointer transition-all bg-blue-500 text-white h-11 px-4 py-1 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                  >
+                    Buka
+                  </NavLink>
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
       </section>
@@ -321,6 +392,30 @@ active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
                   <option value="Ilmu Pengetahuan Sosial">
                     Ilmu Pengetahuan Sosial
                   </option>
+                </select>
+              </div>
+
+              {/* Pilih jenis tugas */}
+              <div className="m-4">
+                <label
+                  htmlFor="TambahTugasMapel"
+                  className="block text-sm font-medium text-gray-900"
+                >
+                  Pilih jenis tugas
+                </label>
+
+                <select
+                  name="TambahJenisTugas"
+                  id="TambahJenisTugas"
+                  className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+                  onChange={handleJenisTugas}
+                  value={selectJenisTugas}
+                >
+                  <option value="">Pilih jenis tugas ....</option>
+                  <option value="Pekerjaan Rumah">PR</option>
+                  <option value="Soal latihan">Soal latihan</option>
+                  <option value="UTS">UTS</option>
+                  <option value="UAS">UAS</option>
                 </select>
               </div>
 

@@ -54,7 +54,10 @@ function App() {
               path="/guru/dashboard/tambah_soal"
               element={<TambahSoalGuru />}
             />
-            <Route path="/guru/dashboard/soal/:id" element={<SoalDetail />} />
+            <Route
+              path="/guru/dashboard/soal/:mapel"
+              element={<SoalDetail />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>
