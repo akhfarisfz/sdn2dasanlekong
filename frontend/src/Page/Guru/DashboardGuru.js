@@ -64,29 +64,6 @@ function E_learningSiswa() {
   useEffect(() => {
     onMapelList();
   }, []);
-  // const list_matpel = [
-  //   {
-  //     id: 1,
-  //     image: indonesia,
-  //     title: "Bahasa Indonesia",
-  //   },
-  //   {
-  //     id: 2,
-
-  //     image: matematika,
-  //     title: "Matematika",
-  //   },
-  //   {
-  //     id: 3,
-  //     image: IPA,
-  //     title: "Ilmu Pengetahuan Alam",
-  //   },
-  //   {
-  //     id: 4,
-  //     image: inggris,
-  //     title: "Bahasa Inggris",
-  //   },
-  // ];
 
   return (
     <>
@@ -141,11 +118,13 @@ function E_learningSiswa() {
                   </div>
 
                   <div className="flex mx-auto items-end h-12 w-fit gap-4 absolute bottom-2 left-2 right-2">
-                    <button
-                      class="cursor-pointer transition-all bg-blue-500 text-white h-11 px-4 py-1 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+
+                    <NavLink
+                      to={`/mapel/${mapel._id}`}
+                      className="cursor-pointer transition-all bg-blue-500 text-white h-11 px-4 py-1 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
                     >
                       Buka
-                    </button>
+                    </NavLink>
                     <button
                       class="cursor-pointer transition-all bg-blue-500 h-11 text-white px-4 py-1 rounded-lg
 border-blue-600

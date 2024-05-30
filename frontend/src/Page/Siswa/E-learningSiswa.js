@@ -5,10 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { ContextApplication } from "../../libs/config/contexts";
 import belajar from "../../img/belajar.jpg";
 import Header from "../../libs/components/Header";
-import matematika from "../../img/matematika.jpg";
-import IPA from "../../img/IPA.jpg";
-import indonesia from "../../img/bhs indo.jpg";
-import inggris from "../../img/bhs inggris.jpg";
 import { BASE_URL } from "../../libs/config/settings";
 import useMessage from "../../libs/hooks/useMessage";
 import useHTTP from "../../libs/hooks/useHTTP";
@@ -16,7 +12,6 @@ import { jwtDecode } from "jwt-decode";
 
 
 function E_learningSiswa() {
-  let [isOpen, setIsOpen] = useState(false);
   const [daftarMapel, setDaftarMapel] = useState([]);
   const[idUser,setIdUser]=useState([]);
   // const [daftarMapelPagination, setDaftarMapelPagination] = useState({});
@@ -101,11 +96,6 @@ function E_learningSiswa() {
       </section>
 
       <section>
-      {isLoggedIn && (
-          <div className="text-center mt-4">
-            <p>User ID: {idUser}</p>
-          </div>
-        )}
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
           {/* list menggunakan React Router Dom */}
           <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -124,7 +114,6 @@ function E_learningSiswa() {
                       to={`/siswa/eLearning/mapel/${mapel._id}`}
                       className="opacity-0 group-hover:opacity-100"
                     >
-                      <p>{mapel._id}</p>
                       <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
                         Lihat Detail
                       </button>
