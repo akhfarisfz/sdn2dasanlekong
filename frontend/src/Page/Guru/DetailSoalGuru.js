@@ -18,7 +18,7 @@ function SoalDetail() {
         <Header />
         <div className="">
           <h2 className="mx-auto mt-12 font-bold text-lg border-b-2 border-gray-400 w-fit">
-            Soal masih kosong
+            Tugas masih kosong
           </h2>
         </div>
       </>
@@ -28,10 +28,10 @@ function SoalDetail() {
   return (
     <>
       <Header />
-      <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="mt-12 grid justify-center gap-4">
         {soalMapel.map((soal, index) => (
-          <li key={index}>
-            <div className="relative h-48 rounded-lg w-full bg-red-200">
+          <li key={index} className="lg:w-[1100px] ">
+            <div className="relative h-72 w-96 rounded-lg w-full bg-red-200">
               <div>
                 <h2 className="text-xl font-bold text-gray-700 text-center p-6">
                   {soal.jenis}
