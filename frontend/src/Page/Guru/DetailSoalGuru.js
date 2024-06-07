@@ -16,6 +16,7 @@ function SoalDetail() {
     return (
       <>
         <Header />
+
         <div className="">
           <h2 className="mx-auto mt-12 font-bold text-lg border-b-2 border-gray-400 w-fit">
             Tugas masih kosong
@@ -28,6 +29,38 @@ function SoalDetail() {
   return (
     <>
       <Header />
+      <section>
+        <div className="mt-[25px] lg:mt-[1px] relative justify-center lg:justify-start h-52 w-full bg-blue-300 flex items-center mx-auto ">
+          <div
+            id="cover-content"
+            className="relative text-center md:text-left lg:left-20"
+          >
+            <button
+              // onClick={handleOpenPopUp}
+              className="group cursor-pointer outline-none"
+              title="Add New"
+            >
+              <svg
+                class="stroke-teal-500 fill-none group-hover:fill-teal-800 group-active:stroke-teal-200 group-active:fill-teal-600 group-active:duration-0 duration-300"
+                viewBox="0 0 24 24"
+                height="50px"
+                width="50px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-width="1.5"
+                  d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                ></path>
+                <path stroke-width="1.5" d="M8 12H16"></path>
+                <path stroke-width="1.5" d="M12 16V8"></path>
+              </svg>
+              <h2>Tambah Soal</h2>
+            </button>
+
+            <div className="flex flex-col md:flex-row items-center justify-center md:justify-start"></div>
+          </div>
+        </div>
+      </section>
       <ul className="mt-12 grid justify-center gap-4">
         {soalMapel.map((soal, index) => (
           <li key={index} className="lg:w-[1100px] ">
