@@ -105,8 +105,15 @@ function DashboardGuru() {
     setFormSoalList(updatedFormSoalList);
   };
 
-  const handleJawabanChange = (id, text) => {
-    setJawabanList(jawabanList.map((j) => (j.id === id ? { ...j, text } : j)));
+  const handleJawabanChange = (e, index) => {
+    const { value } = e.target;
+    const updatedJawabanList = jawabanList.map((jawaban, idx) => {
+      if (idx === index) {
+        return { ...jawaban, text: value };
+      }
+      return jawaban;
+    });
+    setJawabanList(updatedJawabanList);
   };
   const handleKunciJawabanChange = (e) => {
     setKunciJawaban(e.target.value);
@@ -417,7 +424,7 @@ function DashboardGuru() {
                                       id={`jawaban_${jawaban.id}`}
                                       value={jawaban.text}
                                       onChange={(e) =>
-                                        handleInputChange(e, index)
+                                        handleJawabanChange(e, index)
                                       }
                                       className="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                     />
