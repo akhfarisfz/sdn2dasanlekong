@@ -108,12 +108,22 @@ function DashboardGuru() {
   const handleJawabanChange = (id, text) => {
     setJawabanList(jawabanList.map((j) => (j.id === id ? { ...j, text } : j)));
   };
+  const handleKunciJawabanChange = (e) => {
+    setKunciJawaban(e.target.value);
+  };
 
   const TambahJawabanPG = () => {
     const newId = jawabanList.length + 1;
     setJawabanList([...jawabanList, { id: newId, text: "" }]);
   };
-
+  const handleHapusJawabanPG = (id) => {
+    if (jawabanList.length > 1) {
+      const updatedJawabanList = jawabanList.filter(
+        (jawaban) => jawaban.id !== id
+      );
+      setJawabanList(updatedJawabanList);
+    }
+  };
   const handleDeleteSoal = (index) => {
     const updatedFormSoalList = formSoalList.filter((_, idx) => idx !== index);
     setFormSoalList(updatedFormSoalList);
@@ -390,42 +400,130 @@ function DashboardGuru() {
                             <label className="block font-semibold">
                               Jawaban PG
                             </label>
-                            {jawabanList.map((jawaban) => (
-                              <div
-                                key={jawaban.id}
-                                className="flex items-center mt-1"
-                              >
-                                <input
-                                  type="text"
-                                  value={jawaban.text}
-                                  onChange={(e) =>
-                                    handleJawabanChange(
-                                      jawaban.id,
-                                      e.target.value
-                                    )
-                                  }
-                                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                />
-                              </div>
+                            {/* Jawaban */}
+                            {jawabanList.map((jawaban, index) => (
+                              <>
+                                <div key={jawaban.id} className="mb-4">
+                                  <label
+                                    htmlFor={`jawaban_${jawaban.id}`}
+                                    className="block text-sm font-medium text-gray-900"
+                                  >
+                                    Jawaban{" "}
+                                    {String.fromCharCode(64 + jawaban.id)}
+                                  </label>
+                                  <div className="mt-2">
+                                    <input
+                                      type="text"
+                                      id={`jawaban_${jawaban.id}`}
+                                      value={jawaban.text}
+                                      onChange={(e) =>
+                                        handleInputChange(e, index)
+                                      }
+                                      className="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="flex gap-6">
+                                  <button
+                                    type="button"
+                                    onClick={TambahJawabanPG}
+                                    className="flex items-center text-teal-500 hover:text-teal-800"
+                                  >
+                                    <svg
+                                      className="stroke-teal-500 fill-none hover:fill-teal-800 duration-300"
+                                      viewBox="0 0 24 24"
+                                      height="24px"
+                                      width="24px"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        strokeWidth="1.5"
+                                        d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                                      ></path>
+                                      <path
+                                        strokeWidth="1.5"
+                                        d="M8 12H16"
+                                      ></path>
+                                      <path
+                                        strokeWidth="1.5"
+                                        d="M12 16V8"
+                                      ></path>
+                                    </svg>
+                                    <span className="ml-1">Tambah Jawaban</span>
+                                  </button>
+
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      handleHapusJawabanPG(jawaban.id)
+                                    }
+                                    className={`flex items-center text-red-500 hover:text-red-800 ${
+                                      jawabanList.length === 1
+                                        ? "opacity-50 cursor-not-allowed"
+                                        : ""
+                                    }`}
+                                    disabled={jawabanList.length === 1}
+                                  >
+                                    <svg
+                                      className="stroke-red-500 fill-none hover:fill-red-800 duration-300"
+                                      viewBox="0 0 24 24"
+                                      height="24px"
+                                      width="24px"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        strokeWidth="1.5"
+                                        d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                                      ></path>
+                                      <path
+                                        strokeWidth="1.5"
+                                        d="M8 12H16"
+                                      ></path>
+                                    </svg>
+                                    <span className="ml-1">Hapus Jawaban</span>
+                                  </button>
+                                </div>
+                              </>
                             ))}
-                            <button
-                              type="button"
-                              onClick={TambahJawabanPG}
-                              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
-                            >
-                              Tambah Jawaban
-                            </button>
-                          </div>
-                          <div className="mt-2">
-                            <label className="block font-semibold">
-                              Kunci Jawaban
-                            </label>
-                            <input
-                              type="text"
-                              value={kunciJawaban}
-                              onChange={(e) => setKunciJawaban(e.target.value)}
-                              className="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            />
+
+                            <div className="mb-4">
+                              <label
+                                htmlFor="kunciJawaban"
+                                className="block text-sm font-medium text-gray-900"
+                              >
+                                Kunci Jawaban
+                              </label>
+                              <div className="mt-2">
+                                <ul className="space-y-2">
+                                  {jawabanList.map((jawaban) => (
+                                    <li
+                                      key={jawaban.id}
+                                      className="flex items-center gap-2"
+                                    >
+                                      <input
+                                        type="radio"
+                                        name="kunciJawaban"
+                                        value={String.fromCharCode(
+                                          64 + jawaban.id
+                                        )}
+                                        checked={
+                                          kunciJawaban ===
+                                          String.fromCharCode(64 + jawaban.id)
+                                        }
+                                        onChange={handleKunciJawabanChange}
+                                        className="form-radio border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                      />
+                                      <label
+                                        htmlFor={`kunciJawaban_${jawaban.id}`}
+                                        className="text-sm text-gray-700 font-medium"
+                                      >
+                                        {String.fromCharCode(64 + jawaban.id)}
+                                      </label>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
                           </div>
                         </>
                       )}
@@ -468,13 +566,25 @@ function DashboardGuru() {
                         <button
                           type="button"
                           onClick={() => handleDeleteSoal(index)}
-                          className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md"
+                          className={`mt-2 px-4 py-2 bg-red-500 text-white rounded-md ${
+                            formSoalList.length === 1
+                              ? "opacity-50 cursor-not-allowed"
+                              : ""
+                          }`}
+                          disabled={formSoalList.length === 1}
                         >
                           Hapus Soal
                         </button>
                       </div>
                     </div>
                   ))}
+                  <button
+                    title="submit"
+                    type="submit"
+                    className="mt-4 cursor-pointer flex items-center bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Submit
+                  </button>
                 </form>
               </div>
             </div>
