@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const app = express();
-const port = 3000;
+const port = 5000;
 
 app.use(express.json()); // Middleware untuk parsing JSON
 
@@ -11,13 +11,13 @@ let books = [
     id: 1,
     title: "Book One",
     description: "Description for Book One",
-    filePath: "books/book1.pdf",
+    filePath: "rak buku/Bahasa_Indonesia_BG_KLS_I_Rev.pdf",
   },
   {
     id: 2,
     title: "Book Two",
     description: "Description for Book Two",
-    filePath: "books/book2.pdf",
+    filePath: "rak buku/Bahasa-Inggris-BS-KLS-II.pdf",
   },
 ];
 
