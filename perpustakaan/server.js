@@ -1,34 +1,32 @@
 const express = require("express");
+const cors = require("cors");
 const path = require("path");
-const cors = require("cors"); // Import CORS
+const fs = require("fs");
 const app = express();
 const port = 5000;
 
-app.use(cors()); // Gunakan middleware CORS
-app.use(express.json()); // Middleware untuk parsing JSON
+app.use(cors());
+app.use(express.json());
 
-// Data dummy buku
-let books = [
-  {
-    id: 1,
-    title: "Book One",
-    description: "Description for Book One",
-    filePath: "rak buku/Bahasa_Indonesia_BG_KLS_I_Rev.pdf",
-  },
-  {
-    id: 2,
-    title: "Book Two",
-    description: "Description for Book Two",
-    filePath: "rak buku/Bahasa-Inggris-BS-KLS-II.pdf",
-  },
-];
+let books = [];
 
-// Endpoint untuk mendapatkan semua buku
+// Function to load books from JSON file
+const loadBooks = () => {
+  try {
+    const data = fs.readFileSync("dataBuku.json", "utf8");
+    books = JSON.parse(data);
+  } catch (err) {
+    console.error("Error reading books.json:", err);
+  }
+};
+
+// Load books initially
+loadBooks();
+
 app.get("/books", (req, res) => {
   res.json(books);
 });
 
-// Endpoint untuk mendapatkan buku berdasarkan ID
 app.get("/books/:id", (req, res) => {
   const bookId = parseInt(req.params.id);
   const book = books.find((b) => b.id === bookId);
@@ -39,7 +37,6 @@ app.get("/books/:id", (req, res) => {
   }
 });
 
-// Endpoint untuk mengunduh buku berdasarkan ID
 app.get("/books/:id/download", (req, res) => {
   const bookId = parseInt(req.params.id);
   const book = books.find((b) => b.id === bookId);
@@ -51,7 +48,19 @@ app.get("/books/:id/download", (req, res) => {
   }
 });
 
-// Menjalankan server
+app.post("/inputBooks", (req, res) => {
+  const newBook = {
+    id: books.length + 1,
+    title: req.body.title,
+    description: req.body.description,
+    filePath: "rak buku/default.pdf",
+  };
+  books.push(newBook);
+  // Save the updated books array to books.json
+  fs.writeFileSync("dataBuku.json", JSON.stringify(books, null, 2));
+  res.status(201).json(newBook);
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
