@@ -85,6 +85,12 @@ function Home() {
                   </button>
                 </NavLink>
               )}
+              <NavLink
+                to="/perpustakaan"
+                className="bg-white text-blue-500 hover:bg-blue-400 text-lg md:text-xl lg:text-2xl font-semibold py-2 px-6 md:py-3 md:px-8 lg:py-4 lg:px-10 rounded-full shadow-md transition duration-300 mb-4 md:mb-0"
+              >
+                ke perpustakaan
+              </NavLink>
             </div>
           </div>
         </div>

@@ -14,6 +14,8 @@ import TambahSiswa from "./Page/Admin/TambahSiswa.js";
 import TambahAdmin from "./Page/Admin/Fitur Tambah/TambahAdmin.js";
 import TambahSoalGuru from "./Page/Guru/TambahSoalGuru.js";
 import SoalDetail from "./Page/Guru/DetailSoalGuru.js";
+import TambahSoalProto from "./Page/Guru/FormSoalPrototype.js";
+import perpustakaan from "./Page/perpustakaan/perpustakaan.js";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -25,6 +27,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/perpustakaan" element={<perpustakaan />} />
 
           <Route path="/login" element={<Login />} />
           {/* Admin */}
