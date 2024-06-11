@@ -1,8 +1,10 @@
 const express = require("express");
 const path = require("path");
+const cors = require("cors"); // Import CORS
 const app = express();
 const port = 5000;
 
+app.use(cors()); // Gunakan middleware CORS
 app.use(express.json()); // Middleware untuk parsing JSON
 
 // Data dummy buku

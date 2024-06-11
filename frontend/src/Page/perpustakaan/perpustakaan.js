@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-function perpustakaan() {
+function Perpustakaan() {
   const [books, setBooks] = useState([]);
+
   useEffect(() => {
     fetchAPI();
   }, []);
+
   const fetchAPI = async () => {
     await fetch("http://localhost:5000/books")
       .then((res) => res.json())
@@ -19,16 +21,18 @@ function perpustakaan() {
 
   return (
     <>
-      <div>perpustakaan</div>
+      <div>Perpustakaan</div>
       {books.map((book) => (
         <div key={book.id}>
           <h2>{book.title}</h2>
           <p>{book.description}</p>
-          <p>{book.filePath}</p>
+          <a href={`http://localhost:3000/books/${book.id}/download`}>
+            Download
+          </a>
         </div>
       ))}
     </>
   );
 }
 
-export default perpustakaan;
+export default Perpustakaan;
