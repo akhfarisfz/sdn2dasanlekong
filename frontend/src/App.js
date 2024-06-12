@@ -49,7 +49,7 @@ function App() {
           </Route>
           {/* Siswa */}
           <Route path="/siswa/eLearning" element={<E_learningSiswa />} />
-          <Route path="/siswa/eLearning/mapel/:id" element={<BelajarSiswa />}></Route>
+          {/* <Route path="/siswa/eLearning/mapel/:id" element={<BelajarSiswa />}></Route> */}
 
           {/* Guru */}
           <Route element={<PageCommonOutlet />}>
