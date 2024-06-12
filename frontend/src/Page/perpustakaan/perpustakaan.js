@@ -4,6 +4,7 @@ function Perpustakaan() {
   const [books, setBooks] = useState([]);
   const [judul, setJudul] = useState("");
   const [deskripsi, setDeskripsi] = useState("");
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
     ambilBuku();
@@ -70,6 +71,15 @@ function Perpustakaan() {
               required
             />
           </label>
+        </div>
+        <div>
+          <label>Masukkan File Buku (PDF):</label>
+          <input
+            type="file"
+            accept="application/pdf"
+            onChange={(e) => setFile(e.target.files[0])}
+            required
+          />
         </div>
         <button type="submit">Tambah Buku</button>
       </form>
