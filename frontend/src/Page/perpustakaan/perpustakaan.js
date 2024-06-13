@@ -1,14 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import useJWT from "../../libs/hooks/useJWT";
+import { useNavigate } from "react-router-dom";
+import { ContextApplication } from "../../libs/config/contexts";
+import belajar from "../../img/belajar.jpg";
+import Header from "../../libs/components/Header";
+import { BASE_URL } from "../../libs/config/settings";
 
 function Perpustakaan() {
   const [books, setBooks] = useState([]);
   const [judul, setJudul] = useState("");
   const [deskripsi, setDeskripsi] = useState("");
   const [file, setFile] = useState(null);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const jwt = useJWT();
 
   useEffect(() => {
     ambilBuku();
-  }, []);
+  });
 
   const tambahBuku = async (event) => {
     event.preventDefault();
@@ -18,7 +28,7 @@ function Perpustakaan() {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/inputBooks", {
+      const response = await fetch("http://localhost:4000/inputBooks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,10 +47,16 @@ function Perpustakaan() {
 
   const ambilBuku = async () => {
     try {
-      const response = await fetch("http://localhost:5000/books");
+      const response = await fetch(`${BASE_URL}/buku/`, {
+        method: "GET",
+        headers: {
+          Authorization: jwt.get(),
+        },
+      });
+
       const data = await response.json();
-      setBooks(data);
-      console.log(data);
+      setBooks(data.data);
+      setTotalPages(data.totalPages);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -51,26 +67,22 @@ function Perpustakaan() {
       <div>Perpustakaan</div>
       <form onSubmit={tambahBuku}>
         <div>
-          <label>
-            Judul Buku:
-            <input
-              type="text"
-              value={judul}
-              onChange={(e) => setJudul(e.target.value)}
-              required
-            />
-          </label>
+          <label>Judul Buku:</label>
+          <input
+            type="text"
+            value={judul}
+            onChange={(e) => setJudul(e.target.value)}
+            required
+          />
         </div>
         <div>
-          <label>
-            Deskripsi Buku:
-            <input
-              type="text"
-              value={deskripsi}
-              onChange={(e) => setDeskripsi(e.target.value)}
-              required
-            />
-          </label>
+          <label>Deskripsi Buku:</label>
+          <input
+            type="text"
+            value={deskripsi}
+            onChange={(e) => setDeskripsi(e.target.value)}
+            required
+          />
         </div>
         <div>
           <label>Masukkan File Buku (PDF):</label>
