@@ -1,5 +1,5 @@
 
-function TugasFilter(req) {
+function BukuFilter(req) {
   let qSearch = {};
   const { search, limit, page, ...filters } = req.query;
 
@@ -20,6 +20,6 @@ function TugasFilter(req) {
 }
 
 module.exports = {
-  TugasFilter,
+  BukuFilter,
 };
   

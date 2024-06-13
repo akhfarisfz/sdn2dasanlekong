@@ -5,18 +5,16 @@ import { useNavigate } from "react-router-dom";
 import { ContextApplication } from "../../libs/config/contexts";
 import belajar from "../../img/belajar.jpg";
 import Header from "../../libs/components/Header";
-import matematika from "../../img/matematika.jpg";
-import IPA from "../../img/IPA.jpg";
-import indonesia from "../../img/bhs indo.jpg";
-import inggris from "../../img/bhs inggris.jpg";
 import { BASE_URL } from "../../libs/config/settings";
 import useMessage from "../../libs/hooks/useMessage";
 import useHTTP from "../../libs/hooks/useHTTP";
+import { jwtDecode } from "jwt-decode";
+
 
 function E_learningSiswa() {
-  let [isOpen, setIsOpen] = useState(false);
   const [daftarMapel, setDaftarMapel] = useState([]);
-  const [daftarMapelPagination, setDaftarMapelPagination] = useState({});
+  const[idUser,setIdUser]=useState([]);
+  // const [daftarMapelPagination, setDaftarMapelPagination] = useState({});
 
   const token = localStorage.getItem("token");
   const isLoggedIn = !!token;
@@ -47,7 +45,7 @@ function E_learningSiswa() {
       .get(url, config)
       .then((response) => {
         const { results, ...pagination } = response.data;
-        setDaftarMapelPagination(pagination);
+        // setDaftarMapelPagination(pagination);
         setDaftarMapel(results);
       })
       .catch((error) => {
@@ -57,33 +55,17 @@ function E_learningSiswa() {
 
   useEffect(() => {
     onMapelList();
+    if (isLoggedIn) {
+      const decodedToken = jwtDecode(token);
+      const { id } = decodedToken;
+      setIdUser(id);
+    }
   }, []);
   const hariArray = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
   const jamArray = Array.from({ length: 9 }, (_, i) => i + 7);
 
-  // const list_matpel = [
-  //   {
-  //     id: 1,
-  //     image: indonesia,
-  //     title: "Bahasa Indonesia",
-  //   },
-  //   {
-  //     id: 2,
 
-  //     image: matematika,
-  //     title: "Matematika",
-  //   },
-  //   {
-  //     id: 3,
-  //     image: IPA,
-  //     title: "Ilmu Pengetahuan Alam",
-  //   },
-  //   {
-  //     id: 4,
-  //     image: inggris,
-  //     title: "Bahasa Inggris",
-  //   },
-  // ];
+
 
   return (
     <>
@@ -92,6 +74,7 @@ function E_learningSiswa() {
 
       {/* body */}
       <section>
+      
         <div
           id="cover"
           className="mt-[25px] lg:mt-[50px] relative justify-center lg:justify-start bg-blue-500 min-h-screen flex items-center mx-auto max-w-screen-xl bg-cover bg-center bg-no-repeat "
@@ -109,7 +92,7 @@ function E_learningSiswa() {
             </p>
             <div className="flex flex-col md:flex-row items-center justify-center md:justify-start"></div>
           </div>
-        </div>
+        </div> 
       </section>
 
       <section>

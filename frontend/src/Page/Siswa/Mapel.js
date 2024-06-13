@@ -47,7 +47,6 @@ function Mapel() {
           className="relative justify-center lg:justify-start bg-blue-500 min-h-screen flex items-center mx-auto bg-cover bg-center bg-no-repeat "
           style={{ backgroundImage: `url(${mapel.gambar})` }}
         >
-          {console.log(mapel.gambar)}
           <div
             id="cover-content"
             className="relative text-center lg:text-left lg:left-20"

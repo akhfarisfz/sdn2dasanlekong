@@ -61,8 +61,7 @@ const UserControllerSignUp = async (req, res) => {
 
 const UserControllerSignIn = async (req, res) => {
   try {
-    console.log(req.cleanedData);
-    const user = await User.findOne({ email: req.cleanedData.email });
+      const user = await User.findOne({ email: req.cleanedData.email });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }

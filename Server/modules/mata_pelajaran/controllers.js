@@ -27,7 +27,6 @@ const Mata_pelajaranControllerDetail = async (req, res) => {
     let matapelajaran = await Mata_pelajaran.findOne({ _id: req.params.id });
     if (!matapelajaran) throw { status: 404, message: "Not found" };
     res.status(200).json(matapelajaran);
-    return res.status(200).json(matapelajaran); // Mengirimkan respons sukses dengan data siswa
   } catch (error) {
     return LibHTTPResponseException(res, error);
   }

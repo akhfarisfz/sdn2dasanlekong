@@ -49,20 +49,15 @@ function App() {
           </Route>
           {/* Siswa */}
           <Route path="/siswa/eLearning" element={<E_learningSiswa />} />
-          <Route path="/siswa/eLearning/mapel/:id" element={<Mapel />}></Route>
+          {/* <Route path="/siswa/eLearning/mapel/:id" element={<BelajarSiswa />}></Route> */}
+
           {/* Guru */}
           <Route element={<PageCommonOutlet />}>
             <Route path="/guru/dashboard" element={<DashboardGuru />} />
-            <Route
-              path="/guru/dashboard/tambah_soal"
-              element={<TambahSoalGuru />}
+            <Route path="/guru/dashboard/tambah_soal"element={<TambahSoalGuru />}
             />
-            <Route
-              path="/guru/dashboard/soal/:mapel"
-              element={<SoalDetail />}
-            />
+            <Route path="/guru/dashboard/soal/:id" element={<SoalDetail />} />
           </Route>
-          <Route path="/protoFormSoal" element={<TambahSoalProto />} />
         </Routes>
       </BrowserRouter>
     </ContextApplication.Provider>
